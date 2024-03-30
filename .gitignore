@@ -1,0 +1,10 @@
+*.cr.mti
+*.mpf
+*.wlf
+
+# Ignore everything in the work folder and its subdirectories
+*.qdb
+*.qpg
+*.qtl
+_vmake
+_info
