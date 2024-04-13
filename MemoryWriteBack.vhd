@@ -11,12 +11,14 @@ ENTITY MemoryWriteBack IS
         RegWrite2 : IN STD_LOGIC;
         MemoryData : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
         AluResult : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+        RegDst : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
 
         MemToRegOut : OUT STD_LOGIC_VECTOR(1 DOWNTO 0);
         RegWriteOut : OUT STD_LOGIC;
         RegWrite2Out : OUT STD_LOGIC;
         MemoryDataOut : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
-        AluResultOut : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
+        AluResultOut : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+        RegDstOut : OUT STD_LOGIC_VECTOR(2 DOWNTO 0)
     );
 END MemoryWriteBack;
 
@@ -31,6 +33,7 @@ BEGIN
             RegWrite2Out <= '0';
             MemoryDataOut <= (OTHERS => '0');
             AluResultOut <= (OTHERS => '0');
+            RegDstOut <= (OTHERS => '0');
         ELSIF rising_edge(clk) THEN
             IF enable = '1' THEN
                 MemToRegOut <= MemToReg;
@@ -38,6 +41,7 @@ BEGIN
                 RegWrite2Out <= RegWrite2;
                 MemoryDataOut <= MemoryData;
                 AluResultOut <= AluResult;
+                RegDstOut <= RegDst;
             END IF;
     END IF;
     END PROCESS;

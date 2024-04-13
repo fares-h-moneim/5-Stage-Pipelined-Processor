@@ -18,7 +18,7 @@ ENTITY DecodeExecute IS
         ReadData1 : IN std_logic_vector(31 downto 0); -- Register src 1
         ReadData2 : IN std_logic_vector(31 downto 0); -- Register src 2
         Destination : IN std_logic_vector(2 downto 0); -- Register destination address
-        Imm : IN std_logic_vector(15 downto 0);
+        Imm : IN std_logic_vector(31 downto 0);
 
         AluSelectorOut : OUT std_logic_vector(3 downto 0);
         AluSrcOut : OUT std_logic;

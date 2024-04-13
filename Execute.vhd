@@ -2,7 +2,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-entity Execute is
+entity ExecuteBlock is
     port (
         clk : in std_logic;
         reset : in std_logic;
@@ -15,9 +15,9 @@ entity Execute is
         ZeroFlag : out std_logic;
         AluOut : out std_logic_vector(31 downto 0)
     );
-end entity Execute; 
+end entity ExecuteBlock; 
 
-architecture Behavioral of Execute is
+architecture Behavioral of ExecuteBlock is
     component ALU is
         generic (n: integer := 32);
         port (

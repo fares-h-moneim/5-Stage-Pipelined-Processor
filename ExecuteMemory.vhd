@@ -7,34 +7,38 @@ entity ExecuteMemory is
         clk : in std_logic;
         reset : in std_logic;
         ZeroFlagIn : in std_logic;
+        RegDst : in std_logic_vector(2 downto 0);
         AluResultIn : in std_logic_vector(31 downto 0);
-        ReadData2 : out std_logic_vector(31 downto 0);
+        ReadData2 : in std_logic_vector(31 downto 0);
         MemWrite : in std_logic;
         MemRead : in std_logic;
         MemToReg : in std_logic_vector (1 downto 0);
         RegWrite : in std_logic;
-        SpPointers : in std_logic_vector(31 downto 0);
+        SpPointers : in std_logic_vector(1 downto 0);
         ProtectWrite : in std_logic;
         Branching : in std_logic;
 
         ZeroFlagOut : out std_logic;
+        RegDstOut : out std_logic_vector(2 downto 0);
         AluResultOut : out std_logic_vector(31 downto 0);
         ReadData2Out : out std_logic_vector(31 downto 0);
         MemWriteOut : out std_logic;
         MemReadOut : out std_logic;
         MemToRegOut : out std_logic_vector(1 downto 0);
         RegWriteOut : out std_logic;
-        SpPointersOut : out std_logic_vector(31 downto 0);
+        SpPointersOut : out std_logic_vector(1 downto 0);
         ProtectWriteOut : out std_logic;
         BranchingOut : out std_logic
     );
 end entity ExecuteMemory;
 
 architecture Behavioural of ExecuteMemory is
+begin
     process(clk, reset)
     begin
         if reset = '1' then
             ZeroFlagOut <= '0';
+            RegDstOut <= (others => '0');
             AluResultOut <= (others => '0');
             ReadData2Out <= (others => '0');
             MemWriteOut <= '0';
@@ -46,6 +50,7 @@ architecture Behavioural of ExecuteMemory is
             BranchingOut <= '0';
         elsif rising_edge(clk) then
             ZeroFlagOut <= ZeroFlagIn;
+            RegDstOut <= RegDst;
             AluResultOut <= AluResultIn;
             ReadData2Out <= ReadData2;
             MemWriteOut <= MemWrite;

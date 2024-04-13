@@ -1,15 +1,16 @@
 LIBRARY IEEE;
- USE IEEE.STD_LOGIC_1164.ALL;
- USE IEEE.numeric_std.all;
- ENTITY DataMemory IS
+USE IEEE.STD_LOGIC_1164.ALL;
+USE IEEE.numeric_std.all;
+
+ENTITY DataMemory IS
     PORT (clk : IN std_logic;
-          address : IN std_logic_vector(11 DOWNTO 0);
-          data_in : IN std_logic_vector(31 DOWNTO 0);
-          mem_write : IN std_logic;
-          mem_read : IN std_logic;
-          read_data : OUT std_logic_vector(31 DOWNTO 0)
+            address : IN std_logic_vector(11 DOWNTO 0);
+            data_in : IN std_logic_vector(31 DOWNTO 0);
+            mem_write : IN std_logic;
+            mem_read : IN std_logic;
+            read_data : OUT std_logic_vector(31 DOWNTO 0)
         );
- END ENTITY DataMemory;
+END ENTITY DataMemory;
 
 ARCHITECTURE sync_ram_a OF DataMemory IS  
     TYPE ram_type IS ARRAY(0 TO 4095) of std_logic_vector(15 DOWNTO 0);
@@ -26,4 +27,4 @@ ARCHITECTURE sync_ram_a OF DataMemory IS
             END IF;
         END IF;
     END PROCESS;
- END sync_ram_a;
+END sync_ram_a;
