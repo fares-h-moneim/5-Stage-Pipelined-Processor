@@ -20,8 +20,8 @@ BEGIN
     PROCESS(clk, reset)
     BEGIN
         IF reset = '1' THEN
-        instruction <= (OTHERS => '0');
-        internal_instruction <= (OTHERS => '0');
+        instruction <= "1100000000000000";
+        internal_instruction <= "1100000000000000";
         immediate <= (OTHERS => '0');
         ELSIF rising_edge(clk) THEN
             instruction <= mem(TO_INTEGER(unsigned(address)));

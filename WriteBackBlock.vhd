@@ -15,17 +15,8 @@ end WriteBackBlock;
 architecture Behavioral of WriteBackBlock is
     signal TempWriteData: std_logic_vector(31 downto 0);
 begin
-    process(clk, reset)
-    begin
-        if reset = '1' then
-            TempWriteData <= (others => '0');
-        elsif falling_edge(clk) then
-            if MemToReg = "01" then
-                TempWriteData <= MemoryOutput;
-            elsif MemToReg = "10" then
-                TempWriteData <= ALUOutput;
-            end if;
-        end if;
-    end process;
-    WriteData <= TempWriteData;
+    WriteData <= (others => '0') when reset = '1' else
+                    MemoryOutput when MEMTOREG = "01" else
+                    ALUOutput when MemToReg = "10" else
+                    (others => '0');
 end Behavioral;
