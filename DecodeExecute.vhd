@@ -32,7 +32,7 @@ ENTITY DecodeExecute IS
         ReadData1Out : OUT std_logic_vector(31 downto 0);
         ReadData2Out : OUT std_logic_vector(31 downto 0);
         DestinationOut : OUT std_logic_vector(2 downto 0);
-        ImmOut : OUT std_logic_vector(15 downto 0)
+        ImmOut : OUT std_logic_vector(31 downto 0)
     );
 END DecodeExecute;
 
@@ -71,7 +71,7 @@ BEGIN
                 DestinationOut <= Destination;
                 ImmOut <= Imm;
             END IF;
-    END IF;
+        END IF;
     END PROCESS;
     
 END DecodeExecute;
