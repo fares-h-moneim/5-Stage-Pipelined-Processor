@@ -17,7 +17,7 @@ BEGIN
     PROCESS (clk, reset)
     BEGIN
         IF reset = '1' THEN
-            instructionOut <= (OTHERS => '0');
+            instructionOut <= "1100000000000000";
             immediateOut   <= (OTHERS => '0');
         ELSIF rising_edge(clk) THEN
             instructionOut <= instructionIn;

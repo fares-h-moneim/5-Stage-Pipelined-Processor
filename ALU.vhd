@@ -16,8 +16,7 @@ end entity ALU;
 architecture Behavioral of ALU is
     -- Operations
 
-    constant ALU_NOP : std_logic_vector(3 downto 0) := "0000";
-    constant ALU_NOT : std_logic_vector(3 downto 0) := "1110";
+    constant ALU_NOT : std_logic_vector(3 downto 0) := "0000";
     constant ALU_NEG : std_logic_vector(3 downto 0) := "0001";
     constant ALU_INC : std_logic_vector(3 downto 0) := "0010";
     constant ALU_DEC : std_logic_vector(3 downto 0) := "0011";
