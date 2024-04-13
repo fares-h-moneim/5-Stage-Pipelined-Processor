@@ -50,7 +50,7 @@ architecture Behavioral of ALU is
     -- else  TempB                                              when Sel = ALU_SWAP
     else (others => '0');
 
-    FlagsOut(0) <= '1'  when (Sel = ALU_NOT or Sel = ALU_NEG or Sel = ALU_INC or Sel = ALU_DEC or Sel = ALU_ADD or Sel = ALU_SUB or Sel = ALU_OR or Sel = ALU_XOR or Sel = ALU_AND) AND TempOut(n-1 downto 0) ="00000000000000000000000000000000"
+    FlagsOut(0) <= '1'  when (Sel = ALU_NOT or Sel = ALU_NEG or Sel = ALU_INC or Sel = ALU_DEC or Sel = ALU_ADD or Sel = ALU_SUB or Sel = ALU_OR or Sel = ALU_XOR or Sel = ALU_AND) AND TempOut(n-1 downto 0) = "00000000000000000000000000000000"
     else '0';
     
     FlagsOut(1) <= '1' when (Sel = ALU_NOT or Sel = ALU_NEG or Sel = ALU_INC or Sel = ALU_DEC or Sel = ALU_ADD or Sel = ALU_SUB or Sel = ALU_OR or Sel = ALU_XOR or Sel = ALU_AND) AND (to_integer(signed(TempOut(n-1 downto 0))) < 0)
