@@ -22,7 +22,7 @@ architecture Behavioral of Control is
 
 begin
 
-    AluSelector <= opcode(3 downto 0) when Opcode(5 downto 4) = "00" -- R-type
+    AluSelector <= Opcode(3 downto 0) when Opcode(5 downto 4) = "00" -- R-type
     else "0100" when Opcode(5 downto 4) = "01" -- LDD and STD
     else "1001"; -- Rest are dont cares so just treat them as MOV;
 

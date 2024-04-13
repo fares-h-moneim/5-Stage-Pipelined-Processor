@@ -1,4 +1,5 @@
-force -freeze sim:/processor/Rst 0 0
+vsim -gui work.processor
+add wave sim:/processor/*
 add wave -position 56  sim:/processor/FetchBlock1/clk
 add wave -position 57  sim:/processor/FetchBlock1/rst
 add wave -position 58  sim:/processor/FetchBlock1/instruction
@@ -25,3 +26,6 @@ mem load -filltype value -filldata 11111111111111111111111111111111 -fillradix s
 force -freeze sim:/processor/Rst 1 0
 mem load -filltype value -filldata {11111111111111111111111111111110 } -fillradix symbolic /processor/Registers/ram(0)
 force -freeze sim:/processor/Rst 1 0
+run
+
+force -freeze sim:/processor/Rst 0 0

@@ -35,6 +35,7 @@ architecture Behavioral of Processor is
         port(
             clk : IN std_logic;
             we : IN std_logic;
+            reset : IN std_logic;
             w_address : IN std_logic_vector(2 DOWNTO 0);
             r_address1 : IN std_logic_vector(2 DOWNTO 0);
             r_address2 : IN std_logic_vector(2 DOWNTO 0);
@@ -69,7 +70,7 @@ architecture Behavioral of Processor is
 
     component DecodeExecute is
         port(
-             clk : IN STD_LOGIC;
+            clk : IN STD_LOGIC;
             reset : IN STD_LOGIC;
             enable : IN STD_LOGIC;
             AluSelector : IN std_logic_vector(3 downto 0);
@@ -272,7 +273,7 @@ architecture Behavioral of Processor is
         
         ----------- Decode ------------
         Registers: RegisterFile port map (
-                                            Clk, write_back_reg_write, write_back_reg_destination,
+                                            Clk, write_back_reg_write, Rst, write_back_reg_destination,
                                             fetch_instruction_out(9 downto 7), fetch_instruction_out(3 downto 1),
                                             WriteBackData, read_data1, read_data2
                                         );

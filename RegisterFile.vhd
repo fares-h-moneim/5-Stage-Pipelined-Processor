@@ -3,6 +3,7 @@ LIBRARY IEEE;
  USE IEEE.numeric_std.all;
  ENTITY RegisterFile IS
     PORT (clk : IN std_logic;
+            reset : IN std_logic;
             we : IN std_logic;
             w_address : IN std_logic_vector(2 DOWNTO 0);
             r_address1 : IN std_logic_vector(2 DOWNTO 0);
@@ -17,9 +18,11 @@ ARCHITECTURE sync_ram_a OF RegisterFile IS
     TYPE ram_type IS ARRAY(0 TO 7) of std_logic_vector(31 DOWNTO 0);
         SIGNAL ram : ram_type ;
     BEGIN
-    PROCESS(clk) IS  
+    PROCESS(clk, reset) IS  
         BEGIN
-        IF falling_edge(clk) THEN   
+        IF reset = '1' THEN
+            ram <= (OTHERS => (OTHERS => '0'));
+        ELSIF falling_edge(clk) THEN   
             IF we = '1' THEN        
                 ram(to_integer(unsigned((w_address)))) <= data_in;  
             END IF;
