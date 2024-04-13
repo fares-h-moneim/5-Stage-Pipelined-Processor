@@ -128,7 +128,7 @@ architecture Behavioral of Processor is
             ZeroFlagIn : in std_logic;
             RegDst : in std_logic_vector(2 downto 0);
             AluResultIn : in std_logic_vector(31 downto 0);
-            ReadData2 : out std_logic_vector(31 downto 0);
+            ReadData2 : in std_logic_vector(31 downto 0);
             MemWrite : in std_logic;
             MemRead : in std_logic;
             MemToReg : in std_logic_vector (1 downto 0);
@@ -215,6 +215,7 @@ architecture Behavioral of Processor is
     signal decode_protect_write : std_logic; -- WHAT COMES OUT OF CONTROL
     signal decode_branching : std_logic; -- WHAT COMES OUT OF CONTROL
     signal immediate_sign_extended : std_logic_vector(31 downto 0); -- WHAT COMES OUT OF SIGN EXTEND
+    signal decode_reg_write2 : std_logic; -- WHAT COMES OUT OF CONTROL
     
     ----------- Signals Execute -----------
     signal execute_zero_out : std_logic;
@@ -281,9 +282,9 @@ architecture Behavioral of Processor is
                                         );
 
         ControlUnit: Control port map (
-                                        fetch_instruction_out(15 downto 10), execute_alu_selector, execute_alu_src,
-                                        execute_mem_write, execute_mem_read, execute_mem_to_reg, execute_reg_write,
-                                        execute_reg_write2, execute_sp_pointers, execute_protect_write, execute_branching
+                                        fetch_instruction_out(15 downto 10), decode_alu_selector, decode_alu_src,
+                                        decode_mem_write, decode_mem_read, decode_mem_to_reg, decode_reg_write,
+                                        decode_reg_write2, decode_sp_pointers, decode_protect_write, decode_branching
                                     );
 
         DecodeExecute1: DecodeExecute port map (

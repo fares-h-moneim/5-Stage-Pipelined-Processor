@@ -31,7 +31,7 @@ architecture behavioral of FetchBlock is
         );
     end component PC;
     
-    signal PC_OUT: std_logic_vector(31 DOWNTO 0);
+    signal PC_OUT: std_logic_vector(31 DOWNTO 0) := (others => '0');
     signal PC_IN: std_logic_vector(31 DOWNTO 0);
     signal internal_instruction: std_logic_vector(15 DOWNTO 0);
     signal IncrementTwo: std_logic; --will i increment by 1 or 2
