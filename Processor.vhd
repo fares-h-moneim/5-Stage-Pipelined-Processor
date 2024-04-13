@@ -214,6 +214,7 @@ architecture Behavioral of Processor is
     signal decode_sp_pointers : std_logic_vector(1 downto 0); -- WHAT COMES OUT OF CONTROL
     signal decode_protect_write : std_logic; -- WHAT COMES OUT OF CONTROL
     signal decode_branching : std_logic; -- WHAT COMES OUT OF CONTROL
+    signal immediate_sign_extended : std_logic_vector(31 downto 0); -- WHAT COMES OUT OF SIGN EXTEND
     
     ----------- Signals Execute -----------
     signal execute_zero_out : std_logic;
@@ -276,7 +277,7 @@ architecture Behavioral of Processor is
                                         );
 
         SignExtend1: SignExtend port map (
-                                            fetch_immediate_out, execute_immediate
+                                            fetch_immediate_out, immediate_sign_extended
                                         );
 
         ControlUnit: Control port map (
@@ -290,7 +291,7 @@ architecture Behavioral of Processor is
                                                 decode_alu_src, decode_mem_write, decode_mem_read,
                                                 decode_mem_to_reg, decode_reg_write, decode_sp_pointers, decode_protect_write,
                                                 decode_branching, read_data1, read_data2,
-                                                fetch_instruction_out(6 downto 4), execute_immediate, execute_alu_selector,
+                                                fetch_instruction_out(6 downto 4), immediate_sign_extended, execute_alu_selector,
                                                 execute_alu_src, execute_mem_write, execute_mem_read,
                                                 execute_mem_to_reg, execute_reg_write, execute_sp_pointers,
                                                 execute_protect_write, execute_branching, execute_read_data1,
