@@ -11,7 +11,7 @@ entity ExecuteMemory is
         ReadData2 : out std_logic_vector(31 downto 0);
         MemWrite : in std_logic;
         MemRead : in std_logic;
-        MemToReg : in std_logic;
+        MemToReg : in std_logic_vector (1 downto 0);
         RegWrite : in std_logic;
         SpPointers : in std_logic_vector(31 downto 0);
         ProtectWrite : in std_logic;
@@ -22,7 +22,7 @@ entity ExecuteMemory is
         ReadData2Out : out std_logic_vector(31 downto 0);
         MemWriteOut : out std_logic;
         MemReadOut : out std_logic;
-        MemToRegOut : out std_logic;
+        MemToRegOut : out std_logic_vector(1 downto 0);
         RegWriteOut : out std_logic;
         SpPointersOut : out std_logic_vector(31 downto 0);
         ProtectWriteOut : out std_logic;
@@ -39,7 +39,7 @@ architecture Behavioural of ExecuteMemory is
             ReadData2Out <= (others => '0');
             MemWriteOut <= '0';
             MemReadOut <= '0';
-            MemToRegOut <= '0';
+            MemToRegOut <= (others => '0');
             RegWriteOut <= '0';
             SpPointersOut <= (others => '0');
             ProtectWriteOut <= '0';
