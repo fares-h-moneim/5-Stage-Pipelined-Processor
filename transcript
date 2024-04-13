@@ -1,1 +1,158 @@
-# Compile of PC_MUX.vhd was successful.
+# Compile of instruction_memory.vhd failed with 3 errors.
+# Compile of instruction_memory.vhd failed with 3 errors.
+# Compile of instruction_memory.vhd was successful.
+# Compile of FetchBlock.vhd failed with 8 errors.
+# Compile of FetchBlock.vhd failed with 6 errors.
+# Compile of FetchBlock.vhd failed with 5 errors.
+# Compile of FetchBlock.vhd failed with 9 errors.
+# Compile of FetchBlock.vhd was successful.
+vsim -gui work.fetchblock
+# vsim -gui work.fetchblock 
+# Start time: 15:30:43 on Apr 13,2024
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.fetchblock(behavioral)
+# Loading work.pc(behavioral)
+# Loading work.instruction_memory(behavioral)
+add wave -position end  sim:/fetchblock/clk
+add wave -position end  sim:/fetchblock/rst
+add wave -position end  sim:/fetchblock/instruction
+add wave -position end  sim:/fetchblock/immediate
+add wave -position end  sim:/fetchblock/PC_OUT
+add wave -position end  sim:/fetchblock/internal_instruction
+add wave -position end  sim:/fetchblock/IncrementTwo
+mem load -filltype rand -filldata 0 -fillradix symbolic -skip 0 /fetchblock/IM1/mem
+force -freeze sim:/fetchblock/clk 1 0, 0 {50 ps} -r 100
+force -freeze sim:/fetchblock/rst 1 0
+run
+force -freeze sim:/fetchblock/rst 0 0
+run
+run
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 300 ps  Iteration: 0  Instance: /fetchblock/IM1
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 300 ps  Iteration: 0  Instance: /fetchblock/IM1
+run
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 400 ps  Iteration: 0  Instance: /fetchblock/IM1
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 400 ps  Iteration: 0  Instance: /fetchblock/IM1
+run
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 500 ps  Iteration: 0  Instance: /fetchblock/IM1
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 500 ps  Iteration: 0  Instance: /fetchblock/IM1
+run
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 600 ps  Iteration: 0  Instance: /fetchblock/IM1
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 600 ps  Iteration: 0  Instance: /fetchblock/IM1
+add wave -position end sim:/fetchblock/PC1/*
+add wave -position end sim:/fetchblock/IM1/*
+run
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 700 ps  Iteration: 0  Instance: /fetchblock/IM1
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 700 ps  Iteration: 0  Instance: /fetchblock/IM1
+run
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 800 ps  Iteration: 0  Instance: /fetchblock/IM1
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 800 ps  Iteration: 0  Instance: /fetchblock/IM1
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 900 ps  Iteration: 0  Instance: /fetchblock/IM1
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 900 ps  Iteration: 0  Instance: /fetchblock/IM1
+# Compile of FetchBlock.vhd was successful.
+restart
+# Loading work.fetchblock(behavioral)
+mem load -filltype rand -filldata 0 -fillradix symbolic -skip 0 /fetchblock/IM1/mem
+force -freeze sim:/fetchblock/clk 1 0, 0 {50 ps} -r 100
+force -freeze sim:/fetchblock/rst 1 0
+add wave -position 5  sim:/fetchblock/PC_IN
+run
+force -freeze sim:/fetchblock/rst 0 0
+run
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 300 ps  Iteration: 0  Instance: /fetchblock/IM1
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 300 ps  Iteration: 0  Instance: /fetchblock/IM1
+# Compile of FetchBlock.vhd was successful.
+restart
+# Loading work.fetchblock(behavioral)
+force -freeze sim:/fetchblock/clk 1 0, 0 {50 ps} -r 100
+force -freeze sim:/fetchblock/rst 1 0
+run
+force -freeze sim:/fetchblock/rst 0 0
+mem load -filltype rand -filldata 0 -fillradix symbolic -skip 0 /fetchblock/IM1/mem
+restart
+mem load -filltype rand -filldata 0 -fillradix symbolic -skip 0 /fetchblock/IM1/mem
+force -freeze sim:/fetchblock/clk 1 0, 0 {50 ps} -r 100
+force -freeze sim:/fetchblock/rst 1 0
+run
+force -freeze sim:/fetchblock/rst 0 0
+run
+run
+run
+run
+run
+run
+run
+run
+add wave -position 7  sim:/fetchblock/internal_PC
+restart
+mem load -filltype rand -filldata 0 -fillradix symbolic -skip 0 /fetchblock/IM1/mem
+force -freeze sim:/fetchblock/clk 1 0, 0 {50 ps} -r 100
+run
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 100 ps  Iteration: 0  Instance: /fetchblock/IM1
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 100 ps  Iteration: 0  Instance: /fetchblock/IM1
+force -freeze sim:/fetchblock/rst 1 0
+run
+run
+run
+run
+run
+run
+# Compile of FetchBlock.vhd was successful.
+restart
+# Loading work.fetchblock(behavioral)
+mem load -filltype rand -filldata 0 -fillradix symbolic -skip 0 /fetchblock/IM1/mem
+force -freeze sim:/fetchblock/clk 1 0, 0 {50 ps} -r 100
+force -freeze sim:/fetchblock/rst 1 0
+run
+force -freeze sim:/fetchblock/rst 0 0
+run
+run
+run
+run
+run
+run
+run
+run
+run
+# Compile of FetchBlock.vhd was successful.
+restart
+# Loading work.fetchblock(behavioral)
+force -freeze sim:/fetchblock/clk 1 0, 0 {50 ps} -r 100
+force -freeze sim:/fetchblock/rst 1 0
+mem load -filltype rand -filldata 0 -fillradix symbolic -skip 0 /fetchblock/IM1/mem
+run
+run
+run
+run
+run
+run
+run
+run
+run
+# Compile of FetchBlock.vhd was successful.
+restart
+# Loading work.fetchblock(behavioral)
+force -freeze sim:/fetchblock/clk 1 0, 0 {50 ps} -r 100
+force -freeze sim:/fetchblock/rst 1 0
+run
+# Compile of FetchBlock.vhd was successful.

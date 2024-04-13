@@ -15,15 +15,22 @@ END instruction_memory;
 ARCHITECTURE Behavioral OF instruction_memory IS
     TYPE memory IS ARRAY (0 TO 4095) OF std_logic_vector(15 DOWNTO 0); 
     SIGNAL mem : memory;
+    SIGNAL internal_instruction : std_logic_vector(15 DOWNTO 0);
 BEGIN
     PROCESS(clk, reset)
     BEGIN
         IF reset = '1' THEN
         instruction <= (OTHERS => '0');
+        internal_instruction <= (OTHERS => '0');
         immediate <= (OTHERS => '0');
         ELSIF rising_edge(clk) THEN
             instruction <= mem(TO_INTEGER(unsigned(address)));
-            immediate <= mem(TO_INTEGER(unsigned(address)) + 1);
+            internal_instruction <= mem(TO_INTEGER(unsigned(address)));
+            if internal_instruction(13 downto 10) = "1100" OR internal_instruction(13 downto 10) = "1101" then
+                immediate <= mem(TO_INTEGER(unsigned(address)) + 1);
+            else
+                immediate <= (OTHERS => '0');
+            end if;
         END IF;
     END PROCESS;
 END Behavioral;
