@@ -6,17 +6,14 @@ entity Execute is
     port (
         clk : in std_logic;
         reset : in std_logic;
-        instruction : in std_logic_vector(31 downto 0);
-        data1 : in std_logic_vector(31 downto 0);
-        data2 : in std_logic_vector(31 downto 0);
-        immediate : in std_logic_vector(31 downto 0 );
-        result : out std_logic_vector(31 downto 0);
-        zero : out std_logic;
-        ALUSrc : in std_logic;
-        RegDst : in std_logic;
-        Dst : out std_logic_vector(2 downto 0);
-        SigFromWB : in std_logic; -- Msh fahem eh 
-        SigFromMEM : in std_logic; -- dool mn draw.io
+        AluSrc : in std_logic;
+        ReadData1 : in std_logic_vector(31 downto 0);
+        ReadData2 : in std_logic_vector(31 downto 0);
+        Immediate : in std_logic_vector(31 downto 0);
+        AluSelector : in std_logic_vector(3 downto 0);
+        
+        ZeroFlag : out std_logic;
+        AluOut : out std_logic_vector(31 downto 0)
     );
 end entity Execute; 
 
@@ -43,21 +40,27 @@ architecture Behavioral of Execute is
         );
     end component;
 
-    signal AluOut: std_logic_vector(31 downto 0);
     signal Flags: std_logic_vector(2 downto 0);
     signal FlagsOut: std_logic_vector(2 downto 0);
-    signal ZeroFlag: std_logic;
     signal AluIn1: std_logic_vector(31 downto 0);
     signal AluIn2: std_logic_vector(31 downto 0);
+    signal TempFlags: std_logic_vector(2 downto 0);
+    signal TempAluOut: std_logic_vector(31 downto 0);
 
 begin
+    TempFlags <= FlagsOut;
 
-    -- MUX
-    if (ALUSrc = '1') then
-        AluIn2 <= immediate;
-    else
-        AluIn2 <= data2;
-    end if;
+
+    AluIn1 <= ReadData1;
+    AluIn2 <= immediate when AluSrc = '1' else ReadData2;
+
+    ALU1: ALU generic map (32) port map (AluIn1, AluIn2, AluSelector, TempFlags, Flags, TempAluOut);
+
+    FlagsReg1: FlagReg generic map (3) port map (clk, reset, '1', Flags, FlagsOut);
+
+    ZeroFlag <= FlagsOut(0);
+    AluOut <= TempAluOut;
+
 end architecture Behavioral;
 
 

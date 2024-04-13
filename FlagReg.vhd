@@ -19,7 +19,7 @@ architecture nDff of FlagReg is
         begin
             if rst = '1' then
                 flag_out <= (others => '0');
-            elsif rising_edge(clk) and en = '1' then
+            elsif falling_edge(clk) and en = '1' then
                 flag_out <= flag;
             end if;
         end process;
