@@ -41,7 +41,7 @@ architecture behavioral of FetchBlock is
         IM1: instruction_memory port map(clk, rst, PC_OUT, internal_instruction, immediate);
         instruction <= internal_instruction;
         PC_IN <= PC_OUT;
-        IncrementTwo <= '1' when (internal_instruction(13 downto 10) = "1100" or internal_instruction(13 downto 10)= "1101") else '0';
+        IncrementTwo <= '1' when (internal_instruction(15 downto 10) = "001100" or internal_instruction(15 downto 10)= "001101" or internal_instruction(15 downto 10) = "010010") else '0';
 
         process(clk)
         begin

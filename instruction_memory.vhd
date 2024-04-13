@@ -20,13 +20,13 @@ BEGIN
     PROCESS(clk, reset)
     BEGIN
         IF reset = '1' THEN
-        instruction <= "1100000000000000";
-        internal_instruction <= "1100000000000000";
-        immediate <= (OTHERS => '0');
+            instruction <= "1100000000000000";
+            internal_instruction <= "1100000000000000";
+            immediate <= (OTHERS => '0');
         ELSIF rising_edge(clk) THEN
             instruction <= mem(TO_INTEGER(unsigned(address)));
             internal_instruction <= mem(TO_INTEGER(unsigned(address)));
-            if internal_instruction(13 downto 10) = "1100" OR internal_instruction(13 downto 10) = "1101" then
+            if internal_instruction(15 downto 10) = "001100" or internal_instruction(15 downto 10)= "001101" or internal_instruction(15 downto 10) = "010010" then
                 immediate <= mem(TO_INTEGER(unsigned(address)) + 1);
             else
                 immediate <= (OTHERS => '0');
