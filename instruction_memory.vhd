@@ -21,5 +21,5 @@ BEGIN
     instruction <= internal_instruction;
 
     immediate <= mem(TO_INTEGER(unsigned(address)) + 1) WHEN internal_instruction(15 downto 10) = "001100" or internal_instruction(15 downto 10)= "001101" or internal_instruction(15 downto 10) = "010010" ELSE
-                 (OTHERS => '0');
+                (OTHERS => '0');
 END Behavioral;

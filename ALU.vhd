@@ -25,6 +25,7 @@ architecture Behavioral of ALU is
     constant ALU_OR : std_logic_vector(3 downto 0) := "0110";
     constant ALU_XOR : std_logic_vector(3 downto 0) := "0111";
     constant ALU_AND : std_logic_vector(3 downto 0) := "1000";
+    constant ALU_CMP : std_logic_vector(3 downto 0) := "1011";
     constant ALU_A : std_logic_vector(3 downto 0) := "1001"; -- Output readdata1
     constant ALU_B : std_logic_vector(3 downto 0) := "1110"; -- output readdata2 or immediate
     
@@ -43,7 +44,7 @@ architecture Behavioral of ALU is
     else std_logic_vector(unsigned(TempA) + 1)               when Sel = ALU_INC
     else std_logic_vector(unsigned(TempA) - 1)               when Sel = ALU_DEC 
     else std_logic_vector(unsigned(TempA) + unsigned(TempB)) when Sel = ALU_ADD
-    else std_logic_vector(unsigned(TempA) - unsigned(TempB)) when Sel = ALU_SUB
+    else std_logic_vector(unsigned(TempA) - unsigned(TempB)) when Sel = ALU_SUB or Sel = ALU_CMP
     else  TempA or  TempB                                    when Sel = ALU_OR
     else  TempA xor TempB                                    when Sel = ALU_XOR
     else  TempA and TempB                                    when Sel = ALU_AND
@@ -51,13 +52,13 @@ architecture Behavioral of ALU is
     else  TempB                                              when Sel = ALU_B
     else (others => '0');
 
-    FlagsOut(0) <= '1'  when (Sel = ALU_NOT or Sel = ALU_NEG or Sel = ALU_INC or Sel = ALU_DEC or Sel = ALU_ADD or Sel = ALU_SUB or Sel = ALU_OR or Sel = ALU_XOR or Sel = ALU_AND) AND TempOut(n-1 downto 0) = "00000000000000000000000000000000"
+    FlagsOut(0) <= '1'  when (Sel = ALU_NOT or Sel = ALU_NEG or Sel = ALU_INC or Sel = ALU_DEC or Sel = ALU_ADD or Sel = ALU_SUB or Sel = ALU_CMP or Sel = ALU_OR or Sel = ALU_XOR or Sel = ALU_AND) AND TempOut(n-1 downto 0) = "00000000000000000000000000000000"
     else '0';
     
-    FlagsOut(1) <= '1' when (Sel = ALU_NOT or Sel = ALU_NEG or Sel = ALU_INC or Sel = ALU_DEC or Sel = ALU_ADD or Sel = ALU_SUB or Sel = ALU_OR or Sel = ALU_XOR or Sel = ALU_AND) AND (to_integer(signed(TempOut(n-1 downto 0))) < 0)
+    FlagsOut(1) <= '1' when (Sel = ALU_NOT or Sel = ALU_NEG or Sel = ALU_INC or Sel = ALU_DEC or Sel = ALU_ADD or Sel = ALU_SUB or Sel = ALU_CMP or Sel = ALU_OR or Sel = ALU_XOR or Sel = ALU_AND) AND (to_integer(signed(TempOut(n-1 downto 0))) < 0)
     else '0';
 
-    FlagsOut(2) <= TempOut(n) when (Sel = ALU_NEG or Sel = ALU_INC or Sel = ALU_DEC or Sel = ALU_ADD or Sel = ALU_SUB)
+    FlagsOut(2) <= TempOut(n) when (Sel = ALU_NEG or Sel = ALU_INC or Sel = ALU_DEC or Sel = ALU_ADD or Sel = ALU_SUB or Sel = ALU_CMP)
     else '0';
 
     Res <= TempOut(n-1 downto 0);
