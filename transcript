@@ -1,14 +1,126 @@
-# Compile of instruction_memory.vhd failed with 3 errors.
-# Compile of instruction_memory.vhd failed with 3 errors.
+# Compile of ALU.vhd was successful.
+# Compile of Control.vhd was successful.
+# Compile of DataMemory.vhd was successful.
+# Compile of DecodeExecute.vhd was successful.
+# Compile of DFF.vhd was successful.
+# Compile of Execute.vhd was successful.
+# Compile of ExecuteMemory.vhd was successful.
+# Compile of FetchBlock.vhd failed with 3 errors.
+# Compile of FetchDecode.vhd was successful.
+# Compile of FlagReg.vhd was successful.
+# Compile of instruction_memory.vhd failed with 2 errors.
+# Compile of MemoryWriteBack.vhd was successful.
+# Compile of PC.vhd failed with 4 errors.
+# Compile of PC_MUX.vhd was successful.
+# Compile of Processor.vhd was successful.
+# Compile of RegisterFile.vhd was successful.
+# Compile of SignExtend.vhd was successful.
+# Compile of WriteBackBlock.vhd was successful.
+# 18 compiles, 3 failed with 9 errors.
+# Compile of FetchBlock.vhd failed with 3 errors.
+# Compile of instruction_memory.vhd failed with 2 errors.
+# Compile of PC.vhd failed with 4 errors.
+# 3 compiles, 3 failed with 9 errors.
+# Compile of PC.vhd was successful.
 # Compile of instruction_memory.vhd was successful.
-# Compile of FetchBlock.vhd failed with 8 errors.
-# Compile of FetchBlock.vhd failed with 6 errors.
-# Compile of FetchBlock.vhd failed with 5 errors.
-# Compile of FetchBlock.vhd failed with 9 errors.
+# Compile of FetchBlock.vhd failed with 3 errors.
 # Compile of FetchBlock.vhd was successful.
+vsim -gui work.processor
+# vsim -gui work.processor 
+# Start time: 09:26:28 on Apr 14,2024
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.processor(behavioral)
+# Loading work.fetchblock(behavioral)
+# Loading work.pc(behavioral)
+# Loading work.instruction_memory(behavioral)
+# Loading work.fetchdecode(behavior)
+# Loading work.registerfile(sync_ram_a)
+# Loading work.signextend(behavioral)
+# Loading ieee.std_logic_arith(body)
+# Loading work.control(behavioral)
+# Loading work.decodeexecute(decodeexecute)
+# Loading work.executeblock(behavioral)
+# Loading work.alu(behavioral)
+# Loading work.flagreg(ndff)
+# Loading work.executememory(behavioural)
+# Loading work.datamemory(sync_ram_a)
+# Loading work.memorywriteback(memorywriteback)
+# Loading work.writebackblock(behavioral)
+vsim -gui work.processor
+# End time: 09:26:43 on Apr 14,2024, Elapsed time: 0:00:15
+# Errors: 0, Warnings: 0
+# vsim -gui work.processor 
+# Start time: 09:26:43 on Apr 14,2024
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.processor(behavioral)
+# Loading work.fetchblock(behavioral)
+# Loading work.pc(behavioral)
+# Loading work.instruction_memory(behavioral)
+# Loading work.fetchdecode(behavior)
+# Loading work.registerfile(sync_ram_a)
+# Loading work.signextend(behavioral)
+# Loading ieee.std_logic_arith(body)
+# Loading work.control(behavioral)
+# Loading work.decodeexecute(decodeexecute)
+# Loading work.executeblock(behavioral)
+# Loading work.alu(behavioral)
+# Loading work.flagreg(ndff)
+# Loading work.executememory(behavioural)
+# Loading work.datamemory(sync_ram_a)
+# Loading work.memorywriteback(memorywriteback)
+# Loading work.writebackblock(behavioral)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(0)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(1)
+mem load -filltype value -filldata {0100100000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(2)
+mem load -filltype value -filldata {1111000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(3)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(4)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(5)
+add wave sim:/processor/*
+force -freeze sim:/processor/Clk 1 0, 0 {50 ps} -r 100
+force -freeze sim:/processor/Rst 1 0
+run
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/Registers
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/Registers
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 2  Instance: /processor/ExecuteBlock1/ALU1
+run
+force -freeze sim:/processor/Rst 0 0
+mem load -filltype value -filldata 00000000000000000000000000000101 -fillradix symbolic /processor/Registers/ram(0)
+mem load -filltype value -filldata 00000000000000000000000000000110 -fillradix symbolic /processor/Registers/ram(1)
+# BKMARK_ERROR: Unknown client: .main_pane.source
+add wave -position 6  sim:/processor/FetchBlock1/clk
+add wave -position 7  sim:/processor/FetchBlock1/rst
+add wave -position 8  sim:/processor/FetchBlock1/instruction
+add wave -position 9  sim:/processor/FetchBlock1/immediate
+add wave -position 10  sim:/processor/FetchBlock1/PC_OUT
+add wave -position 11  sim:/processor/FetchBlock1/PC_IN
+add wave -position 12  sim:/processor/FetchBlock1/internal_instruction
+add wave -position 13  sim:/processor/FetchBlock1/internal_immediate
+add wave -position 14  sim:/processor/FetchBlock1/Increment
+run
+run
+run
+run
+run
+run
+run
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 900 ps  Iteration: 1  Instance: /processor/Registers
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 900 ps  Iteration: 1  Instance: /processor/Registers
 vsim -gui work.fetchblock
+# End time: 09:29:11 on Apr 14,2024, Elapsed time: 0:02:28
+# Errors: 1, Warnings: 5
 # vsim -gui work.fetchblock 
-# Start time: 15:30:43 on Apr 13,2024
+# Start time: 09:29:11 on Apr 14,2024
 # Loading std.standard
 # Loading std.textio(body)
 # Loading ieee.std_logic_1164(body)
@@ -21,138 +133,500 @@ add wave -position end  sim:/fetchblock/rst
 add wave -position end  sim:/fetchblock/instruction
 add wave -position end  sim:/fetchblock/immediate
 add wave -position end  sim:/fetchblock/PC_OUT
+add wave -position end  sim:/fetchblock/PC_IN
+add wave -position end  sim:/fetchblock/internal_instruction
+add wave -position end  sim:/fetchblock/internal_immediate
+add wave -position end  sim:/fetchblock/Increment
+mem load -filltype value -filldata 1100000000000000 -fillradix symbolic /fetchblock/IM1/mem(0)
+mem load -filltype value -filldata 1100000000000000 -fillradix symbolic /fetchblock/IM1/mem(1)
+mem load -filltype value -filldata 0100100000000000 -fillradix symbolic /fetchblock/IM1/mem(2)
+mem load -filltype value -filldata 1111000000000000 -fillradix symbolic /fetchblock/IM1/mem(3)
+mem load -filltype value -filldata 1100000000000000 -fillradix symbolic /fetchblock/IM1/mem(4)
+force -freeze sim:/fetchblock/clk 1 0, 0 {50 ps} -r 100
+force -freeze sim:/fetchblock/rst 1 0
+run
+force -freeze sim:/fetchblock/rst 0 0
+run
+run
+run
+run
+run
+run
+run
+restart
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /fetchblock/IM1/mem(0)
+mem load -filltype value -filldata 1100000000000000 -fillradix symbolic /fetchblock/IM1/mem(1)
+mem load -filltype value -filldata 0100100000000000 -fillradix symbolic /fetchblock/IM1/mem(2)
+mem load -filltype value -filldata 1111000000000000 -fillradix symbolic /fetchblock/IM1/mem(3)
+mem load -filltype value -filldata 1111000000000001 -fillradix symbolic /fetchblock/IM1/mem(4)
+mem load -filltype value -filldata 1111000000000011 -fillradix symbolic /fetchblock/IM1/mem(5)
+mem load -filltype value -filldata {1111000000000111 } -fillradix symbolic /fetchblock/IM1/mem(6)
+mem load -filltype value -filldata 1111000000001111 -fillradix symbolic /fetchblock/IM1/mem(7)
+force -freeze sim:/fetchblock/clk 1 0, 0 {50 ps} -r 100
+force -freeze sim:/fetchblock/rst 1 0
+run
+force -freeze sim:/fetchblock/rst 0 0
+run
+run
+run
+run
+run
+run
+run
+run
+run
+# Compile of FetchBlock.vhd was successful.
+# Compile of instruction_memory.vhd failed with 2 errors.
+# Compile of PC.vhd was successful.
+# 3 compiles, 1 failed with 2 errors.
+# Compile of instruction_memory.vhd failed with 3 errors.
+# Compile of instruction_memory.vhd was successful.
+# Compile of FetchBlock.vhd was successful.
+# Compile of instruction_memory.vhd was successful.
+# Compile of PC.vhd was successful.
+# 3 compiles, 0 failed with no errors.
+restart
+# Loading work.fetchblock(behavioral)
+# Loading work.instruction_memory(behavioral)
+# Loading work.pc(behavioral)
+# Warning in wave window restart: (vish-4014) No objects found matching '/fetchblock/rst'. 
+# Warning in wave window restart: (vish-4014) No objects found matching '/fetchblock/PC_IN'. 
+# Warning in wave window restart: (vish-4014) No objects found matching '/fetchblock/Increment'. 
+add wave -position 4  sim:/fetchblock/clk
+add wave -position 5  sim:/fetchblock/reset
+add wave -position 6  sim:/fetchblock/instruction
+add wave -position 7  sim:/fetchblock/immediate
+add wave -position 8  sim:/fetchblock/pc_out
+add wave -position 9  sim:/fetchblock/next_pc
+add wave -position 10  sim:/fetchblock/inc_signal
+add wave -position 11  sim:/fetchblock/internal_instruction
+add wave -position 12  sim:/fetchblock/internal_immediate
+add wave -position end  sim:/fetchblock/clk
+add wave -position end  sim:/fetchblock/reset
+add wave -position end  sim:/fetchblock/instruction
+add wave -position end  sim:/fetchblock/immediate
+add wave -position end  sim:/fetchblock/pc_out
+add wave -position end  sim:/fetchblock/next_pc
+add wave -position end  sim:/fetchblock/inc_signal
+add wave -position end  sim:/fetchblock/internal_instruction
+add wave -position end  sim:/fetchblock/internal_immediate
+noforce sim:/fetchblock/reset
+force -freeze sim:/fetchblock/reset 1 0
+force -freeze sim:/fetchblock/clk 1 0, 0 {50 ps} -r 100
+run
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /fetchblock/IM1
+force -freeze sim:/fetchblock/reset 0 0
+run
+run
+run
+run
+run
+run
+run
+run
+run
+restart
+# Compile of FetchBlock.vhd was successful.
+# Compile of instruction_memory.vhd was successful.
+# Compile of PC.vhd was successful.
+# 3 compiles, 0 failed with no errors.
+restart
+# Loading work.fetchblock(behavioral)
+# Loading work.pc(behavioral)
+# Loading work.instruction_memory(behavioral)
+# Warning in wave window restart: (vish-4014) No objects found matching '/fetchblock/reset'. 
+# Warning in wave window restart: (vish-4014) No objects found matching '/fetchblock/next_pc'. 
+# Warning in wave window restart: (vish-4014) No objects found matching '/fetchblock/inc_signal'. 
+# Warning in wave window restart: (vish-4014) No objects found matching '/fetchblock/internal_immediate'. 
+add wave -position end  sim:/fetchblock/clk
+add wave -position end  sim:/fetchblock/rst
+add wave -position end  sim:/fetchblock/instruction
+add wave -position end  sim:/fetchblock/immediate
+add wave -position end  sim:/fetchblock/PC_OUT
+add wave -position end  sim:/fetchblock/PC_IN
 add wave -position end  sim:/fetchblock/internal_instruction
 add wave -position end  sim:/fetchblock/IncrementTwo
-mem load -filltype rand -filldata 0 -fillradix symbolic -skip 0 /fetchblock/IM1/mem
-force -freeze sim:/fetchblock/clk 1 0, 0 {50 ps} -r 100
-force -freeze sim:/fetchblock/rst 1 0
+add wave -position end  sim:/fetchblock/internal_PC
+vsim -gui work.instruction_memory
+# End time: 09:48:20 on Apr 14,2024, Elapsed time: 0:19:09
+# Errors: 7, Warnings: 1
+# vsim -gui work.instruction_memory 
+# Start time: 09:48:20 on Apr 14,2024
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.instruction_memory(behavioral)
+add wave -position end  sim:/instruction_memory/clk
+add wave -position end  sim:/instruction_memory/reset
+add wave -position end  sim:/instruction_memory/address
+add wave -position end  sim:/instruction_memory/instruction
+add wave -position end  sim:/instruction_memory/immediate
+add wave -position end  sim:/instruction_memory/mem
+add wave -position end  sim:/instruction_memory/internal_instruction
+force -freeze sim:/instruction_memory/clk 1 0, 0 {50 ps} -r 100
+force -freeze sim:/instruction_memory/reset 1 0
 run
-force -freeze sim:/fetchblock/rst 0 0
+force -freeze sim:/instruction_memory/reset 0 0
+mem load -filltype value -filldata 1100000000000000 -fillradix symbolic /instruction_memory/mem(0)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /instruction_memory/mem(1)
+mem load -filltype value -filldata 0100100000000000 -fillradix symbolic /instruction_memory/mem(2)
+mem load -filltype value -filldata 1111000000000000 -fillradix symbolic /instruction_memory/mem(3)
+force -freeze sim:/instruction_memory/address 0000000000000001 0
+# Value length (16) does not equal array index length (32).
+# 
+# ** Error: (vsim-4011) Invalid force value: 0000000000000001 0.
+# 
+force -freeze sim:/instruction_memory/address 00000000000000000000000000000000 0
+run
+force -freeze sim:/instruction_memory/address 00000000000000000000000000000001 0
+run
+force -freeze sim:/instruction_memory/address 00000000000000000000000000000002 0
+# ** Error: (vsim-4026) Value "'2'" does not represent a literal of the enumeration type.
+# ** Error: (vsim-4011) Invalid force value: 00000000000000000000000000000002 0.
+# 
 run
 run
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 300 ps  Iteration: 0  Instance: /fetchblock/IM1
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 300 ps  Iteration: 0  Instance: /fetchblock/IM1
 run
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 400 ps  Iteration: 0  Instance: /fetchblock/IM1
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 400 ps  Iteration: 0  Instance: /fetchblock/IM1
+force -freeze sim:/instruction_memory/address 00000000000000000000000000000010 0
 run
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 500 ps  Iteration: 0  Instance: /fetchblock/IM1
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 500 ps  Iteration: 0  Instance: /fetchblock/IM1
 run
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 600 ps  Iteration: 0  Instance: /fetchblock/IM1
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 600 ps  Iteration: 0  Instance: /fetchblock/IM1
-add wave -position end sim:/fetchblock/PC1/*
-add wave -position end sim:/fetchblock/IM1/*
-run
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 700 ps  Iteration: 0  Instance: /fetchblock/IM1
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 700 ps  Iteration: 0  Instance: /fetchblock/IM1
-run
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 800 ps  Iteration: 0  Instance: /fetchblock/IM1
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 800 ps  Iteration: 0  Instance: /fetchblock/IM1
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 900 ps  Iteration: 0  Instance: /fetchblock/IM1
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 900 ps  Iteration: 0  Instance: /fetchblock/IM1
-# Compile of FetchBlock.vhd was successful.
+# Compile of instruction_memory.vhd failed with 13 errors.
+# Compile of instruction_memory.vhd failed with 4 errors.
+# Compile of instruction_memory.vhd was successful.
 restart
+# Loading work.instruction_memory(behavioral)
+force -freeze sim:/instruction_memory/clk 1 0, 0 {50 ps} -r 100
+force -freeze sim:/instruction_memory/reset 1 0
+force -freeze sim:/instruction_memory/address 00000000000000000000000000000000 0
+mem load -filltype value -filldata 1100000000000000 -fillradix symbolic /instruction_memory/mem(0)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /instruction_memory/mem(1)
+mem load -filltype value -filldata 0100100000000000 -fillradix symbolic /instruction_memory/mem(2)
+mem load -filltype value -filldata 1111000000000000 -fillradix symbolic /instruction_memory/mem(3)
+restart
+run
+force -freeze sim:/instruction_memory/reset 0 0
+run
+force -freeze sim:/instruction_memory/address 00000000000000000000000000000001 0
+run
+run
+force -freeze sim:/instruction_memory/address 00000000000000000000000000000010 0
+run
+mem load -filltype value -filldata 1100000000000000 -fillradix symbolic /instruction_memory/mem(0)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /instruction_memory/mem(1)
+mem load -filltype value -filldata 0100100000000000 -fillradix symbolic /instruction_memory/mem(2)
+mem load -filltype value -filldata 1111000000000000 -fillradix symbolic /instruction_memory/mem(3)
+vsim -gui work.processor
+# End time: 09:59:58 on Apr 14,2024, Elapsed time: 0:11:38
+# Errors: 2, Warnings: 0
+# vsim -gui work.processor 
+# Start time: 09:59:58 on Apr 14,2024
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.processor(behavioral)
 # Loading work.fetchblock(behavioral)
-mem load -filltype rand -filldata 0 -fillradix symbolic -skip 0 /fetchblock/IM1/mem
-force -freeze sim:/fetchblock/clk 1 0, 0 {50 ps} -r 100
-force -freeze sim:/fetchblock/rst 1 0
-add wave -position 5  sim:/fetchblock/PC_IN
-run
-force -freeze sim:/fetchblock/rst 0 0
+# Loading work.pc(behavioral)
+# Loading work.instruction_memory(behavioral)
+# Loading work.fetchdecode(behavior)
+# Loading work.registerfile(sync_ram_a)
+# Loading work.signextend(behavioral)
+# Loading ieee.std_logic_arith(body)
+# Loading work.control(behavioral)
+# Loading work.decodeexecute(decodeexecute)
+# Loading work.executeblock(behavioral)
+# Loading work.alu(behavioral)
+# Loading work.flagreg(ndff)
+# Loading work.executememory(behavioural)
+# Loading work.datamemory(sync_ram_a)
+# Loading work.memorywriteback(memorywriteback)
+# Loading work.writebackblock(behavioral)
+add wave -position end  sim:/processor/Clk
+add wave -position end  sim:/processor/Rst
+add wave -position end  sim:/processor/fetch_instruction_out
+add wave -position end  sim:/processor/fetch_immediate_out
+add wave -position end  sim:/processor/internal_fetch_instruction
+add wave -position end  sim:/processor/internal_fetch_immediate
+add wave -position end  sim:/processor/read_data1
+add wave -position end  sim:/processor/read_data2
+add wave -position end  sim:/processor/reg_write
+add wave -position end  sim:/processor/decode_alu_selector
+add wave -position end  sim:/processor/decode_alu_src
+add wave -position end  sim:/processor/decode_mem_write
+add wave -position end  sim:/processor/decode_mem_read
+add wave -position end  sim:/processor/decode_mem_to_reg
+add wave -position end  sim:/processor/decode_reg_write
+add wave -position end  sim:/processor/decode_sp_pointers
+add wave -position end  sim:/processor/decode_protect_write
+add wave -position end  sim:/processor/decode_branching
+add wave -position end  sim:/processor/immediate_sign_extended
+add wave -position end  sim:/processor/decode_reg_write2
+add wave -position end  sim:/processor/execute_zero_out
+add wave -position end  sim:/processor/execute_alu_out
+add wave -position end  sim:/processor/execute_alu_selector
+add wave -position end  sim:/processor/execute_alu_src
+add wave -position end  sim:/processor/execute_immediate
+add wave -position end  sim:/processor/execute_read_data1
+add wave -position end  sim:/processor/execute_read_data2
+add wave -position end  sim:/processor/execute_mem_write
+add wave -position end  sim:/processor/execute_mem_read
+add wave -position end  sim:/processor/execute_mem_to_reg
+add wave -position end  sim:/processor/execute_reg_write
+add wave -position end  sim:/processor/execute_reg_write2
+add wave -position end  sim:/processor/execute_sp_pointers
+add wave -position end  sim:/processor/execute_protect_write
+add wave -position end  sim:/processor/execute_branching
+add wave -position end  sim:/processor/execute_reg_destination
+add wave -position end  sim:/processor/memory_zero_out
+add wave -position end  sim:/processor/memory_alu_out
+add wave -position end  sim:/processor/memory_read_data_output
+add wave -position end  sim:/processor/memory_mem_write
+add wave -position end  sim:/processor/memory_mem_read
+add wave -position end  sim:/processor/memory_mem_to_reg
+add wave -position end  sim:/processor/memory_reg_write
+add wave -position end  sim:/processor/memory_sp_pointers
+add wave -position end  sim:/processor/memory_protect_write
+add wave -position end  sim:/processor/memory_branching
+add wave -position end  sim:/processor/memory_read_data2
+add wave -position end  sim:/processor/memory_reg_destination
+add wave -position end  sim:/processor/memory_reg_write2
+add wave -position end  sim:/processor/WriteBackData
+add wave -position end  sim:/processor/write_back_mem_to_reg
+add wave -position end  sim:/processor/write_back_reg_write
+add wave -position end  sim:/processor/write_back_reg_write2
+add wave -position end  sim:/processor/write_back_data_output
+add wave -position end  sim:/processor/write_back_alu_out
+add wave -position end  sim:/processor/write_back_reg_destination
+vsim -gui work.processor
+# End time: 10:00:19 on Apr 14,2024, Elapsed time: 0:00:21
+# Errors: 0, Warnings: 0
+# vsim -gui work.processor 
+# Start time: 10:00:19 on Apr 14,2024
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.processor(behavioral)
+# Loading work.fetchblock(behavioral)
+# Loading work.pc(behavioral)
+# Loading work.instruction_memory(behavioral)
+# Loading work.fetchdecode(behavior)
+# Loading work.registerfile(sync_ram_a)
+# Loading work.signextend(behavioral)
+# Loading ieee.std_logic_arith(body)
+# Loading work.control(behavioral)
+# Loading work.decodeexecute(decodeexecute)
+# Loading work.executeblock(behavioral)
+# Loading work.alu(behavioral)
+# Loading work.flagreg(ndff)
+# Loading work.executememory(behavioural)
+# Loading work.datamemory(sync_ram_a)
+# Loading work.memorywriteback(memorywriteback)
+# Loading work.writebackblock(behavioral)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(0)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(1)
+mem load -filltype value -filldata {0100100000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(2)
+mem load -filltype value -filldata {1111000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(3)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(4)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(5)
+add wave sim:/processor/*
+force -freeze sim:/processor/Clk 1 0, 0 {50 ps} -r 100
+force -freeze sim:/processor/Rst 1 0
 run
 # ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 300 ps  Iteration: 0  Instance: /fetchblock/IM1
+#    Time: 0 ps  Iteration: 0  Instance: /processor/Registers
 # ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 300 ps  Iteration: 0  Instance: /fetchblock/IM1
-# Compile of FetchBlock.vhd was successful.
-restart
-# Loading work.fetchblock(behavioral)
-force -freeze sim:/fetchblock/clk 1 0, 0 {50 ps} -r 100
-force -freeze sim:/fetchblock/rst 1 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/Registers
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 2  Instance: /processor/ExecuteBlock1/ALU1
 run
-force -freeze sim:/fetchblock/rst 0 0
-mem load -filltype rand -filldata 0 -fillradix symbolic -skip 0 /fetchblock/IM1/mem
-restart
-mem load -filltype rand -filldata 0 -fillradix symbolic -skip 0 /fetchblock/IM1/mem
-force -freeze sim:/fetchblock/clk 1 0, 0 {50 ps} -r 100
-force -freeze sim:/fetchblock/rst 1 0
-run
-force -freeze sim:/fetchblock/rst 0 0
+force -freeze sim:/processor/Rst 0 0
+mem load -filltype value -filldata 00000000000000000000000000000101 -fillradix symbolic /processor/Registers/ram(0)
+mem load -filltype value -filldata 00000000000000000000000000000110 -fillradix symbolic /processor/Registers/ram(1)
 run
 run
 run
 run
 run
-run
-run
-run
-add wave -position 7  sim:/fetchblock/internal_PC
-restart
-mem load -filltype rand -filldata 0 -fillradix symbolic -skip 0 /fetchblock/IM1/mem
-force -freeze sim:/fetchblock/clk 1 0, 0 {50 ps} -r 100
 run
 # ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 100 ps  Iteration: 0  Instance: /fetchblock/IM1
+#    Time: 800 ps  Iteration: 1  Instance: /processor/Registers
 # ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 100 ps  Iteration: 0  Instance: /fetchblock/IM1
-force -freeze sim:/fetchblock/rst 1 0
-run
-run
-run
-run
-run
-run
-# Compile of FetchBlock.vhd was successful.
+#    Time: 800 ps  Iteration: 1  Instance: /processor/Registers
 restart
-# Loading work.fetchblock(behavioral)
-mem load -filltype rand -filldata 0 -fillradix symbolic -skip 0 /fetchblock/IM1/mem
-force -freeze sim:/fetchblock/clk 1 0, 0 {50 ps} -r 100
-force -freeze sim:/fetchblock/rst 1 0
 run
-force -freeze sim:/fetchblock/rst 0 0
-run
-run
-run
-run
-run
-run
-run
-run
-run
-# Compile of FetchBlock.vhd was successful.
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/Registers
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/Registers
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/FetchBlock1/IM1
 restart
+# Paste insertion failed: vsim: (vish-4014) No objects found matching 'vsim'.
+# Paste insertion failed: -gui: Unrecognized option: "-gui" ignored.
+# Missing signal name or pattern.
+# Paste insertion failed: work.processor: (vish-4014) No objects found matching 'work.processor'.
+# Paste insertion failed: mem: (vish-4014) No objects found matching 'mem'.
+# Paste insertion failed: load: (vish-4014) No objects found matching 'load'.
+# Paste insertion failed: -filltype: Unrecognized option: "-filltype" ignored.
+# Missing signal name or pattern.
+# Paste insertion failed: value: (vish-4014) No objects found matching 'value'.
+# Paste insertion failed: -filldata: Unrecognized option: "-filldata" ignored.
+# Missing signal name or pattern.
+# Paste insertion failed: 1100000000000000 : (vish-4014) No objects found matching '1100000000000000 '.
+# Paste insertion failed: -fillradix: Unrecognized option: "-fillradix" ignored.
+# Missing signal name or pattern.
+# Paste insertion failed: symbolic: (vish-4014) No objects found matching 'symbolic'.
+# Paste insertion failed: mem: (vish-4014) No objects found matching 'mem'.
+# Paste insertion failed: load: (vish-4014) No objects found matching 'load'.
+# Paste insertion failed: -filltype: Unrecognized option: "-filltype" ignored.
+# Missing signal name or pattern.
+# Paste insertion failed: value: (vish-4014) No objects found matching 'value'.
+# Paste insertion failed: -filldata: Unrecognized option: "-filldata" ignored.
+# Missing signal name or pattern.
+# Paste insertion failed: 1100000000000000 : (vish-4014) No objects found matching '1100000000000000 '.
+# Paste insertion failed: -fillradix: Unrecognized option: "-fillradix" ignored.
+# Missing signal name or pattern.
+# Paste insertion failed: symbolic: (vish-4014) No objects found matching 'symbolic'.
+# Paste insertion failed: mem: (vish-4014) No objects found matching 'mem'.
+# Paste insertion failed: load: (vish-4014) No objects found matching 'load'.
+# Paste insertion failed: -filltype: Unrecognized option: "-filltype" ignored.
+# Missing signal name or pattern.
+# Paste insertion failed: value: (vish-4014) No objects found matching 'value'.
+# Paste insertion failed: -filldata: Unrecognized option: "-filldata" ignored.
+# Missing signal name or pattern.
+# Paste insertion failed: 0100100000000000 : (vish-4014) No objects found matching '0100100000000000 '.
+# Paste insertion failed: -fillradix: Unrecognized option: "-fillradix" ignored.
+# Missing signal name or pattern.
+# Paste insertion failed: symbolic: (vish-4014) No objects found matching 'symbolic'.
+# Paste insertion failed: mem: (vish-4014) No objects found matching 'mem'.
+# Paste insertion failed: load: (vish-4014) No objects found matching 'load'.
+# Paste insertion failed: -filltype: Unrecognized option: "-filltype" ignored.
+# Missing signal name or pattern.
+# Paste insertion failed: value: (vish-4014) No objects found matching 'value'.
+# Paste insertion failed: -filldata: Unrecognized option: "-filldata" ignored.
+# Missing signal name or pattern.
+# Paste insertion failed: 1111000000000000 : (vish-4014) No objects found matching '1111000000000000 '.
+# Paste insertion failed: -fillradix: Unrecognized option: "-fillradix" ignored.
+# Missing signal name or pattern.
+# Paste insertion failed: symbolic: (vish-4014) No objects found matching 'symbolic'.
+# Paste insertion failed: mem: (vish-4014) No objects found matching 'mem'.
+# Paste insertion failed: load: (vish-4014) No objects found matching 'load'.
+# Paste insertion failed: -filltype: Unrecognized option: "-filltype" ignored.
+# Missing signal name or pattern.
+# Paste insertion failed: value: (vish-4014) No objects found matching 'value'.
+# Paste insertion failed: -filldata: Unrecognized option: "-filldata" ignored.
+# Missing signal name or pattern.
+# Paste insertion failed: 1100000000000000 : (vish-4014) No objects found matching '1100000000000000 '.
+# Paste insertion failed: -fillradix: Unrecognized option: "-fillradix" ignored.
+# Missing signal name or pattern.
+# Paste insertion failed: symbolic: (vish-4014) No objects found matching 'symbolic'.
+# Paste insertion failed: mem: (vish-4014) No objects found matching 'mem'.
+# Paste insertion failed: load: (vish-4014) No objects found matching 'load'.
+# Paste insertion failed: -filltype: Unrecognized option: "-filltype" ignored.
+# Missing signal name or pattern.
+# Paste insertion failed: value: (vish-4014) No objects found matching 'value'.
+# Paste insertion failed: -filldata: Unrecognized option: "-filldata" ignored.
+# Missing signal name or pattern.
+# Paste insertion failed: 1100000000000000 : (vish-4014) No objects found matching '1100000000000000 '.
+# Paste insertion failed: -fillradix: Unrecognized option: "-fillradix" ignored.
+# Missing signal name or pattern.
+# Paste insertion failed: symbolic: (vish-4014) No objects found matching 'symbolic'.
+# Paste insertion failed: add: (vish-4014) No objects found matching 'add'.
+# Paste insertion failed: wave: (vish-4014) No objects found matching 'wave'.
+# Paste insertion failed: force: (vish-4014) No objects found matching 'force'.
+# Paste insertion failed: -freeze: Unrecognized option: "-freeze" ignored.
+# Missing signal name or pattern.
+# Paste insertion failed: 1: (vish-4014) No objects found matching '1'.
+# Paste insertion failed: 0,: (vish-4014) No objects found matching '0,'.
+# Paste insertion failed: 0: (vish-4014) No objects found matching '0'.
+# Paste insertion failed: 50 ps: (vish-4014) No objects found matching '50 ps'.
+# Paste insertion failed: -r: Missing signal name or pattern.
+# Paste insertion failed: 100: (vish-4014) No objects found matching '100'.
+# Paste insertion failed: force: (vish-4014) No objects found matching 'force'.
+# Paste insertion failed: -freeze: Unrecognized option: "-freeze" ignored.
+# Missing signal name or pattern.
+# Paste insertion failed: 1: (vish-4014) No objects found matching '1'.
+# Paste insertion failed: 0: (vish-4014) No objects found matching '0'.
+# Paste insertion failed: run: (vish-4014) No objects found matching 'run'.
+# Paste insertion failed: run: (vish-4014) No objects found matching 'run'.
+# Paste insertion failed: force: (vish-4014) No objects found matching 'force'.
+# Paste insertion failed: -freeze: Unrecognized option: "-freeze" ignored.
+# Missing signal name or pattern.
+# Paste insertion failed: 0: (vish-4014) No objects found matching '0'.
+# Paste insertion failed: 0: (vish-4014) No objects found matching '0'.
+# Paste insertion failed: mem: (vish-4014) No objects found matching 'mem'.
+# Paste insertion failed: load: (vish-4014) No objects found matching 'load'.
+# Paste insertion failed: -filltype: Unrecognized option: "-filltype" ignored.
+# Missing signal name or pattern.
+# Paste insertion failed: value: (vish-4014) No objects found matching 'value'.
+# Paste insertion failed: -filldata: Unrecognized option: "-filldata" ignored.
+# Missing signal name or pattern.
+# Paste insertion failed: 00000000000000000000000000000101: (vish-4014) No objects found matching '00000000000000000000000000000101'.
+# Paste insertion failed: -fillradix: Unrecognized option: "-fillradix" ignored.
+# Missing signal name or pattern.
+# Paste insertion failed: symbolic: (vish-4014) No objects found matching 'symbolic'.
+# Paste insertion failed: mem: (vish-4014) No objects found matching 'mem'.
+# Paste insertion failed: load: (vish-4014) No objects found matching 'load'.
+# Paste insertion failed: -filltype: Unrecognized option: "-filltype" ignored.
+# Missing signal name or pattern.
+# Paste insertion failed: value: (vish-4014) No objects found matching 'value'.
+# Paste insertion failed: -filldata: Unrecognized option: "-filldata" ignored.
+# Missing signal name or pattern.
+# Paste insertion failed: 00000000000000000000000000000110: (vish-4014) No objects found matching '00000000000000000000000000000110'.
+# Paste insertion failed: -fillradix: Unrecognized option: "-fillradix" ignored.
+# Missing signal name or pattern.
+# Paste insertion failed: symbolic: (vish-4014) No objects found matching 'symbolic'.
+vsim -gui work.processor
+# End time: 10:01:28 on Apr 14,2024, Elapsed time: 0:01:09
+# Errors: 87, Warnings: 8
+# vsim -gui work.processor 
+# Start time: 10:01:28 on Apr 14,2024
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.processor(behavioral)
 # Loading work.fetchblock(behavioral)
-force -freeze sim:/fetchblock/clk 1 0, 0 {50 ps} -r 100
-force -freeze sim:/fetchblock/rst 1 0
-mem load -filltype rand -filldata 0 -fillradix symbolic -skip 0 /fetchblock/IM1/mem
+# Loading work.pc(behavioral)
+# Loading work.instruction_memory(behavioral)
+# Loading work.fetchdecode(behavior)
+# Loading work.registerfile(sync_ram_a)
+# Loading work.signextend(behavioral)
+# Loading ieee.std_logic_arith(body)
+# Loading work.control(behavioral)
+# Loading work.decodeexecute(decodeexecute)
+# Loading work.executeblock(behavioral)
+# Loading work.alu(behavioral)
+# Loading work.flagreg(ndff)
+# Loading work.executememory(behavioural)
+# Loading work.datamemory(sync_ram_a)
+# Loading work.memorywriteback(memorywriteback)
+# Loading work.writebackblock(behavioral)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(0)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(1)
+mem load -filltype value -filldata {0100100000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(2)
+mem load -filltype value -filldata {1111000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(3)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(4)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(5)
+add wave sim:/processor/*
+force -freeze sim:/processor/Clk 1 0, 0 {50 ps} -r 100
+force -freeze sim:/processor/Rst 1 0
+run
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/Registers
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/Registers
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 2  Instance: /processor/ExecuteBlock1/ALU1
+run
+force -freeze sim:/processor/Rst 0 0
+mem load -filltype value -filldata 00000000000000000000000000000101 -fillradix symbolic /processor/Registers/ram(0)
+mem load -filltype value -filldata 00000000000000000000000000000110 -fillradix symbolic /processor/Registers/ram(1)
+mem load -filltype value -filldata {1000000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(0)
 run
 run
 run
 run
-run
-run
-run
-run
-run
-# Compile of FetchBlock.vhd was successful.
-restart
-# Loading work.fetchblock(behavioral)
-force -freeze sim:/fetchblock/clk 1 0, 0 {50 ps} -r 100
-force -freeze sim:/fetchblock/rst 1 0
-run
-# Compile of FetchBlock.vhd was successful.
