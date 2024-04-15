@@ -1,5 +1,5 @@
 # Compile of ALU.vhd was successful.
-# Compile of Control.vhd was successful.
+# Compile of Control.vhd failed with 3 errors.
 # Compile of DataMemory.vhd was successful.
 # Compile of DecodeExecute.vhd was successful.
 # Compile of DFF.vhd was successful.
@@ -16,91 +16,9 @@
 # Compile of RegisterFile.vhd was successful.
 # Compile of SignExtend.vhd was successful.
 # Compile of WriteBackBlock.vhd was successful.
-# 18 compiles, 0 failed with no errors.
-vsim -gui work.fetchblock
-# vsim -gui work.fetchblock 
-# Start time: 07:32:08 on Apr 15,2024
-# Loading std.standard
-# Loading std.textio(body)
-# Loading ieee.std_logic_1164(body)
-# Loading ieee.numeric_std(body)
-# Loading work.fetchblock(behavioral)
-# Loading work.pc(behavioral)
-# Loading work.instruction_memory(behavioral)
-add wave -position end  sim:/fetchblock/clk
-add wave -position end  sim:/fetchblock/rst
-add wave -position end  sim:/fetchblock/instruction
-add wave -position end  sim:/fetchblock/PC_OUT
-add wave -position end  sim:/fetchblock/PC_IN
-add wave -position end  sim:/fetchblock/internal_instruction
-add wave -position end  sim:/fetchblock/IncrementTwo
-add wave -position end  sim:/fetchblock/internal_PC
-mem load -filltype value -filldata 00000000000000000 -fillradix symbolic /fetchblock/IM1/mem(0)
-# (vsim-3862) Too many digits in data '00000000000000000'.
-mem load -filltype value -filldata 0000000000000000 -fillradix symbolic /fetchblock/IM1/mem(0)
-mem load -filltype value -filldata 0000000000000001 -fillradix symbolic /fetchblock/IM1/mem(1)
-mem load -filltype value -filldata {0000000000000000 } -fillradix symbolic /fetchblock/IM1/mem(2)
-mem load -filltype value -filldata {0000000000000011 } -fillradix symbolic /fetchblock/IM1/mem(2)
-force -freeze sim:/fetchblock/clk 1 0, 0 {50 ps} -r 100
-force -freeze sim:/fetchblock/rst 1 0
-run
-force -freeze sim:/fetchblock/rst 0 0
-run
-run
-run
-# Compile of Processor.vhd was successful.
-vsim -gui work.processor
-# End time: 07:35:05 on Apr 15,2024, Elapsed time: 0:02:57
-# Errors: 1, Warnings: 0
-# vsim -gui work.processor 
-# Start time: 07:35:05 on Apr 15,2024
-# Loading std.standard
-# Loading std.textio(body)
-# Loading ieee.std_logic_1164(body)
-# Loading ieee.numeric_std(body)
-# Loading work.processor(behavioral)
-# Loading work.fetchblock(behavioral)
-# ** Error: (vsim-3732) C:/Users/Youssef Darwish/Documents/GitHub/Computer-Architecture/Processor.vhd(267): No default binding for component instance 'FetchBlock1'.
-#    The following component port is not on the entity:
-#           immediate
-#    Time: 0 ps  Iteration: 0  Instance: /processor/FetchBlock1 File: C:/Users/Youssef Darwish/Documents/GitHub/Computer-Architecture/FetchBlock.vhd
-# Loading work.pc(behavioral)
-# Loading work.instruction_memory(behavioral)
-# Loading work.fetchdecode(behavior)
-# Loading work.registerfile(sync_ram_a)
-# Loading work.signextend(behavioral)
-# Loading ieee.std_logic_arith(body)
-# Loading work.control(behavioral)
-# Loading work.decodeexecute(decodeexecute)
-# Loading work.executeblock(behavioral)
-# Loading work.alu(behavioral)
-# Loading work.flagreg(ndff)
-# Loading work.executememory(behavioural)
-# Loading work.datamemory(sync_ram_a)
-# Loading work.memorywriteback(memorywriteback)
-# Loading work.writebackblock(behavioral)
-# Error loading design
-# End time: 07:35:06 on Apr 15,2024, Elapsed time: 0:00:01
-# Errors: 1, Warnings: 0
-# Compile of ALU.vhd was successful.
+# 18 compiles, 1 failed with 3 errors.
 # Compile of Control.vhd was successful.
-# Compile of DataMemory.vhd was successful.
-# Compile of DecodeExecute.vhd was successful.
-# Compile of DFF.vhd was successful.
-# Compile of Execute.vhd was successful.
-# Compile of ExecuteMemory.vhd was successful.
-# Compile of FetchBlock.vhd was successful.
-# Compile of FetchDecode.vhd failed with 1 errors.
-# Compile of FlagReg.vhd was successful.
-# Compile of instruction_memory.vhd was successful.
-# Compile of MemoryWriteBack.vhd was successful.
-# Compile of PC.vhd was successful.
-# Compile of PC_MUX.vhd was successful.
-# Compile of Processor.vhd failed with 2 errors.
-# Compile of RegisterFile.vhd was successful.
-# Compile of SignExtend.vhd was successful.
-# Compile of WriteBackBlock.vhd was successful.
-# 18 compiles, 2 failed with 3 errors.
+# Compile of Control.vhd was successful.
 # Compile of ALU.vhd was successful.
 # Compile of Control.vhd was successful.
 # Compile of DataMemory.vhd was successful.
@@ -122,57 +40,7 @@ vsim -gui work.processor
 # 18 compiles, 0 failed with no errors.
 vsim -gui work.processor
 # vsim -gui work.processor 
-# Start time: 07:42:05 on Apr 15,2024
-# Loading std.standard
-# Loading std.textio(body)
-# Loading ieee.std_logic_1164(body)
-# Loading ieee.numeric_std(body)
-# Loading work.processor(behavioral)
-# Loading work.fetchblock(behavioral)
-# ** Error: (vsim-3732) C:/Users/Youssef Darwish/Documents/GitHub/Computer-Architecture/Processor.vhd(264): No default binding for component instance 'FetchBlock1'.
-#    The following component port is not on the entity:
-#           immediate
-#    Time: 0 ps  Iteration: 0  Instance: /processor/FetchBlock1 File: C:/Users/Youssef Darwish/Documents/GitHub/Computer-Architecture/FetchBlock.vhd
-# Loading work.pc(behavioral)
-# Loading work.instruction_memory(behavioral)
-# Loading work.fetchdecode(behavior)
-# Loading work.registerfile(sync_ram_a)
-# Loading work.signextend(behavioral)
-# Loading ieee.std_logic_arith(body)
-# Loading work.control(behavioral)
-# Loading work.decodeexecute(decodeexecute)
-# Loading work.executeblock(behavioral)
-# Loading work.alu(behavioral)
-# Loading work.flagreg(ndff)
-# Loading work.executememory(behavioural)
-# Loading work.datamemory(sync_ram_a)
-# Loading work.memorywriteback(memorywriteback)
-# Loading work.writebackblock(behavioral)
-# Error loading design
-# End time: 07:42:05 on Apr 15,2024, Elapsed time: 0:00:00
-# Errors: 1, Warnings: 0
-# Compile of ALU.vhd was successful.
-# Compile of Control.vhd was successful.
-# Compile of DataMemory.vhd was successful.
-# Compile of DecodeExecute.vhd was successful.
-# Compile of DFF.vhd was successful.
-# Compile of Execute.vhd was successful.
-# Compile of ExecuteMemory.vhd was successful.
-# Compile of FetchBlock.vhd was successful.
-# Compile of FetchDecode.vhd was successful.
-# Compile of FlagReg.vhd was successful.
-# Compile of instruction_memory.vhd was successful.
-# Compile of MemoryWriteBack.vhd was successful.
-# Compile of PC.vhd was successful.
-# Compile of PC_MUX.vhd was successful.
-# Compile of Processor.vhd was successful.
-# Compile of RegisterFile.vhd was successful.
-# Compile of SignExtend.vhd was successful.
-# Compile of WriteBackBlock.vhd was successful.
-# 18 compiles, 0 failed with no errors.
-vsim -gui work.processor
-# vsim -gui work.processor 
-# Start time: 07:43:55 on Apr 15,2024
+# Start time: 09:30:10 on Apr 15,2024
 # Loading std.standard
 # Loading std.textio(body)
 # Loading ieee.std_logic_1164(body)
@@ -195,10 +63,10 @@ vsim -gui work.processor
 # Loading work.memorywriteback(memorywriteback)
 # Loading work.writebackblock(behavioral)
 vsim -gui work.processor
-# End time: 07:44:06 on Apr 15,2024, Elapsed time: 0:00:11
+# End time: 09:30:22 on Apr 15,2024, Elapsed time: 0:00:12
 # Errors: 0, Warnings: 0
 # vsim -gui work.processor 
-# Start time: 07:44:06 on Apr 15,2024
+# Start time: 09:30:22 on Apr 15,2024
 # Loading std.standard
 # Loading std.textio(body)
 # Loading ieee.std_logic_1164(body)
@@ -334,10 +202,15 @@ run
 # ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
 #    Time: 0 ps  Iteration: 2  Instance: /processor/ExecuteBlock1/ALU1
 force -freeze sim:/processor/Rst 0 0
+add wave -position 5  sim:/processor/IsInstruction
 run
 run
 run
-restart
+run
+run
+run
+run
+run
 run
 run
 run
@@ -350,12 +223,19 @@ run
 #    Time: 0 ps  Iteration: 0  Instance: /processor/Registers
 # ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
 #    Time: 0 ps  Iteration: 0  Instance: /processor/FetchBlock1/IM1
+run
+run
+run
+run
+run
+run
+run
 restart
 vsim -gui work.processor
-# End time: 07:46:44 on Apr 15,2024, Elapsed time: 0:02:38
+# End time: 09:32:10 on Apr 15,2024, Elapsed time: 0:01:48
 # Errors: 0, Warnings: 6
 # vsim -gui work.processor 
-# Start time: 07:46:44 on Apr 15,2024
+# Start time: 09:32:10 on Apr 15,2024
 # Loading std.standard
 # Loading std.textio(body)
 # Loading ieee.std_logic_1164(body)
@@ -494,17 +374,625 @@ force -freeze sim:/processor/Rst 0 0
 run
 run
 run
+run
+run
+run
+run
+run
 restart
+vsim -gui work.processor
+# End time: 09:32:47 on Apr 15,2024, Elapsed time: 0:00:37
+# Errors: 0, Warnings: 3
+# vsim -gui work.processor 
+# Start time: 09:32:47 on Apr 15,2024
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.processor(behavioral)
+# Loading work.fetchblock(behavioral)
+# Loading work.pc(behavioral)
+# Loading work.instruction_memory(behavioral)
+# Loading work.fetchdecode(behavior)
+# Loading work.registerfile(sync_ram_a)
+# Loading work.signextend(behavioral)
+# Loading ieee.std_logic_arith(body)
+# Loading work.control(behavioral)
+# Loading work.decodeexecute(decodeexecute)
+# Loading work.executeblock(behavioral)
+# Loading work.alu(behavioral)
+# Loading work.flagreg(ndff)
+# Loading work.executememory(behavioural)
+# Loading work.datamemory(sync_ram_a)
+# Loading work.memorywriteback(memorywriteback)
+# Loading work.writebackblock(behavioral)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(0)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(1)
+
+# LDM R0, 1
+mem load -filltype value -filldata {0100100000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(2)
+mem load -filltype value -filldata {0000000000000001 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(3)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(4)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(5)
+
+# LDM R1, AAAA
+mem load -filltype value -filldata {0100100000010000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(6)
+mem load -filltype value -filldata {1010101010101010 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(7)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(8)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(9)
+
+# LDM R2, FFFF
+mem load -filltype value -filldata {0100100000100000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(10)
+mem load -filltype value -filldata {1111111111111111 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(11)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(12)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(13)
+
+# DEC R0
+mem load -filltype value -filldata {0000110000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(14)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(15)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(16)
+
+# MOV R4, R1
+mem load -filltype value -filldata {0010010011000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(17)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(18)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(19)
+
+# NOT R1
+mem load -filltype value -filldata {0000000010010000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(20)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(21)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(22)
+
+# MOV R3, R0
+mem load -filltype value -filldata {0010010000110000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(23)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(24)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(25)
+
+# DEC R0
+mem load -filltype value -filldata {0000110000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(26)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(27)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(28)
+
+# CMP R4, R2
+mem load -filltype value -filldata {0010111000000100 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(29)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(30)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(31)
+
+# OR R5, R1, R4
+mem load -filltype value -filldata {0001100011011000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(32)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(33)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(34)
+
+# MOV R6, R0
+mem load -filltype value -filldata {0010010001100000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(35)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(36)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(37)
+
+# CMP R2, R4
+mem load -filltype value -filldata {0010110100001000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(38)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(39)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(40)
+
+# CMP R5, R0
+mem load -filltype value -filldata {0010111010000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(38)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(39)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(40)
+
+# OR R7, R4, R3
+mem load -filltype value -filldata {0001101001110110 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(41)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(42)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(43)
+
+# NOT R6
+mem load -filltype value -filldata {0000001101100000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(44)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(45)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(46)
+
+# DEC R0
+mem load -filltype value -filldata {0000110000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(47)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(48)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(49)
+
+
+add wave sim:/processor/*
+force -freeze sim:/processor/Clk 1 0, 0 {50 ps} -r 100
+force -freeze sim:/processor/Rst 1 0
+run
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/Registers
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/Registers
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 2  Instance: /processor/ExecuteBlock1/ALU1
+force -freeze sim:/processor/Rst 0 0
+add wave -position 5  sim:/processor/IsInstruction
+run
+run
+run
+run
+run
+# Compile of Processor.vhd was successful.
+restart
+# Loading work.processor(behavioral)
+# Warning in wave window restart: (vish-4014) No objects found matching '/processor/IsInstruction'. 
+# Warning in wave window restart: (vish-4014) No objects found matching '/processor/IsInstruction'. 
+vsim -gui work.processor
+# End time: 09:42:51 on Apr 15,2024, Elapsed time: 0:10:04
+# Errors: 2, Warnings: 3
+# vsim -gui work.processor 
+# Start time: 09:42:51 on Apr 15,2024
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.processor(behavioral)
+# Loading work.fetchblock(behavioral)
+# Loading work.pc(behavioral)
+# Loading work.instruction_memory(behavioral)
+# Loading work.fetchdecode(behavior)
+# Loading work.registerfile(sync_ram_a)
+# Loading work.signextend(behavioral)
+# Loading ieee.std_logic_arith(body)
+# Loading work.control(behavioral)
+# Loading work.decodeexecute(decodeexecute)
+# Loading work.executeblock(behavioral)
+# Loading work.alu(behavioral)
+# Loading work.flagreg(ndff)
+# Loading work.executememory(behavioural)
+# Loading work.datamemory(sync_ram_a)
+# Loading work.memorywriteback(memorywriteback)
+# Loading work.writebackblock(behavioral)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(0)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(1)
+
+# LDM R0, 1
+mem load -filltype value -filldata {0100100000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(2)
+mem load -filltype value -filldata {0000000000000001 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(3)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(4)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(5)
+
+# LDM R1, AAAA
+mem load -filltype value -filldata {0100100000010000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(6)
+mem load -filltype value -filldata {1010101010101010 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(7)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(8)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(9)
+
+# LDM R2, FFFF
+mem load -filltype value -filldata {0100100000100000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(10)
+mem load -filltype value -filldata {1111111111111111 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(11)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(12)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(13)
+
+# DEC R0
+mem load -filltype value -filldata {0000110000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(14)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(15)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(16)
+
+# MOV R4, R1
+mem load -filltype value -filldata {0010010011000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(17)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(18)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(19)
+
+# NOT R1
+mem load -filltype value -filldata {0000000010010000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(20)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(21)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(22)
+
+# MOV R3, R0
+mem load -filltype value -filldata {0010010000110000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(23)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(24)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(25)
+
+# DEC R0
+mem load -filltype value -filldata {0000110000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(26)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(27)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(28)
+
+# CMP R4, R2
+mem load -filltype value -filldata {0010111000000100 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(29)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(30)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(31)
+
+# OR R5, R1, R4
+mem load -filltype value -filldata {0001100011011000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(32)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(33)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(34)
+
+# MOV R6, R0
+mem load -filltype value -filldata {0010010001100000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(35)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(36)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(37)
+
+# CMP R2, R4
+mem load -filltype value -filldata {0010110100001000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(38)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(39)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(40)
+
+# CMP R5, R0
+mem load -filltype value -filldata {0010111010000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(38)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(39)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(40)
+
+# OR R7, R4, R3
+mem load -filltype value -filldata {0001101001110110 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(41)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(42)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(43)
+
+# NOT R6
+mem load -filltype value -filldata {0000001101100000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(44)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(45)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(46)
+
+# DEC R0
+mem load -filltype value -filldata {0000110000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(47)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(48)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(49)
+
+
+add wave sim:/processor/*
+force -freeze sim:/processor/Clk 1 0, 0 {50 ps} -r 100
+force -freeze sim:/processor/Rst 1 0
+run
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/Registers
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/Registers
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 2  Instance: /processor/ExecuteBlock1/ALU1
+force -freeze sim:/processor/Rst 0 0
+add wave -position 5  sim:/processor/IsInstructionIN
+add wave -position 6  sim:/processor/IsInstructionOUT
+run
+run
+run
+run
+run
+# Compile of Control.vhd was successful.
+restart
+# Loading work.control(behavioral)
+run
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/Registers
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/Registers
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/FetchBlock1/IM1
+restart
+vsim -gui work.processor
+# End time: 09:51:12 on Apr 15,2024, Elapsed time: 0:08:21
+# Errors: 0, Warnings: 6
+# vsim -gui work.processor 
+# Start time: 09:51:13 on Apr 15,2024
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.processor(behavioral)
+# Loading work.fetchblock(behavioral)
+# Loading work.pc(behavioral)
+# Loading work.instruction_memory(behavioral)
+# Loading work.fetchdecode(behavior)
+# Loading work.registerfile(sync_ram_a)
+# Loading work.signextend(behavioral)
+# Loading ieee.std_logic_arith(body)
+# Loading work.control(behavioral)
+# Loading work.decodeexecute(decodeexecute)
+# Loading work.executeblock(behavioral)
+# Loading work.alu(behavioral)
+# Loading work.flagreg(ndff)
+# Loading work.executememory(behavioural)
+# Loading work.datamemory(sync_ram_a)
+# Loading work.memorywriteback(memorywriteback)
+# Loading work.writebackblock(behavioral)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(0)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(1)
+
+# LDM R0, 1
+mem load -filltype value -filldata {0100100000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(2)
+mem load -filltype value -filldata {0000000000000001 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(3)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(4)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(5)
+
+# LDM R1, AAAA
+mem load -filltype value -filldata {0100100000010000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(6)
+mem load -filltype value -filldata {1010101010101010 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(7)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(8)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(9)
+
+# LDM R2, FFFF
+mem load -filltype value -filldata {0100100000100000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(10)
+mem load -filltype value -filldata {1111111111111111 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(11)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(12)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(13)
+
+# DEC R0
+mem load -filltype value -filldata {0000110000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(14)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(15)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(16)
+
+# MOV R4, R1
+mem load -filltype value -filldata {0010010011000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(17)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(18)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(19)
+
+# NOT R1
+mem load -filltype value -filldata {0000000010010000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(20)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(21)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(22)
+
+# MOV R3, R0
+mem load -filltype value -filldata {0010010000110000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(23)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(24)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(25)
+
+# DEC R0
+mem load -filltype value -filldata {0000110000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(26)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(27)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(28)
+
+# CMP R4, R2
+mem load -filltype value -filldata {0010111000000100 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(29)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(30)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(31)
+
+# OR R5, R1, R4
+mem load -filltype value -filldata {0001100011011000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(32)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(33)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(34)
+
+# MOV R6, R0
+mem load -filltype value -filldata {0010010001100000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(35)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(36)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(37)
+
+# CMP R2, R4
+mem load -filltype value -filldata {0010110100001000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(38)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(39)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(40)
+
+# CMP R5, R0
+mem load -filltype value -filldata {0010111010000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(38)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(39)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(40)
+
+# OR R7, R4, R3
+mem load -filltype value -filldata {0001101001110110 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(41)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(42)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(43)
+
+# NOT R6
+mem load -filltype value -filldata {0000001101100000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(44)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(45)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(46)
+
+# DEC R0
+mem load -filltype value -filldata {0000110000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(47)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(48)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(49)
+
+
+add wave sim:/processor/*
+force -freeze sim:/processor/Clk 1 0, 0 {50 ps} -r 100
+force -freeze sim:/processor/Rst 1 0
+run
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/Registers
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/Registers
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 2  Instance: /processor/ExecuteBlock1/ALU1
+force -freeze sim:/processor/Rst 0 0
+add wave -position 3  sim:/processor/IsInstructionIN
+add wave -position 4  sim:/processor/IsInstructionOUT
+run
+run
+run
+run
+# Compile of Processor.vhd was successful.
+run
+restart
+# Loading work.processor(behavioral)
+vsim -gui work.processor
+# End time: 09:53:59 on Apr 15,2024, Elapsed time: 0:02:46
+# Errors: 0, Warnings: 3
+# vsim -gui work.processor 
+# Start time: 09:53:59 on Apr 15,2024
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.processor(behavioral)
+# Loading work.fetchblock(behavioral)
+# Loading work.pc(behavioral)
+# Loading work.instruction_memory(behavioral)
+# Loading work.fetchdecode(behavior)
+# Loading work.registerfile(sync_ram_a)
+# Loading work.signextend(behavioral)
+# Loading ieee.std_logic_arith(body)
+# Loading work.control(behavioral)
+# Loading work.decodeexecute(decodeexecute)
+# Loading work.executeblock(behavioral)
+# Loading work.alu(behavioral)
+# Loading work.flagreg(ndff)
+# Loading work.executememory(behavioural)
+# Loading work.datamemory(sync_ram_a)
+# Loading work.memorywriteback(memorywriteback)
+# Loading work.writebackblock(behavioral)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(0)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(1)
+
+# LDM R0, 1
+mem load -filltype value -filldata {0100100000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(2)
+mem load -filltype value -filldata {0000000000000001 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(3)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(4)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(5)
+
+# LDM R1, AAAA
+mem load -filltype value -filldata {0100100000010000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(6)
+mem load -filltype value -filldata {1010101010101010 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(7)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(8)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(9)
+
+# LDM R2, FFFF
+mem load -filltype value -filldata {0100100000100000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(10)
+mem load -filltype value -filldata {1111111111111111 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(11)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(12)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(13)
+
+# DEC R0
+mem load -filltype value -filldata {0000110000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(14)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(15)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(16)
+
+# MOV R4, R1
+mem load -filltype value -filldata {0010010011000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(17)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(18)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(19)
+
+# NOT R1
+mem load -filltype value -filldata {0000000010010000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(20)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(21)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(22)
+
+# MOV R3, R0
+mem load -filltype value -filldata {0010010000110000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(23)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(24)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(25)
+
+# DEC R0
+mem load -filltype value -filldata {0000110000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(26)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(27)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(28)
+
+# CMP R4, R2
+mem load -filltype value -filldata {0010111000000100 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(29)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(30)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(31)
+
+# OR R5, R1, R4
+mem load -filltype value -filldata {0001100011011000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(32)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(33)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(34)
+
+# MOV R6, R0
+mem load -filltype value -filldata {0010010001100000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(35)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(36)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(37)
+
+# CMP R2, R4
+mem load -filltype value -filldata {0010110100001000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(38)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(39)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(40)
+
+# CMP R5, R0
+mem load -filltype value -filldata {0010111010000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(38)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(39)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(40)
+
+# OR R7, R4, R3
+mem load -filltype value -filldata {0001101001110110 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(41)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(42)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(43)
+
+# NOT R6
+mem load -filltype value -filldata {0000001101100000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(44)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(45)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(46)
+
+# DEC R0
+mem load -filltype value -filldata {0000110000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(47)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(48)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(49)
+
+
+add wave sim:/processor/*
+force -freeze sim:/processor/Clk 1 0, 0 {50 ps} -r 100
+force -freeze sim:/processor/Rst 1 0
+run
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/Registers
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/Registers
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 2  Instance: /processor/ExecuteBlock1/ALU1
+force -freeze sim:/processor/Rst 0 0
+add wave -position 3  sim:/processor/IsInstructionIN
+add wave -position 4  sim:/processor/IsInstructionOUT
+run
+run
 run
 run
 # Compile of Processor.vhd was successful.
 restart
 # Loading work.processor(behavioral)
 vsim -gui work.processor
-# End time: 07:53:18 on Apr 15,2024, Elapsed time: 0:06:34
+# End time: 09:55:30 on Apr 15,2024, Elapsed time: 0:01:31
 # Errors: 0, Warnings: 3
 # vsim -gui work.processor 
-# Start time: 07:53:18 on Apr 15,2024
+# Start time: 09:55:30 on Apr 15,2024
 # Loading std.standard
 # Loading std.textio(body)
 # Loading ieee.std_logic_1164(body)
@@ -640,6 +1128,412 @@ run
 # ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
 #    Time: 0 ps  Iteration: 2  Instance: /processor/ExecuteBlock1/ALU1
 force -freeze sim:/processor/Rst 0 0
+add wave -position 3  sim:/processor/IsInstructionIN
+add wave -position 4  sim:/processor/IsInstructionOUT
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+restart
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 5200 ps  Iteration: 1  Instance: /processor/Registers
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 5200 ps  Iteration: 1  Instance: /processor/Registers
+run
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 5250 ps  Iteration: 1  Instance: /processor/Registers
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 5250 ps  Iteration: 1  Instance: /processor/Registers
+run
+run
+restart
+vsim -gui work.processor
+# End time: 09:57:54 on Apr 15,2024, Elapsed time: 0:02:24
+# Errors: 0, Warnings: 7
+# vsim -gui work.processor 
+# Start time: 09:57:54 on Apr 15,2024
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.processor(behavioral)
+# Loading work.fetchblock(behavioral)
+# Loading work.pc(behavioral)
+# Loading work.instruction_memory(behavioral)
+# Loading work.fetchdecode(behavior)
+# Loading work.registerfile(sync_ram_a)
+# Loading work.signextend(behavioral)
+# Loading ieee.std_logic_arith(body)
+# Loading work.control(behavioral)
+# Loading work.decodeexecute(decodeexecute)
+# Loading work.executeblock(behavioral)
+# Loading work.alu(behavioral)
+# Loading work.flagreg(ndff)
+# Loading work.executememory(behavioural)
+# Loading work.datamemory(sync_ram_a)
+# Loading work.memorywriteback(memorywriteback)
+# Loading work.writebackblock(behavioral)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(0)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(1)
+
+# LDM R0, 1
+mem load -filltype value -filldata {0100100000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(2)
+mem load -filltype value -filldata {0000000000000001 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(3)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(4)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(5)
+
+# LDM R1, AAAA
+mem load -filltype value -filldata {0100100000010000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(6)
+mem load -filltype value -filldata {1010101010101010 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(7)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(8)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(9)
+
+# LDM R2, FFFF
+mem load -filltype value -filldata {0100100000100000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(10)
+mem load -filltype value -filldata {1111111111111111 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(11)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(12)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(13)
+
+# DEC R0
+mem load -filltype value -filldata {0000110000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(14)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(15)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(16)
+
+# MOV R4, R1
+mem load -filltype value -filldata {0010010011000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(17)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(18)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(19)
+
+# NOT R1
+mem load -filltype value -filldata {0000000010010000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(20)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(21)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(22)
+
+# MOV R3, R0
+mem load -filltype value -filldata {0010010000110000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(23)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(24)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(25)
+
+# DEC R0
+mem load -filltype value -filldata {0000110000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(26)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(27)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(28)
+
+# CMP R4, R2
+mem load -filltype value -filldata {0010111000000100 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(29)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(30)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(31)
+
+# OR R5, R1, R4
+mem load -filltype value -filldata {0001100011011000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(32)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(33)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(34)
+
+# MOV R6, R0
+mem load -filltype value -filldata {0010010001100000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(35)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(36)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(37)
+
+# CMP R2, R4
+mem load -filltype value -filldata {0010110100001000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(38)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(39)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(40)
+
+# CMP R5, R0
+mem load -filltype value -filldata {0010111010000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(38)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(39)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(40)
+
+# OR R7, R4, R3
+mem load -filltype value -filldata {0001101001110110 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(41)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(42)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(43)
+
+# NOT R6
+mem load -filltype value -filldata {0000001101100000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(44)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(45)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(46)
+
+# DEC R0
+mem load -filltype value -filldata {0000110000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(47)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(48)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(49)
+
+
+add wave sim:/processor/*
+force -freeze sim:/processor/Clk 1 0, 0 {50 ps} -r 100
+force -freeze sim:/processor/Rst 1 0
+run
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/Registers
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/Registers
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 2  Instance: /processor/ExecuteBlock1/ALU1
+force -freeze sim:/processor/Rst 0 0
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+restart
+vsim -gui work.processor
+# End time: 09:59:58 on Apr 15,2024, Elapsed time: 0:02:04
+# Errors: 0, Warnings: 3
+# vsim -gui work.processor 
+# Start time: 09:59:58 on Apr 15,2024
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.processor(behavioral)
+# Loading work.fetchblock(behavioral)
+# Loading work.pc(behavioral)
+# Loading work.instruction_memory(behavioral)
+# Loading work.fetchdecode(behavior)
+# Loading work.registerfile(sync_ram_a)
+# Loading work.signextend(behavioral)
+# Loading ieee.std_logic_arith(body)
+# Loading work.control(behavioral)
+# Loading work.decodeexecute(decodeexecute)
+# Loading work.executeblock(behavioral)
+# Loading work.alu(behavioral)
+# Loading work.flagreg(ndff)
+# Loading work.executememory(behavioural)
+# Loading work.datamemory(sync_ram_a)
+# Loading work.memorywriteback(memorywriteback)
+# Loading work.writebackblock(behavioral)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(0)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(1)
+
+# LDM R0, 1
+mem load -filltype value -filldata {0100100000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(2)
+mem load -filltype value -filldata {0000000000000001 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(3)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(4)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(5)
+
+# LDM R1, AAAA
+mem load -filltype value -filldata {0100100000010000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(6)
+mem load -filltype value -filldata {1010101010101010 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(7)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(8)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(9)
+
+# LDM R2, FFFF
+mem load -filltype value -filldata {0100100000100000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(10)
+mem load -filltype value -filldata {1111111111111111 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(11)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(12)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(13)
+
+# DEC R0
+mem load -filltype value -filldata {0000110000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(14)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(15)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(16)
+
+# MOV R4, R1
+mem load -filltype value -filldata {0010010011000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(17)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(18)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(19)
+
+# NOT R1
+mem load -filltype value -filldata {0000000010010000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(20)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(21)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(22)
+
+# MOV R3, R0
+mem load -filltype value -filldata {0010010000110000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(23)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(24)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(25)
+
+# DEC R0
+mem load -filltype value -filldata {0000110000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(26)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(27)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(28)
+
+# CMP R4, R2
+mem load -filltype value -filldata {0010111000000100 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(29)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(30)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(31)
+
+# OR R5, R1, R4
+mem load -filltype value -filldata {0001100011011000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(32)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(33)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(34)
+
+# MOV R6, R0
+mem load -filltype value -filldata {0010010001100000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(35)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(36)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(37)
+
+# CMP R2, R4
+mem load -filltype value -filldata {0010110100001000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(38)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(39)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(40)
+
+# CMP R5, R0
+mem load -filltype value -filldata {0010111010000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(38)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(39)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(40)
+
+# OR R7, R4, R3
+mem load -filltype value -filldata {0001101001110110 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(41)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(42)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(43)
+
+# NOT R6
+mem load -filltype value -filldata {0000001101100000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(44)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(45)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(46)
+
+# DEC R0
+mem load -filltype value -filldata {0000110000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(47)
+
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(48)
+mem load -filltype value -filldata {1100000000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(49)
+
+
+add wave sim:/processor/*
+force -freeze sim:/processor/Clk 1 0, 0 {50 ps} -r 100
+force -freeze sim:/processor/Rst 1 0
+run
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/Registers
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/Registers
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 2  Instance: /processor/ExecuteBlock1/ALU1
+force -freeze sim:/processor/Rst 0 0
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
 run
 run
 run

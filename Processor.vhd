@@ -45,6 +45,7 @@ architecture Behavioral of Processor is
     component Control is
         port(
             Opcode : in std_logic_vector(5 downto 0);
+            IsInstructionIn : in std_logic;
             AluSelector : out std_logic_vector(3 downto 0);
             AluSrc : out std_logic;
             MemWrite : out std_logic;
@@ -54,7 +55,8 @@ architecture Behavioral of Processor is
             RegWrite2 : out std_logic;
             SpPointers : out std_logic_vector(1 downto 0);
             ProtectWrite : out std_logic;
-            Branching : out std_logic
+            Branching : out std_logic;
+            IsInstructionOut : out std_logic
         );
     end component Control;
 
@@ -256,6 +258,9 @@ architecture Behavioral of Processor is
     signal write_back_data_output : std_logic_vector(31 downto 0);
     signal write_back_alu_out : std_logic_vector(31 downto 0);
     signal write_back_reg_destination : std_logic_vector(2 downto 0);
+
+    signal IsInstructionIN: std_logic := '1';
+    signal IsInstructionOUT: std_logic;
     begin
         ----------- Fetch ------------
         FetchBlock1: FetchBlock port map (
@@ -279,9 +284,9 @@ architecture Behavioral of Processor is
                                         );
 
         ControlUnit: Control port map (
-                                        fetch_instruction_out(15 downto 10), decode_alu_selector, decode_alu_src,
+                                        fetch_instruction_out(15 downto 10), IsInstructionIN, decode_alu_selector, decode_alu_src,
                                         decode_mem_write, decode_mem_read, decode_mem_to_reg, decode_reg_write,
-                                        decode_reg_write2, decode_sp_pointers, decode_protect_write, decode_branching
+                                        decode_reg_write2, decode_sp_pointers, decode_protect_write, decode_branching, IsInstructionOUT
                                     );
 
         DecodeExecute1: DecodeExecute port map (
@@ -333,4 +338,11 @@ architecture Behavioral of Processor is
 
         ----------- Write Back ------------
         WriteBackBlock1: WriteBackBlock port map(Clk, Rst, write_back_mem_to_reg, write_back_data_output, write_back_alu_out, WriteBackData);
+
+        process(Clk)
+        begin
+            if rising_edge(Clk) then
+                IsInstructionIN <= IsInstructionOUT;
+            end if;
+        end process;
 end architecture Behavioral;
