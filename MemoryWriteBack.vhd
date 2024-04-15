@@ -12,13 +12,17 @@ ENTITY MemoryWriteBack IS
         MemoryData : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
         AluResult : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
         RegDst : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
+        Instruction_Src_1 : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
+        ReadData : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
 
         MemToRegOut : OUT STD_LOGIC_VECTOR(1 DOWNTO 0);
         RegWriteOut : OUT STD_LOGIC;
         RegWrite2Out : OUT STD_LOGIC;
         MemoryDataOut : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
         AluResultOut : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
-        RegDstOut : OUT STD_LOGIC_VECTOR(2 DOWNTO 0)
+        RegDstOut : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
+        ReadDataOut : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+        Instruction_Src_1Out : OUT STD_LOGIC_VECTOR(2 DOWNTO 0)
     );
 END MemoryWriteBack;
 
@@ -34,6 +38,8 @@ BEGIN
             MemoryDataOut <= (OTHERS => '0');
             AluResultOut <= (OTHERS => '0');
             RegDstOut <= (OTHERS => '0');
+            ReadDataOut <= (OTHERS => '0');
+            Instruction_Src_1Out <= (OTHERS => '0');
         ELSIF rising_edge(clk) THEN
             IF enable = '1' THEN
                 MemToRegOut <= MemToReg;
@@ -41,7 +47,14 @@ BEGIN
                 RegWrite2Out <= RegWrite2;
                 MemoryDataOut <= MemoryData;
                 AluResultOut <= AluResult;
-                RegDstOut <= RegDst;
+                ReadDataOut <= ReadData;
+                IF RegWrite2 = '1' THEN
+                    RegDstOut <= Instruction_Src_1;
+                    Instruction_Src_1Out <= RegDst;
+                ELSE
+                    RegDstOut <= RegDst;
+                    Instruction_Src_1Out <= Instruction_Src_1;
+                END IF;
             END IF;
     END IF;
     END PROCESS;

@@ -12,11 +12,14 @@ ENTITY DecodeExecute IS
         MemRead : IN std_logic;
         MemToReg : IN std_logic_vector(1 downto 0);
         RegWrite : IN std_logic;
+        RegWrite2 : IN std_logic;
         SpPointers : IN std_logic_vector(1 downto 0);
         ProtectWrite : IN std_logic;
         Branching : IN std_logic;
         ReadData1 : IN std_logic_vector(31 downto 0); -- Register src 1
         ReadData2 : IN std_logic_vector(31 downto 0); -- Register src 2
+        Instruction_Src1 : IN std_logic_vector(2 downto 0);
+        Instruction_Src2 : IN std_logic_vector(2 downto 0);
         Destination : IN std_logic_vector(2 downto 0); -- Register destination address
         Imm : IN std_logic_vector(31 downto 0);
 
@@ -26,11 +29,14 @@ ENTITY DecodeExecute IS
         MemReadOut : OUT std_logic;
         MemToRegOut : OUT std_logic_vector(1 downto 0);
         RegWriteOut : OUT std_logic;
+        RegWrite2Out : OUT std_logic;
         SpPointersOut : OUT std_logic_vector(1 downto 0);
         ProtectWriteOut : OUT std_logic;
         BranchingOut : OUT std_logic;
         ReadData1Out : OUT std_logic_vector(31 downto 0);
         ReadData2Out : OUT std_logic_vector(31 downto 0);
+        Instruction_Src1Out : OUT std_logic_vector(2 downto 0);
+        Instruction_Src2Out : OUT std_logic_vector(2 downto 0);
         DestinationOut : OUT std_logic_vector(2 downto 0);
         ImmOut : OUT std_logic_vector(31 downto 0)
     );
@@ -48,12 +54,15 @@ BEGIN
             MemReadOut <= '0';
             MemToRegOut <= (OTHERS=>'0');
             RegWriteOut <= '0';
+            RegWrite2Out <= '0';
             SpPointersOut <= (OTHERS=>'0');
             ProtectWriteOut <= '0';
             BranchingOut <= '0';
             ReadData1Out <= (OTHERS=>'0');
             ReadData2Out <= (OTHERS=>'0');
             DestinationOut <= (OTHERS=>'0');
+            Instruction_Src1Out <= (OTHERS=>'0');
+            Instruction_Src2Out <= (OTHERS=>'0');
             ImmOut <= (OTHERS=>'0');
         ELSIF rising_edge(clk) THEN
             IF enable = '1' THEN
@@ -63,12 +72,15 @@ BEGIN
                 MemReadOut <= MemRead;
                 MemToRegOut <= MemToReg;
                 RegWriteOut <= RegWrite;
+                RegWrite2Out <= RegWrite2;
                 SpPointersOut <= SpPointers;
                 ProtectWriteOut <= ProtectWrite;
                 BranchingOut <= Branching;
                 ReadData1Out <= ReadData1;
                 ReadData2Out <= ReadData2;
                 DestinationOut <= Destination;
+                Instruction_Src1Out <= Instruction_Src1;
+                Instruction_Src2Out <= Instruction_Src2;
                 ImmOut <= Imm;
             END IF;
         END IF;

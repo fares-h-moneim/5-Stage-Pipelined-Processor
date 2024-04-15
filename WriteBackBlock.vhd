@@ -8,7 +8,9 @@ entity WriteBackBlock is
         MemToReg : in std_logic_vector(1 downto 0);
         MemoryOutput : in std_logic_vector(31 downto 0);
         ALUOutput : in std_logic_vector(31 downto 0);
-        WriteData: out std_logic_vector(31 downto 0)
+        ReadData1 : in std_logic_vector(31 downto 0);
+        WriteData: out std_logic_vector(31 downto 0);
+        WriteData2: out std_logic_vector(31 downto 0)
     );
 end WriteBackBlock;
 
@@ -19,4 +21,6 @@ begin
                     MemoryOutput when MEMTOREG = "01" else
                     ALUOutput when MemToReg = "10" else
                     (others => '0');
+
+    WriteData2 <= (others => '0') when reset = '1' else ReadData1;
 end Behavioral;
