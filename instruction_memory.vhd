@@ -6,8 +6,8 @@ ENTITY instruction_memory is
     PORT(
         clk, reset : IN std_logic;
         address : IN std_logic_vector(31 DOWNTO 0);
-        instruction : OUT std_logic_vector(15 DOWNTO 0);
-        immediate : OUT std_logic_vector(15 DOWNTO 0)
+        instruction : OUT std_logic_vector(15 DOWNTO 0)
+        -- immediate : OUT std_logic_vector(15 DOWNTO 0)
     );
 END instruction_memory;
 
@@ -20,6 +20,6 @@ BEGIN
                             mem(TO_INTEGER(unsigned(address)));
     instruction <= internal_instruction;
 
-    immediate <= mem(TO_INTEGER(unsigned(address)) + 1) WHEN internal_instruction(15 downto 10) = "001100" or internal_instruction(15 downto 10)= "001101" or internal_instruction(15 downto 10) = "010010" ELSE
-                (OTHERS => '0');
+    -- immediate <= mem(TO_INTEGER(unsigned(address)) + 1) WHEN internal_instruction(15 downto 10) = "001100" or internal_instruction(15 downto 10)= "001101" or internal_instruction(15 downto 10) = "010010" ELSE
+    --             (OTHERS => '0');
 END Behavioral;

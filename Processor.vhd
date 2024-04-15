@@ -14,8 +14,7 @@ architecture Behavioral of Processor is
         port (
             clk : in std_logic;
             rst : in std_logic;
-            instruction : OUT std_logic_vector(15 DOWNTO 0);
-            immediate : OUT std_logic_vector(15 DOWNTO 0)
+            instruction : OUT std_logic_vector(15 DOWNTO 0)
         );
     end component FetchBlock;
 
@@ -24,9 +23,7 @@ architecture Behavioral of Processor is
             clk: in std_logic;
             reset: in std_logic;
             instructionIn: in std_logic_vector(15 downto 0);
-            instructionOut: out std_logic_vector(15 downto 0);
-            immediatein: in std_logic_vector(15 downto 0);
-            immediateout: out std_logic_vector(15 downto 0)
+            instructionOut: out std_logic_vector(15 downto 0)
         );
     end component FetchDecode;
 
@@ -200,7 +197,7 @@ architecture Behavioral of Processor is
     
     ----------- Signals Fetch ------------
     
-    signal fetch_instruction_out, fetch_immediate_out : std_logic_vector(15 downto 0); -- WHAT COMES OUT OF FETCHDECODE
+    signal fetch_instruction_out : std_logic_vector(15 downto 0); -- WHAT COMES OUT OF FETCHDECODE
     signal internal_fetch_instruction, internal_fetch_immediate : std_logic_vector(15 downto 0); -- WHAT COMES OUT OF FETCH BLOCK
 
     ----------- Signals Decode ------------
@@ -262,13 +259,12 @@ architecture Behavioral of Processor is
     begin
         ----------- Fetch ------------
         FetchBlock1: FetchBlock port map (
-                                            Clk, Rst, internal_fetch_instruction,
-                                            internal_fetch_immediate
+                                            Clk, Rst, internal_fetch_instruction
                                         );
 
         FetchDecode1: FetchDecode port map (
                                             Clk, Rst, internal_fetch_instruction,
-                                            fetch_instruction_out, internal_fetch_immediate, fetch_immediate_out
+                                            fetch_instruction_out
                                         );
         
         ----------- Decode ------------
@@ -279,7 +275,7 @@ architecture Behavioral of Processor is
                                         );
 
         SignExtend1: SignExtend port map (
-                                            fetch_immediate_out, immediate_sign_extended
+                                             internal_fetch_instruction, immediate_sign_extended
                                         );
 
         ControlUnit: Control port map (
