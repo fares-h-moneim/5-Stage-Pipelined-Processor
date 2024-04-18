@@ -20,6 +20,7 @@ entity ExecuteMemory is
         ProtectWrite : in std_logic;
         Branching : in std_logic;
         Instruction_Src1 : in std_logic_vector(2 downto 0);
+        Instruction_Src2 : in std_logic_vector(2 downto 0);
 
         ZeroFlagOut : out std_logic;
         RegDstOut : out std_logic_vector(2 downto 0);
@@ -34,7 +35,8 @@ entity ExecuteMemory is
         SpPointersOut : out std_logic_vector(1 downto 0);
         ProtectWriteOut : out std_logic;
         BranchingOut : out std_logic;
-        Instruction_Src1Out : out std_logic_vector(2 downto 0)
+        Instruction_Src1Out : out std_logic_vector(2 downto 0);
+        Instruction_Src2Out : out std_logic_vector(2 downto 0)
     );
 end entity ExecuteMemory;
 
@@ -57,6 +59,7 @@ begin
             ProtectWriteOut <= '0';
             BranchingOut <= '0';
             Instruction_Src1Out <= (others => '0');
+            Instruction_Src2Out <= (others => '0');
         elsif rising_edge(clk) then
             ZeroFlagOut <= ZeroFlagIn;
             RegDstOut <= RegDst;
@@ -72,6 +75,7 @@ begin
             ProtectWriteOut <= ProtectWrite;
             BranchingOut <= Branching;
             Instruction_Src1Out <= Instruction_Src1;
+            Instruction_Src2Out <= Instruction_Src2;
         end if;
     end process;
 end Behavioural;
