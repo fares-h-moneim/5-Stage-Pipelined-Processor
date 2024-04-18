@@ -26,6 +26,7 @@ architecture Behavioral of ALU is
     constant ALU_XOR : std_logic_vector(3 downto 0) := "0111";
     constant ALU_AND : std_logic_vector(3 downto 0) := "1000";
     constant ALU_CMP : std_logic_vector(3 downto 0) := "1011";
+    constant ALU_SWAP : std_logic_vector(3 downto 0) := "1010";
     constant ALU_A : std_logic_vector(3 downto 0) := "1001"; -- Output readdata1
     constant ALU_B : std_logic_vector(3 downto 0) := "1110"; -- output readdata2 or immediate
     
@@ -49,7 +50,7 @@ architecture Behavioral of ALU is
     else  TempA xor TempB                                    when Sel = ALU_XOR
     else  TempA and TempB                                    when Sel = ALU_AND
     else  TempA                                              when Sel = ALU_A
-    else  TempB                                              when Sel = ALU_B or sel = "1010"
+    else  TempB                                              when Sel = ALU_B or Sel = ALU_SWAP
     else (others => '0');
 
     FlagsOut(0) <= '1'  when (Sel = ALU_NOT or Sel = ALU_NEG or Sel = ALU_INC or Sel = ALU_DEC or Sel = ALU_ADD or Sel = ALU_SUB or Sel = ALU_CMP or Sel = ALU_OR or Sel = ALU_XOR or Sel = ALU_AND) AND TempOut(n-1 downto 0) = "00000000000000000000000000000000"
