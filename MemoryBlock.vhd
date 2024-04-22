@@ -4,11 +4,11 @@ USE IEEE.numeric_std.all;
 
 Entity MemoryBlock is 
     PORT (clk : IN std_logic;
-    address : IN std_logic_vector(11 DOWNTO 0);
-    data_in : IN std_logic_vector(31 DOWNTO 0);
-    mem_write : IN std_logic;
-    mem_read : IN std_logic;
-    read_data : OUT std_logic_vector(31 DOWNTO 0)
+        address : IN std_logic_vector(11 DOWNTO 0);
+        data_in : IN std_logic_vector(31 DOWNTO 0);
+        mem_write : IN std_logic;
+        mem_read : IN std_logic;
+        read_data : OUT std_logic_vector(31 DOWNTO 0)
     );
 END ENTITY MemoryBlock;
 

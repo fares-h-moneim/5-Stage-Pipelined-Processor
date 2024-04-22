@@ -28,6 +28,35 @@ architecture Behavioral of Processor is
     end component FetchDecode;
 
     ------------- Decode ------------
+    component DecodeBlock is
+        port(
+            clk : IN std_logic;
+            reset : IN std_logic;
+            we : IN std_logic;
+            we2 : IN std_logic;
+            w_address : IN std_logic_vector(2 DOWNTO 0);
+            w_address2 : IN std_logic_vector(2 DOWNTO 0);
+            r_address1 : IN std_logic_vector(2 DOWNTO 0);
+            r_address2 : IN std_logic_vector(2 DOWNTO 0);
+            data_in   : IN std_logic_vector(31 DOWNTO 0);
+            data_in2   : IN std_logic_vector(31 DOWNTO 0);
+            dataout_1 : OUT std_logic_vector(31 DOWNTO 0);
+            dataout_2 : OUT std_logic_vector(31 DOWNTO 0);
+            Opcode : in std_logic_vector(5 downto 0);
+            IsInstructionIn : in std_logic;
+            AluSelector : out std_logic_vector(3 downto 0);
+            AluSrc : out std_logic;
+            MemWrite : out std_logic;
+            MemRead : out std_logic;
+            MemToReg : out std_logic_vector(1 downto 0);
+            RegWrite : out std_logic;
+            RegWrite2 : out std_logic;
+            SpPointers : out std_logic_vector(1 downto 0);
+            ProtectWrite : out std_logic;
+            Branching : out std_logic;
+            IsInstructionOut : out std_logic
+        );
+    end component DecodeBlock;
     component RegisterFile is
         port(
             clk : IN std_logic;
@@ -315,21 +344,18 @@ architecture Behavioral of Processor is
                                         );
         
         ----------- Decode ------------
-        Registers: RegisterFile port map (
+        DecodeBlock1: DecodeBlock port map (
                                             Clk, Rst, write_back_reg_write, write_back_reg_write2, write_back_reg_destination, write_back_instruction_src2,
-                                            fetch_instruction_out(9 downto 7), fetch_instruction_out(3 downto 1),
-                                            write_back_alu_out, write_back_read_data1, read_data1, read_data2
+                                            fetch_instruction_out(9 downto 7), fetch_instruction_out(3 downto 1), write_back_alu_out, write_back_read_data1,
+                                            read_data1, read_data2, fetch_instruction_out(15 downto 10), IsInstructionIN, decode_alu_selector, decode_alu_src,
+                                            decode_mem_write, decode_mem_read, decode_mem_to_reg, decode_reg_write, decode_reg_write2,
+                                            decode_sp_pointers, decode_protect_write, decode_branching, IsInstructionOUT
                                         );
 
         SignExtend1: SignExtend port map (
                                             internal_fetch_instruction, immediate_sign_extended, fetch_instruction_out(15 downto 10)
                                         );
 
-        ControlUnit: Control port map (
-                                        Rst, fetch_instruction_out(15 downto 10), IsInstructionIN, decode_alu_selector, decode_alu_src,
-                                        decode_mem_write, decode_mem_read, decode_mem_to_reg, decode_reg_write,
-                                        decode_reg_write2, decode_sp_pointers, decode_protect_write, decode_branching, IsInstructionOUT
-                                    );
 
         DecodeExecute1: DecodeExecute port map (
                                                 Clk, Rst, '1', decode_alu_selector,
