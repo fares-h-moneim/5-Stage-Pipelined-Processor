@@ -175,7 +175,7 @@ architecture Behavioral of Processor is
 
     ------------- Memory -------------
 
-    COMPONENT DataMemory IS
+    COMPONENT MemoryBlock IS
     PORT (
             clk : IN std_logic;
             address : IN std_logic_vector(11 DOWNTO 0);
@@ -184,7 +184,7 @@ architecture Behavioral of Processor is
             mem_read : IN std_logic;
             read_data : OUT std_logic_vector(31 DOWNTO 0)
         );
-    END COMPONENT DataMemory;
+    END COMPONENT MemoryBlock;
 
     COMPONENT MemoryWriteBack IS
         PORT(
@@ -364,7 +364,7 @@ architecture Behavioral of Processor is
 
         ----------- Memory -------------
 
-        DataMemory1: DataMemory port map (
+        DataMemory1: MemoryBlock port map (
                                             Clk, memory_alu_out(11 downto 0), memory_alu_out(31 downto 0),
                                             memory_mem_write, memory_mem_read,
                                             memory_read_data_output
