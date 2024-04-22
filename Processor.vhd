@@ -47,6 +47,7 @@ architecture Behavioral of Processor is
 
     component Control is
         port(
+            reset : in std_logic;
             Opcode : in std_logic_vector(5 downto 0);
             IsInstructionIn : in std_logic;
             AluSelector : out std_logic_vector(3 downto 0);
@@ -66,7 +67,8 @@ architecture Behavioral of Processor is
     component SignExtend is 
         port(
             input : in std_logic_vector(15 downto 0);
-            output : out std_logic_vector(31 downto 0)
+            output : out std_logic_vector(31 downto 0);
+            Opcode : in std_logic_vector(5 downto 0)
         );
     end component SignExtend;
 
@@ -126,6 +128,9 @@ architecture Behavioral of Processor is
             AluSelector : in std_logic_vector(3 downto 0);
             
             ZeroFlag : out std_logic;
+            NegativeFlag : out std_logic;
+            CarryFlag : out std_logic;
+            OverflowFlag : out std_logic;
             AluOut : out std_logic_vector(31 downto 0)
         );
     end component ExecuteBlock;
@@ -244,6 +249,9 @@ architecture Behavioral of Processor is
 
     ----------- Signals Execute -----------
     signal execute_zero_out : std_logic;
+    signal execute_negative_out : std_logic;
+    signal execute_carry_out : std_logic;
+    signal execute_overflow_out : std_logic;
     signal execute_alu_out : std_logic_vector(31 downto 0);
     signal execute_alu_selector : std_logic_vector(3 downto 0);
     signal execute_alu_src : std_logic;
@@ -314,11 +322,11 @@ architecture Behavioral of Processor is
                                         );
 
         SignExtend1: SignExtend port map (
-                                            internal_fetch_instruction, immediate_sign_extended
+                                            internal_fetch_instruction, immediate_sign_extended, fetch_instruction_out(15 downto 10)
                                         );
 
         ControlUnit: Control port map (
-                                        fetch_instruction_out(15 downto 10), IsInstructionIN, decode_alu_selector, decode_alu_src,
+                                        Rst, fetch_instruction_out(15 downto 10), IsInstructionIN, decode_alu_selector, decode_alu_src,
                                         decode_mem_write, decode_mem_read, decode_mem_to_reg, decode_reg_write,
                                         decode_reg_write2, decode_sp_pointers, decode_protect_write, decode_branching, IsInstructionOUT
                                     );
@@ -340,7 +348,7 @@ architecture Behavioral of Processor is
         ExecuteBlock1: ExecuteBlock port map (
                                                 Clk, Rst, execute_alu_src,
                                                 execute_read_data1, execute_read_data2, execute_immediate,
-                                                execute_alu_selector, execute_zero_out, execute_alu_out
+                                                execute_alu_selector, execute_zero_out, execute_negative_out, execute_carry_out, execute_overflow_out, execute_alu_out
                                             );
 
         ExecuteMemory1: ExecuteMemory port map (

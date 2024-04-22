@@ -7,8 +7,8 @@ entity ALU is
     port (
         A, B: in std_logic_vector(n-1 downto 0); -- Two operands
         Sel: in std_logic_vector(3 downto 0); -- Select lines
-        FlagsIn: in std_logic_vector(2 downto 0); -- Flags input (Zero, Negative, Carry)
-        FlagsOut: out std_logic_vector(2 downto 0); -- Flags output (Zero, Negative, Carry)
+        FlagsIn: in std_logic_vector(3 downto 0); -- Flags input (Zero, Negative, Overflow, Carry)
+        FlagsOut: out std_logic_vector(3 downto 0); -- Flags output (Zero, Negative, Overflow, Carry)
         Res: out std_logic_vector(n-1 downto 0) -- Result
     );
 end entity ALU;
@@ -53,14 +53,27 @@ architecture Behavioral of ALU is
     else  TempB                                              when Sel = ALU_B or Sel = ALU_SWAP
     else (others => '0');
 
+    -- Zero flag
     FlagsOut(0) <= '1'  when (Sel = ALU_NOT or Sel = ALU_NEG or Sel = ALU_INC or Sel = ALU_DEC or Sel = ALU_ADD or Sel = ALU_SUB or Sel = ALU_CMP or Sel = ALU_OR or Sel = ALU_XOR or Sel = ALU_AND) AND TempOut(n-1 downto 0) = "00000000000000000000000000000000"
-    else '0';
-    
-    FlagsOut(1) <= '1' when (Sel = ALU_NOT or Sel = ALU_NEG or Sel = ALU_INC or Sel = ALU_DEC or Sel = ALU_ADD or Sel = ALU_SUB or Sel = ALU_CMP or Sel = ALU_OR or Sel = ALU_XOR or Sel = ALU_AND) AND (to_integer(signed(TempOut(n-1 downto 0))) < 0)
-    else '0';
+            else '0'    when (Sel = ALU_NOT or Sel = ALU_NEG or Sel = ALU_INC or Sel = ALU_DEC or Sel = ALU_ADD or Sel = ALU_SUB or Sel = ALU_CMP or Sel = ALU_OR or Sel = ALU_XOR or Sel = ALU_AND) AND TempOut(n-1 downto 0) /= "00000000000000000000000000000000"
+            else FlagsIn(0);
 
-    FlagsOut(2) <= TempOut(n) when (Sel = ALU_NEG or Sel = ALU_INC or Sel = ALU_DEC or Sel = ALU_ADD or Sel = ALU_SUB or Sel = ALU_CMP)
-    else '0';
+    -- Negative flag
+    FlagsOut(1) <= '1' when (Sel = ALU_NOT or Sel = ALU_NEG or Sel = ALU_INC or Sel = ALU_DEC or Sel = ALU_ADD or Sel = ALU_SUB or Sel = ALU_CMP or Sel = ALU_OR or Sel = ALU_XOR or Sel = ALU_AND) AND (to_integer(signed(TempOut(n-1 downto 0))) < 0)
+            else '0'   when (Sel = ALU_NOT or Sel = ALU_NEG or Sel = ALU_INC or Sel = ALU_DEC or Sel = ALU_ADD or Sel = ALU_SUB or Sel = ALU_CMP or Sel = ALU_OR or Sel = ALU_XOR or Sel = ALU_AND) AND (to_integer(signed(TempOut(n-1 downto 0))) >= 0)
+            else FlagsIn(1);
+
+    -- Overflow flag
+    FlagsOut(2) <= '1' when ((Sel = ALU_INC or Sel = ALU_DEC) and (TempOut(n-1) /= TempA(n-1))) or -- Overflow for INC and DEC
+            ((Sel = ALU_ADD or Sel = ALU_SUB) and (TempA(n-1) = TempB(n-1)) and (TempOut(n-1) /= TempA(n-1))) or -- Overflow for ADD and SUB with same sign operands
+            ((Sel = ALU_ADD or Sel = ALU_SUB) and (TempA(n-1) /= TempB(n-1)) and (TempOut(n-1) /= TempA(n-1)) and (TempOut(n-1) /= TempB(n-1))) -- Overflow for ADD and SUB with different sign operands
+            else '0' when (Sel = ALU_INC or Sel = ALU_DEC or Sel = ALU_ADD or Sel = ALU_SUB)
+            else FlagsIn(2);
+
+
+    -- Carry flag
+    FlagsOut(3) <= TempOut(n) when (Sel = ALU_NEG or Sel = ALU_INC or Sel = ALU_DEC or Sel = ALU_ADD or Sel = ALU_SUB or Sel = ALU_CMP)
+    else FlagsIn(3);
 
     Res <= TempOut(n-1 downto 0);
 end architecture Behavioral;

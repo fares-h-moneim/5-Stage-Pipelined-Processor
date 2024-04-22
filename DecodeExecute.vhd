@@ -48,7 +48,7 @@ BEGIN
     PROCESS (clk, reset, enable)
     BEGIN
         IF reset = '1' THEN
-            AluSelectorOut <= (OTHERS=>'0');
+            AluSelectorOut <= "1001";
             AluSrcOut <= '0';
             MemWriteOut <= '0';
             MemReadOut <= '0';

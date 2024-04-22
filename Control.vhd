@@ -4,6 +4,7 @@ use ieee.std_logic_arith.all;
 
 entity Control is
     port(
+        reset : in std_logic;
         Opcode : in std_logic_vector(5 downto 0);
         IsInstructionIn : in std_logic;
         AluSelector : out std_logic_vector(3 downto 0);
@@ -25,7 +26,7 @@ begin
 
     IsInstructionOut <= '0' when Opcode = "010010" else '1';
 
-    AluSelector <= "1001" when IsInstructionIn = '0' else
+    AluSelector <= "1001" when IsInstructionIn = '0' or reset = '1' else
     Opcode(3 downto 0) when Opcode(5 downto 4) = "00" -- R-type
     else "1110" when Opcode = "010010" or Opcode = "001010" --LDM outputs the selector for ALU that outputs TempB
     else "0100" when Opcode(5 downto 4) = "01" -- LDD and STD
