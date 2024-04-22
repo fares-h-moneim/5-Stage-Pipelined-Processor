@@ -12,7 +12,7 @@ BEGIN
 PROCESS(clk,rst)
 BEGIN
 IF(rst = '1') THEN
- q <= "0000001111111111";
+ q <= "111111111110";
 ELSIF clk'event and clk = '1' THEN
 if en = '1' then 
  q <= d;

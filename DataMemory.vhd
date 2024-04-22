@@ -16,14 +16,14 @@ ARCHITECTURE sync_ram_a OF DataMemory IS
     TYPE ram_type IS ARRAY(0 TO 4095) of std_logic_vector(15 DOWNTO 0);
         SIGNAL ram : ram_type ;
     BEGIN
+
+    read_data <= ram(to_integer(unsigned(address)) + 1) & ram(to_integer(unsigned(address))) when mem_read = '1' else data_in;
     PROCESS(clk, mem_write, mem_read) IS  
         BEGIN
         IF rising_edge(clk) THEN   
             IF mem_write = '1' THEN        
                 ram(to_integer(unsigned((address)))) <= data_in(15 downto 0);
                 ram(to_integer(unsigned((address))) + 1) <= data_in(31 downto 16);
-            ELSIF mem_read = '1' THEN
-                read_data <= ram(to_integer(unsigned(address)) + 1) & ram(to_integer(unsigned(address)));
             END IF;
         END IF;
     END PROCESS;
