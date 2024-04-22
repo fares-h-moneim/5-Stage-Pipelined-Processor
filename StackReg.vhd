@@ -1,13 +1,13 @@
 
 LIBRARY IEEE;
 USE IEEE.std_logic_1164.all;
-ENTITY stackReg IS
-GENERIC(n : integer :=8);
+ENTITY StackReg IS
+GENERIC(n : integer :=16);
  PORT( d : IN std_logic_vector (n-1 downto 0);
  q : OUT std_logic_vector (n-1 downto 0);
 clk,rst,en : IN std_logic );
-END stackReg;
-ARCHITECTURE a_my_DFF OF stackReg IS
+END StackReg;
+ARCHITECTURE a_my_DFF OF StackReg IS
 BEGIN
 PROCESS(clk,rst)
 BEGIN
