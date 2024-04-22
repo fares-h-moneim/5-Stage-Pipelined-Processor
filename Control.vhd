@@ -28,17 +28,18 @@ begin
 
     AluSelector <= "1001" when IsInstructionIn = '0' or reset = '1' else
     Opcode(3 downto 0) when Opcode(5 downto 4) = "00" -- R-type
-    else "1110" when Opcode = "010010" or Opcode = "001010" --LDM outputs the selector for ALU that outputs TempB
+    else "1110" when Opcode = "010010" or Opcode = "001010" or Opcode = "010110" --LDM outputs the selector for ALU that outputs TempB or push
     else "0100" when Opcode(5 downto 4) = "01" -- LDD and STD
     else "1001"; -- Rest are dont cares so just treat them as MOV;
 
     AluSrc <= '0' when IsInstructionIn = '0' else
+    '0' when Opcode = "010110" else --push
     '1' when Opcode(5 downto 4) = "10" or Opcode(5 downto 4) = "01" or -- ALU src is equal 1 if ADDI, SUBI, LDM, LDD, STD else it is zero
         Opcode = "001100" or Opcode = "001101" 
     else '0';
 
     MemWrite <= '0' when IsInstructionIn = '0' else
-    '1' when Opcode = "010100" or Opcode = "010110" --MemWrite is equal 1 only if STD and Push
+    '1' when Opcode = "010100" or Opcode = "010110" or Opcode = "010110" --MemWrite is equal 1 only if STD and Push
     else '0';
 
     MemRead <= '0' when IsInstructionIn = '0' else
