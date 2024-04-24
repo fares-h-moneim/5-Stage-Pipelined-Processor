@@ -263,7 +263,6 @@ architecture Behavioral of Processor is
 
     ----------- Signals Decode ------------
     signal read_data1, read_data2 : std_logic_vector(31 downto 0); -- WHAT COMES OUT OF REGISTER FILE
-    signal reg_write : std_logic; -- write enable for register file
     signal decode_alu_selector : std_logic_vector(3 downto 0); -- WHAT COMES OUT OF CONTROL
     signal decode_alu_src : std_logic; -- WHAT COMES OUT OF CONTROL 
     signal decode_mem_write : std_logic; -- WHAT COMES OUT OF CONTROL

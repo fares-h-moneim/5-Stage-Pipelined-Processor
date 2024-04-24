@@ -34,6 +34,7 @@ architecture Behavioral of ALU is
     
 
     signal TempOut : std_logic_vector(n downto 0);
+    signal TempCarryOut : std_logic_vector(n-1 downto 0);
     signal TempA, TempB:std_logic_vector(n downto 0);
     
     Begin
@@ -55,6 +56,11 @@ architecture Behavioral of ALU is
     else  TempB                                              when Sel = ALU_B or Sel = ALU_SWAP
     else (others => '0');
 
+    TempCarryOut <= std_logic_vector(unsigned('0' & TempA(n-2 downto 0)) + 1)               when Sel = ALU_INC
+                    else std_logic_vector(unsigned('0' & TempA(n-2 downto 0)) - 1)               when Sel = ALU_DEC 
+                    else std_logic_vector(unsigned('0' & TempA(n-2 downto 0)) + unsigned('0' & TempB(n-2 downto 0))) when Sel = ALU_ADD or Sel = ALU_ADDI
+                    else std_logic_vector(unsigned('0' & TempA(n-2 downto 0)) - unsigned('0' & TempB(n-2 downto 0))) when Sel = ALU_SUB or Sel = ALU_CMP or Sel = ALU_SUBI;
+
     -- Zero flag
     FlagsOut(0) <= '1'  when (Sel = ALU_NOT or Sel = ALU_NEG or Sel = ALU_INC or Sel = ALU_DEC or Sel = ALU_ADD or Sel = ALU_ADDI or Sel = ALU_SUB or Sel = ALU_SUBI or Sel = ALU_CMP or Sel = ALU_OR or Sel = ALU_XOR or Sel = ALU_AND) AND TempOut(n-1 downto 0) = "00000000000000000000000000000000"
             else '0'    when (Sel = ALU_NOT or Sel = ALU_NEG or Sel = ALU_INC or Sel = ALU_DEC or Sel = ALU_ADD or Sel = ALU_ADDI or Sel = ALU_SUB or Sel = ALU_SUBI or Sel = ALU_CMP or Sel = ALU_OR or Sel = ALU_XOR or Sel = ALU_AND) AND TempOut(n-1 downto 0) /= "00000000000000000000000000000000"
@@ -66,15 +72,12 @@ architecture Behavioral of ALU is
             else FlagsIn(1);
 
     -- Overflow flag
-    FlagsOut(2) <= '1' when ((Sel = ALU_INC or Sel = ALU_DEC) and (TempOut(n-1) /= TempA(n-1))) or -- Overflow for INC and DEC
-            ((Sel = ALU_ADD or Sel = ALU_ADDI or Sel = ALU_SUB or Sel = ALU_SUBI) and (TempA(n-1) = TempB(n-1)) and (TempOut(n-1) /= TempA(n-1))) or -- Overflow for ADD and SUB with same sign operands
-            ((Sel = ALU_ADD or Sel = ALU_ADDI or Sel = ALU_SUB or Sel = ALU_SUBI) and (TempA(n-1) /= TempB(n-1)) and (TempOut(n-1) /= TempA(n-1)) and (TempOut(n-1) /= TempB(n-1))) -- Overflow for ADD and SUB with different sign operands
-            else '0' when (Sel = ALU_INC or Sel = ALU_DEC or Sel = ALU_ADD or Sel = ALU_ADDI or Sel = ALU_SUB or Sel = ALU_SUBI)
+    FlagsOut(2) <= TempOut(n) xor TempCarryOut(n-1) when (Sel = ALU_ADD or Sel = ALU_ADDI or Sel = ALU_SUB or Sel = ALU_SUBI or Sel = ALU_INC or Sel = ALU_DEC)
             else FlagsIn(2);
 
 
     -- Carry flag
-    FlagsOut(3) <= TempOut(n) when (Sel = ALU_NEG or Sel = ALU_INC or Sel = ALU_DEC or Sel = ALU_ADD or Sel = ALU_ADDI or Sel = ALU_SUB or Sel = ALU_SUBI or Sel = ALU_CMP)
+    FlagsOut(3) <= TempOut(n) when (Sel = ALU_NEG or Sel = ALU_INC or Sel = ALU_DEC or Sel = ALU_ADD or Sel = ALU_ADDI or Sel = ALU_SUB or Sel = ALU_SUBI)
     else FlagsIn(3);
 
     Res <= TempOut(n-1 downto 0);
