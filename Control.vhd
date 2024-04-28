@@ -24,7 +24,7 @@ architecture Behavioral of Control is
 
 begin
  --010101 Regwrite = 1, Memread= 1, memtoreg = 01
-    IsInstructionOut <= '0' when Opcode = "010010" else '1';
+    IsInstructionOut <= '0' when Opcode = "010010" or Opcode = "010011" or Opcode = "010100" else '1';
 
     AluSelector <= "1001" when IsInstructionIn = '0' or reset = '1' else
     Opcode(3 downto 0) when Opcode(5 downto 4) = "00" -- R-type
