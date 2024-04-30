@@ -4,7 +4,9 @@ use ieee.numeric_std.all;
 
 entity Processor is
     port (
-        Clk, Rst : in std_logic
+        Clk, Rst : in std_logic;
+        InPort : in std_logic_vector(15 downto 0);
+        OutPort : out std_logic_vector(15 downto 0)
     );
 end entity Processor;
 
