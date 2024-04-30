@@ -194,8 +194,8 @@ for instruction in removedSpacesInstr:
     elif instruction[0] in ThreeOperands:
         print(instruction)
         temp += commands[instruction[0]]  # op
-        temp += operands[instruction[1]]  # s1
-        temp += operands[instruction[2]]  # d
+        temp += operands[instruction[2]]  # s1
+        temp += operands[instruction[1]]  # d
         temp += operands[instruction[3]]  # s2
         temp += "0"
         isInstruction = True
