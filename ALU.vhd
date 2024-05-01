@@ -77,7 +77,7 @@ architecture Behavioral of ALU is
 
 
     -- Carry flag
-    FlagsOut(3) <= TempOut(n) when (Sel = ALU_NEG or Sel = ALU_INC or Sel = ALU_DEC or Sel = ALU_ADD or Sel = ALU_ADDI or Sel = ALU_SUB or Sel = ALU_SUBI)
+    FlagsOut(3) <= TempOut(n) when (Sel = ALU_ADD or Sel = ALU_ADDI or Sel = ALU_SUB or Sel = ALU_SUBI or Sel = ALU_INC or Sel = ALU_DEC)
     else FlagsIn(3);
 
     Res <= TempOut(n-1 downto 0);
