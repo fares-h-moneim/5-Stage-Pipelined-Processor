@@ -68,7 +68,7 @@ begin
     else "10" when Opcode = "010101" or Opcode = "100011" or Opcode = "100100" -- Pop, RET, RTI
     else "00"; -- SP is not changed
 
-    ProtectWrite <= '1' when Opcode = "010111" or Opcode = "011000" -- ProtectWrite is equal 1 if Protect or free
+    ProtectWrite <= '1' when Opcode = "010111" -- ProtectWrite is equal 1 if Protect
     else '0';
 
     FreeWrite <= '1' when Opcode = "011000" -- FreeWrite is equal 1 if Free

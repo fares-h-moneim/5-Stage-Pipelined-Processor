@@ -238,7 +238,8 @@ architecture Behavioral of Processor is
             reg2_value : IN std_logic_vector(31 DOWNTO 0);
             protect_signal : IN std_logic;
             free_signal : IN std_logic;
-            read_data_protected : OUT std_logic
+            read_data_protected : OUT std_logic;
+            read_data_protected_after : OUT std_logic
         );
     END COMPONENT MemoryBlock;
 
@@ -357,6 +358,7 @@ architecture Behavioral of Processor is
     signal memory_in_port : std_logic_vector(31 downto 0);
     signal memory_out_en : std_logic;
     signal memory_read_data_protected : std_logic;
+    signal memory_read_data_protected_after : std_logic;
 
     --------- Signals Write Back ----------
     signal WriteBackData : std_logic_vector(31 downto 0);
@@ -436,7 +438,8 @@ architecture Behavioral of Processor is
         DataMemory1: MemoryBlock port map (
                                             Clk, Rst, memory_alu_out(11 downto 0), memory_alu_out(31 downto 0),
                                             memory_mem_write, memory_mem_read,
-                                            memory_read_data_output, memory_sp_pointers, "00000000000000000000000000000000" , memory_read_data2, memory_protect_write, memory_free_write, memory_read_data_protected
+                                            memory_read_data_output, memory_sp_pointers, "00000000000000000000000000000000" , memory_read_data2, memory_protect_write, memory_free_write, memory_read_data_protected,
+                                            memory_read_data_protected_after
                                         );
 
         MemoryWriteBack1: MemoryWriteBack port map (
