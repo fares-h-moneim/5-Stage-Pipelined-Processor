@@ -15,6 +15,8 @@ ENTITY MemoryWriteBack IS
         Instruction_Src_1 : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
         Instruction_Src_2 : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
         ReadData : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+        InPort : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+        OutEnable : IN STD_LOGIC;
 
         MemToRegOut : OUT STD_LOGIC_VECTOR(1 DOWNTO 0);
         RegWriteOut : OUT STD_LOGIC;
@@ -24,7 +26,9 @@ ENTITY MemoryWriteBack IS
         RegDstOut : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
         ReadDataOut : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
         Instruction_Src_1Out : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
-        Instruction_Src_2Out : OUT STD_LOGIC_VECTOR(2 DOWNTO 0)
+        Instruction_Src_2Out : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
+        InPortOut : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+        OutEnableOut : OUT STD_LOGIC
     );
 END MemoryWriteBack;
 
@@ -43,6 +47,8 @@ BEGIN
             ReadDataOut <= (OTHERS => '0');
             Instruction_Src_1Out <= (OTHERS => '0');
             Instruction_Src_2Out <= (OTHERS => '0');
+            InPortOut <= (OTHERS => '0');
+            OutEnableOut <= '0';
         ELSIF rising_edge(clk) THEN
             IF enable = '1' THEN
                 MemToRegOut <= MemToReg;
@@ -54,6 +60,8 @@ BEGIN
                 RegDstOut <= RegDst;
                 Instruction_Src_1Out <= Instruction_Src_1;
                 Instruction_Src_2Out <= Instruction_Src_2;
+                InPortOut <= InPort;
+                OutEnableOut <= OutEnable;
             END IF;
     END IF;
     END PROCESS;

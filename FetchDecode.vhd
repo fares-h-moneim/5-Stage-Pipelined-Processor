@@ -6,9 +6,9 @@ entity FetchDecode is
         clk: in std_logic;
         reset: in std_logic;
         instructionIn: in std_logic_vector(15 downto 0);
-        instructionOut: out std_logic_vector(15 downto 0)
-        -- immediatein: in std_logic_vector(15 downto 0);
-        -- immediateout: out std_logic_vector(15 downto 0)
+        instructionOut: out std_logic_vector(15 downto 0);
+        InPort: in std_logic_vector(31 downto 0);
+        InPortOut: out std_logic_vector(31 downto 0)
     );
 end FetchDecode;
 
@@ -18,10 +18,11 @@ BEGIN
     BEGIN
         IF reset = '1' THEN
             instructionOut <= "1100000000000000";
-            -- immediateOut   <= (OTHERS => '0');
+            InPortOut <= (others => '0');
+
         ELSIF rising_edge(clk) THEN
             instructionOut <= instructionIn;
-            -- immediateOut   <= immediateIn;
+            InPortOut <= InPort;
         END IF;
     END PROCESS;
 

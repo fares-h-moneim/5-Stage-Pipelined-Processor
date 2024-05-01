@@ -28,7 +28,8 @@ ENTITY DecodeBlock IS
         SpPointers : out std_logic_vector(1 downto 0);
         ProtectWrite : out std_logic;
         Branching : out std_logic;
-        IsInstructionOut : out std_logic
+        IsInstructionOut : out std_logic;
+        OutEnable : out std_logic
     );
 END DecodeBlock;
 
@@ -65,7 +66,8 @@ architecture Behavioral of DecodeBlock IS
             SpPointers : out std_logic_vector(1 downto 0);
             ProtectWrite : out std_logic;
             Branching : out std_logic;
-            IsInstructionOut : out std_logic
+            IsInstructionOut : out std_logic;
+            OutEnable : out std_logic
         );
     END component;
 
@@ -100,6 +102,7 @@ architecture Behavioral of DecodeBlock IS
             SpPointers => SpPointers,
             ProtectWrite => ProtectWrite,
             Branching => Branching,
-            IsInstructionOut => IsInstructionOut
+            IsInstructionOut => IsInstructionOut,
+            OutEnable => OutEnable
         );
 end Behavioral;
