@@ -7,6 +7,7 @@ entity Control is
         reset : in std_logic;
         Opcode : in std_logic_vector(5 downto 0);
         IsInstructionIn : in std_logic;
+
         AluSelector : out std_logic_vector(3 downto 0);
         AluSrc : out std_logic;
         MemWrite : out std_logic;
@@ -17,7 +18,8 @@ entity Control is
         SpPointers : out std_logic_vector(1 downto 0);
         ProtectWrite : out std_logic;
         Branching : out std_logic;
-        IsInstructionOut : out std_logic -- Corrected syntax error here, no semicolon needed before this declaration
+        IsInstructionOut : out std_logic; -- Corrected syntax error here, no semicolon needed before this declaration
+        OutEnable : out std_logic
     );
 end Control;
 architecture Behavioral of Control is
@@ -25,6 +27,8 @@ architecture Behavioral of Control is
 begin
 
     IsInstructionOut <= '0' when Opcode = "010010" else '1';
+
+    OutEnable <= '1' when Opcode = "110001" else '0';
 
     AluSelector <= "1001" when IsInstructionIn = '0' or reset = '1' else
     Opcode(3 downto 0) when Opcode(5 downto 4) = "00" -- R-type

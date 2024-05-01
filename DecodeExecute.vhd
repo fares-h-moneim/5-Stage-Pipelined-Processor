@@ -23,6 +23,7 @@ ENTITY DecodeExecute IS
         Destination : IN std_logic_vector(2 downto 0); -- Register destination address
         Imm : IN std_logic_vector(31 downto 0);
         InPort : IN std_logic_vector(31 downto 0);
+        OutEnable : IN std_logic;
 
         AluSelectorOut : OUT std_logic_vector(3 downto 0);
         AluSrcOut : OUT std_logic;
@@ -40,7 +41,8 @@ ENTITY DecodeExecute IS
         Instruction_Src2Out : OUT std_logic_vector(2 downto 0);
         DestinationOut : OUT std_logic_vector(2 downto 0);
         ImmOut : OUT std_logic_vector(31 downto 0);
-        InPortOut : OUT std_logic_vector(31 downto 0)
+        InPortOut : OUT std_logic_vector(31 downto 0);
+        OutEnableOut : OUT std_logic
     );
 END DecodeExecute;
 
@@ -67,6 +69,7 @@ BEGIN
             Instruction_Src2Out <= (OTHERS=>'0');
             ImmOut <= (OTHERS=>'0');
             InPortOut <= (OTHERS=>'0');
+            OutEnableOut <= '0';
         ELSIF rising_edge(clk) THEN
             IF enable = '1' THEN
                 AluSelectorOut <= AluSelector;
@@ -86,6 +89,7 @@ BEGIN
                 Instruction_Src2Out <= Instruction_Src2;
                 ImmOut <= Imm;
                 InPortOut <= InPort;
+                OutEnableOut <= OutEnable;
             END IF;
         END IF;
     END PROCESS;
