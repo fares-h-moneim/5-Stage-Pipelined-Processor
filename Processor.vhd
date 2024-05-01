@@ -209,11 +209,15 @@ architecture Behavioral of Processor is
     COMPONENT MemoryBlock IS
     PORT (
             clk : IN std_logic;
+            reset : IN std_logic;
             address : IN std_logic_vector(11 DOWNTO 0);
             data_in : IN std_logic_vector(31 DOWNTO 0);
             mem_write : IN std_logic;
             mem_read : IN std_logic;
-            read_data : OUT std_logic_vector(31 DOWNTO 0)
+            read_data : OUT std_logic_vector(31 DOWNTO 0);
+            sp_signal : IN std_logic_vector(1 DOWNTO 0);
+            pc_value : IN std_logic_vector(31 DOWNTO 0);
+            reg2_value : IN std_logic_vector(31 DOWNTO 0)
         );
     END COMPONENT MemoryBlock;
 
@@ -347,7 +351,7 @@ architecture Behavioral of Processor is
         ----------- Decode ------------
         DecodeBlock1: DecodeBlock port map (
                                             Clk, Rst, write_back_reg_write, write_back_reg_write2, write_back_reg_destination, write_back_instruction_src2,
-                                            fetch_instruction_out(9 downto 7), fetch_instruction_out(3 downto 1), write_back_alu_out, write_back_read_data1,
+                                            fetch_instruction_out(9 downto 7), fetch_instruction_out(3 downto 1), WriteBackData, write_back_read_data1,
                                             read_data1, read_data2, fetch_instruction_out(15 downto 10), IsInstructionIN, decode_alu_selector, decode_alu_src,
                                             decode_mem_write, decode_mem_read, decode_mem_to_reg, decode_reg_write, decode_reg_write2,
                                             decode_sp_pointers, decode_protect_write, decode_branching, IsInstructionOUT
@@ -392,9 +396,9 @@ architecture Behavioral of Processor is
         ----------- Memory -------------
 
         DataMemory1: MemoryBlock port map (
-                                            Clk, memory_alu_out(11 downto 0), memory_alu_out(31 downto 0),
+                                            Clk, Rst, memory_alu_out(11 downto 0), memory_alu_out(31 downto 0),
                                             memory_mem_write, memory_mem_read,
-                                            memory_read_data_output
+                                            memory_read_data_output, memory_sp_pointers, "00000000000000000000000000000000" , memory_read_data2
                                         );
 
         MemoryWriteBack1: MemoryWriteBack port map (
