@@ -7,7 +7,8 @@ ENTITY ProtectedMemory IS
             alu_address : IN std_logic_vector(11 downto 0);
             protect_signal : IN std_logic;
             free_signal : IN std_logic;
-            read_data_protected : OUT std_logic
+            read_data_protected : OUT std_logic;
+            read_data_protected_after : OUT std_logic -- we need to also check if the location after is protected because we are big endian
         );
 END ENTITY ProtectedMemory;
 
@@ -26,4 +27,5 @@ ARCHITECTURE sync_ram_a OF ProtectedMemory IS
         END IF;
     END PROCESS;
     read_data_protected <= ram(to_integer(unsigned((alu_address))));
+    read_data_protected_after <= ram(to_integer(unsigned((alu_address))) + 1);
 END sync_ram_a;
