@@ -17,6 +17,7 @@ entity Control is
         RegWrite2 : out std_logic;
         SpPointers : out std_logic_vector(1 downto 0);
         ProtectWrite : out std_logic;
+        FreeWrite : out std_logic;
         Branching : out std_logic;
         IsInstructionOut : out std_logic; -- Corrected syntax error here, no semicolon needed before this declaration
         OutEnable : out std_logic
@@ -32,6 +33,7 @@ begin
 
     AluSelector <= "1001" when IsInstructionIn = '0' or reset = '1' else
     Opcode(3 downto 0) when Opcode(5 downto 4) = "00" -- R-type
+    else "1001" when Opcode = "010111" or Opcode = "011000" -- FREE AND PROTECT
     else "1110" when Opcode = "010010" or Opcode = "001010" or Opcode = "010110" --LDM outputs the selector for ALU that outputs TempB or push
     else "0100" when Opcode(5 downto 4) = "01" -- LDD and STD
     else "1001"; -- Rest are dont cares so just treat them as MOV;
@@ -55,7 +57,7 @@ begin
     else "10"; -- MemToReg is equal 10 if ALU operation
 
     RegWrite <= '0' when IsInstructionIn = '0' else
-    '0' when Opcode = "001011" or Opcode = "010100" or Opcode = "010110" or Opcode = "110000" or Opcode = "110001" -- Don't Write to register if CMP, STD, Push, NOP, Out
+    '0' when Opcode = "001011" or Opcode = "010100" or Opcode = "010110" or Opcode = "110000" or Opcode = "110001" or Opcode = "010111" or Opcode = "011000" -- Don't Write to register if CMP, STD, Push, NOP, Out, protect, free
     else '1';
 
     RegWrite2 <= '0' when IsInstructionIn = '0' else
@@ -67,6 +69,9 @@ begin
     else "00"; -- SP is not changed
 
     ProtectWrite <= '1' when Opcode = "010111" or Opcode = "011000" -- ProtectWrite is equal 1 if Protect or free
+    else '0';
+
+    FreeWrite <= '1' when Opcode = "011000" -- FreeWrite is equal 1 if Free
     else '0';
 
     Branching <= '1' when Opcode(5 downto 4) = "10"

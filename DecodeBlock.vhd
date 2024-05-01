@@ -27,6 +27,7 @@ ENTITY DecodeBlock IS
         RegWrite2 : out std_logic;
         SpPointers : out std_logic_vector(1 downto 0);
         ProtectWrite : out std_logic;
+        FreeWrite : out std_logic;
         Branching : out std_logic;
         IsInstructionOut : out std_logic;
         OutEnable : out std_logic
@@ -65,6 +66,7 @@ architecture Behavioral of DecodeBlock IS
             RegWrite2 : out std_logic;
             SpPointers : out std_logic_vector(1 downto 0);
             ProtectWrite : out std_logic;
+            FreeWrite : out std_logic;
             Branching : out std_logic;
             IsInstructionOut : out std_logic;
             OutEnable : out std_logic
@@ -101,6 +103,7 @@ architecture Behavioral of DecodeBlock IS
             RegWrite2 => RegWrite2,
             SpPointers => SpPointers,
             ProtectWrite => ProtectWrite,
+            FreeWrite => FreeWrite,
             Branching => Branching,
             IsInstructionOut => IsInstructionOut,
             OutEnable => OutEnable

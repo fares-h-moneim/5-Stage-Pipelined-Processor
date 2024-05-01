@@ -57,6 +57,7 @@ architecture Behavioral of Processor is
             RegWrite2 : out std_logic;
             SpPointers : out std_logic_vector(1 downto 0);
             ProtectWrite : out std_logic;
+            FreeWrite : out std_logic;
             Branching : out std_logic;
             IsInstructionOut : out std_logic;
             OutEnable: out std_logic
@@ -93,6 +94,7 @@ architecture Behavioral of Processor is
             RegWrite2 : out std_logic;
             SpPointers : out std_logic_vector(1 downto 0);
             ProtectWrite : out std_logic;
+            FreeWrite : out std_logic;
             Branching : out std_logic;
             IsInstructionOut : out std_logic;
             OutEnable : out std_logic
@@ -121,6 +123,7 @@ architecture Behavioral of Processor is
             RegWrite2 : IN std_logic;
             SpPointers : IN std_logic_vector(1 downto 0);
             ProtectWrite : IN std_logic;
+            FreeWrite : IN std_logic;
             Branching : IN std_logic;
             ReadData1 : IN std_logic_vector(31 downto 0);
             ReadData2 : IN std_logic_vector(31 downto 0);
@@ -140,6 +143,7 @@ architecture Behavioral of Processor is
             RegWrite2Out : OUT std_logic;
             SpPointersOut : OUT std_logic_vector(1 downto 0);
             ProtectWriteOut : OUT std_logic;
+            FreeWriteOut : OUT std_logic;
             BranchingOut : OUT std_logic;
             ReadData1Out : OUT std_logic_vector(31 downto 0);
             ReadData2Out : OUT std_logic_vector(31 downto 0);
@@ -190,6 +194,7 @@ architecture Behavioral of Processor is
             RegWrite2 : in std_logic;
             SpPointers : in std_logic_vector(1 downto 0);
             ProtectWrite : in std_logic;
+            FreeWrite : in std_logic;
             Branching : in std_logic;
             Instruction_Src1 : in std_logic_vector(2 downto 0);
             Instruction_Src2 : in std_logic_vector(2 downto 0);
@@ -208,6 +213,7 @@ architecture Behavioral of Processor is
             RegWrite2Out : out std_logic;
             SpPointersOut : out std_logic_vector(1 downto 0);
             ProtectWriteOut : out std_logic;
+            FreeWriteOut : out std_logic;
             BranchingOut : out std_logic;
             Instruction_Src1Out : out std_logic_vector(2 downto 0);
             Instruction_Src2Out : out std_logic_vector(2 downto 0);
@@ -229,7 +235,10 @@ architecture Behavioral of Processor is
             read_data : OUT std_logic_vector(31 DOWNTO 0);
             sp_signal : IN std_logic_vector(1 DOWNTO 0);
             pc_value : IN std_logic_vector(31 DOWNTO 0);
-            reg2_value : IN std_logic_vector(31 DOWNTO 0)
+            reg2_value : IN std_logic_vector(31 DOWNTO 0);
+            protect_signal : IN std_logic;
+            free_signal : IN std_logic;
+            read_data_protected : OUT std_logic
         );
     END COMPONENT MemoryBlock;
 
@@ -294,6 +303,7 @@ architecture Behavioral of Processor is
     signal decode_reg_write : std_logic; -- WHAT COMES OUT OF CONTROL
     signal decode_sp_pointers : std_logic_vector(1 downto 0); -- WHAT COMES OUT OF CONTROL
     signal decode_protect_write : std_logic; -- WHAT COMES OUT OF CONTROL
+    signal decode_free_write : std_logic; -- WHAT COMES OUT OF CONTROL
     signal decode_branching : std_logic; -- WHAT COMES OUT OF CONTROL
     signal decode_in_port : std_logic_vector(31 downto 0); -- WHAT COMES OUT OF FETCHDECODE
     signal immediate_sign_extended : std_logic_vector(31 downto 0); -- WHAT COMES OUT OF SIGN EXTEND
@@ -318,6 +328,7 @@ architecture Behavioral of Processor is
     signal execute_reg_write2 : std_logic;
     signal execute_sp_pointers : std_logic_vector(1 downto 0);
     signal execute_protect_write : std_logic;
+    signal execute_free_write : std_logic;
     signal execute_branching : std_logic;
     signal execute_reg_destination : std_logic_vector(2 downto 0);
     signal execute_instruction_src1 : std_logic_vector(2 downto 0);
@@ -335,6 +346,7 @@ architecture Behavioral of Processor is
     signal memory_reg_write : std_logic;
     signal memory_sp_pointers : std_logic_vector(1 downto 0);
     signal memory_protect_write : std_logic;
+    signal memory_free_write : std_logic;
     signal memory_branching : std_logic;
     signal memory_read_data1 : std_logic_vector(31 downto 0);
     signal memory_read_data2 : std_logic_vector(31 downto 0);
@@ -344,6 +356,7 @@ architecture Behavioral of Processor is
     signal memory_instruction_src2 : std_logic_vector(2 downto 0);
     signal memory_in_port : std_logic_vector(31 downto 0);
     signal memory_out_en : std_logic;
+    signal memory_read_data_protected : std_logic;
 
     --------- Signals Write Back ----------
     signal WriteBackData : std_logic_vector(31 downto 0);
@@ -379,7 +392,7 @@ architecture Behavioral of Processor is
                                             fetch_instruction_out(9 downto 7), fetch_instruction_out(3 downto 1), WriteBackData, write_back_read_data1,
                                             read_data1, read_data2, fetch_instruction_out(15 downto 10), IsInstructionIN, decode_alu_selector, decode_alu_src,
                                             decode_mem_write, decode_mem_read, decode_mem_to_reg, decode_reg_write, decode_reg_write2,
-                                            decode_sp_pointers, decode_protect_write, decode_branching, IsInstructionOUT, decode_out_en
+                                            decode_sp_pointers, decode_protect_write, decode_free_write, decode_branching, IsInstructionOUT, decode_out_en
                                         );
 
         SignExtend1: SignExtend port map (
@@ -390,12 +403,12 @@ architecture Behavioral of Processor is
         DecodeExecute1: DecodeExecute port map (
                                                 Clk, Rst, '1', decode_alu_selector,
                                                 decode_alu_src, decode_mem_write, decode_mem_read,
-                                                decode_mem_to_reg, decode_reg_write, decode_reg_write2, decode_sp_pointers, decode_protect_write,
+                                                decode_mem_to_reg, decode_reg_write, decode_reg_write2, decode_sp_pointers, decode_protect_write, decode_free_write,
                                                 decode_branching, read_data1, read_data2, fetch_instruction_out(9 downto 7), fetch_instruction_out(3 downto 1),
                                                 fetch_instruction_out(6 downto 4), immediate_sign_extended, decode_in_port, decode_out_en, execute_alu_selector,
                                                 execute_alu_src, execute_mem_write, execute_mem_read,
                                                 execute_mem_to_reg, execute_reg_write, execute_reg_write2, execute_sp_pointers,
-                                                execute_protect_write, execute_branching, execute_read_data1,
+                                                execute_protect_write, execute_free_write, execute_branching, execute_read_data1,
                                                 execute_read_data2, execute_instruction_src1, execute_instruction_src2, execute_reg_destination, execute_immediate, execute_in_port, execute_out_en
                                             );
 
@@ -411,10 +424,10 @@ architecture Behavioral of Processor is
                                                 Clk, Rst, execute_zero_out,
                                                 execute_reg_destination, execute_alu_out, execute_read_data1, execute_read_data2, execute_mem_write,
                                                 execute_mem_read, execute_mem_to_reg, execute_reg_write, execute_reg_write2,
-                                                execute_sp_pointers, execute_protect_write, execute_branching, execute_instruction_src1, execute_instruction_src2, execute_in_port, execute_out_en,
+                                                execute_sp_pointers, execute_protect_write, execute_free_write, execute_branching, execute_instruction_src1, execute_instruction_src2, execute_in_port, execute_out_en,
                                                 memory_zero_out, memory_reg_destination, memory_alu_out, memory_read_data1, memory_read_data2,
                                                 memory_mem_write, memory_mem_read, memory_mem_to_reg,
-                                                memory_reg_write, memory_reg_write2, memory_sp_pointers, memory_protect_write,
+                                                memory_reg_write, memory_reg_write2, memory_sp_pointers, memory_protect_write, memory_free_write,
                                                 memory_branching, memory_instruction_src1, memory_instruction_src2, memory_in_port, memory_out_en
                                             );
 
@@ -423,7 +436,7 @@ architecture Behavioral of Processor is
         DataMemory1: MemoryBlock port map (
                                             Clk, Rst, memory_alu_out(11 downto 0), memory_alu_out(31 downto 0),
                                             memory_mem_write, memory_mem_read,
-                                            memory_read_data_output, memory_sp_pointers, "00000000000000000000000000000000" , memory_read_data2
+                                            memory_read_data_output, memory_sp_pointers, "00000000000000000000000000000000" , memory_read_data2, memory_protect_write, memory_free_write, memory_read_data_protected
                                         );
 
         MemoryWriteBack1: MemoryWriteBack port map (

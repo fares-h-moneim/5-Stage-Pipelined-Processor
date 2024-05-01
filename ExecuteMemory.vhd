@@ -18,6 +18,7 @@ entity ExecuteMemory is
         RegWrite2 : in std_logic;
         SpPointers : in std_logic_vector(1 downto 0);
         ProtectWrite : in std_logic;
+        FreeWrite : in std_logic;
         Branching : in std_logic;
         Instruction_Src1 : in std_logic_vector(2 downto 0);
         Instruction_Src2 : in std_logic_vector(2 downto 0);
@@ -36,6 +37,7 @@ entity ExecuteMemory is
         RegWrite2Out : out std_logic;
         SpPointersOut : out std_logic_vector(1 downto 0);
         ProtectWriteOut : out std_logic;
+        FreeWriteOut : out std_logic;
         BranchingOut : out std_logic;
         Instruction_Src1Out : out std_logic_vector(2 downto 0);
         Instruction_Src2Out : out std_logic_vector(2 downto 0);
@@ -61,6 +63,7 @@ begin
             RegWrite2Out <= '0';
             SpPointersOut <= (others => '0');
             ProtectWriteOut <= '0';
+            FreeWriteOut <= '0';
             BranchingOut <= '0';
             Instruction_Src1Out <= (others => '0');
             Instruction_Src2Out <= (others => '0');
@@ -79,6 +82,7 @@ begin
             RegWrite2Out <= RegWrite2;
             SpPointersOut <= SpPointers;
             ProtectWriteOut <= ProtectWrite;
+            FreeWriteOut <= FreeWrite;
             BranchingOut <= Branching;
             Instruction_Src1Out <= Instruction_Src1;
             Instruction_Src2Out <= Instruction_Src2;

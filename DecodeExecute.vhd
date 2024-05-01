@@ -15,6 +15,7 @@ ENTITY DecodeExecute IS
         RegWrite2 : IN std_logic;
         SpPointers : IN std_logic_vector(1 downto 0);
         ProtectWrite : IN std_logic;
+        FreeWrite : IN std_logic;
         Branching : IN std_logic;
         ReadData1 : IN std_logic_vector(31 downto 0); -- Register src 1
         ReadData2 : IN std_logic_vector(31 downto 0); -- Register src 2
@@ -34,6 +35,7 @@ ENTITY DecodeExecute IS
         RegWrite2Out : OUT std_logic;
         SpPointersOut : OUT std_logic_vector(1 downto 0);
         ProtectWriteOut : OUT std_logic;
+        FreeWriteOut : OUT std_logic;
         BranchingOut : OUT std_logic;
         ReadData1Out : OUT std_logic_vector(31 downto 0);
         ReadData2Out : OUT std_logic_vector(31 downto 0);
@@ -61,6 +63,7 @@ BEGIN
             RegWrite2Out <= '0';
             SpPointersOut <= (OTHERS=>'0');
             ProtectWriteOut <= '0';
+            FreeWriteOut <= '0';
             BranchingOut <= '0';
             ReadData1Out <= (OTHERS=>'0');
             ReadData2Out <= (OTHERS=>'0');
@@ -81,6 +84,7 @@ BEGIN
                 RegWrite2Out <= RegWrite2;
                 SpPointersOut <= SpPointers;
                 ProtectWriteOut <= ProtectWrite;
+                FreeWriteOut <= FreeWrite;
                 BranchingOut <= Branching;
                 ReadData1Out <= ReadData1;
                 ReadData2Out <= ReadData2;

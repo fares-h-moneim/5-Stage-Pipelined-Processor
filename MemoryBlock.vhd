@@ -14,7 +14,10 @@ Entity MemoryBlock is
     -- new stuff needed
     sp_signal : IN std_logic_vector(1 DOWNTO 0);
     pc_value : IN std_logic_vector(31 DOWNTO 0);
-    reg2_value : IN std_logic_vector(31 DOWNTO 0)
+    reg2_value : IN std_logic_vector(31 DOWNTO 0);
+    protect_signal : IN std_logic;
+    free_signal : IN std_logic;
+    read_data_protected : OUT std_logic
     );
 END ENTITY MemoryBlock;
 
@@ -23,6 +26,7 @@ architecture Behavioral of MemoryBlock is
     signal sppOut : std_logic_vector(11 DOWNTO 0);
     signal memAddress : std_logic_vector(11 DOWNTO 0);
     signal memDataIn : std_logic_vector(31 DOWNTO 0);
+    signal actual_mem_write : std_logic;
 
     COMPONENT DataMemory IS
     PORT (
@@ -42,6 +46,16 @@ architecture Behavioral of MemoryBlock is
         clk,rst,en : IN std_logic );
     END component;
 
+    COMPONENT ProtectedMemory IS
+    PORT (
+            clk : IN std_logic;
+            alu_address : IN std_logic_vector(11 downto 0);
+            protect_signal : IN std_logic;
+            free_signal : IN std_logic;
+            read_data_protected : OUT std_logic
+        );
+    END COMPONENT ProtectedMemory;
+
     begin
         sppIn <= sppOut when sp_signal = "00" 
         else std_logic_vector(unsigned(sppOut) - 2) when sp_signal = "01"
@@ -56,7 +70,11 @@ architecture Behavioral of MemoryBlock is
         else reg2_value when sp_signal = "01"
         else reg2_value;
 
+        actual_mem_write <= mem_write when protect_signal = '0'
+        else '0';
 
-    DataMemory1: DataMemory PORT MAP (clk, memAddress, memDataIn, mem_write, mem_read, read_data);
+
+    DataMemory1: DataMemory PORT MAP (clk, memAddress, memDataIn, actual_mem_write, mem_read, read_data);
     spp: stackReg generic map(12) port map ( sppIn,sppOut,clk,reset,'1' );
+    ProtectedMemory1: ProtectedMemory PORT MAP (clk, address, protect_signal, free_signal, read_data_protected);
 end Behavioral;
