@@ -90,6 +90,8 @@ hexaToBinary = {
 
 def hex_to_binary(hex_string):
     binary_result = ""
+    while(len(hex_string) < 4):
+        hex_string = "0" + hex_string
     for char in hex_string.upper():
         if char in hexaToBinary:
             binary_result += hexaToBinary[char]
@@ -108,7 +110,11 @@ def check_org(instruction):
     global org
     global file2
     file2.write(
-        f"mem load -filltype value -filldata {{{instruction+' '}}} -fillradix symbolic /processor/FetchBlock1/IM1/mem({org})\n"
+        f"mem load -filltype value -filldata {{0000000000000000}} -fillradix symbolic /processor/FetchBlock1/IM1/mem({org})\n"
+    )
+    org += 1
+    file2.write(
+        f"mem load -filltype value -filldata {{{hex_to_binary(instruction)+' '}}} -fillradix symbolic /processor/FetchBlock1/IM1/mem({org})\n"
     )
     org += 1
 
