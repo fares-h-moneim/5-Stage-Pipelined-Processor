@@ -16,7 +16,8 @@ architecture behavioral of FetchBlock is
         port (
             clk, reset : IN std_logic;
             address : IN std_logic_vector(31 DOWNTO 0);
-            instruction : OUT std_logic_vector(15 DOWNTO 0)
+            instruction : OUT std_logic_vector(15 DOWNTO 0);
+            inital_PC : OUT std_logic_vector(31 DOWNTO 0)
             -- immediate : OUT std_logic_vector(15 DOWNTO 0)
         );
     end component instruction_memory;
@@ -32,31 +33,27 @@ architecture behavioral of FetchBlock is
     end component PC;
     
     signal PC_OUT: std_logic_vector(31 DOWNTO 0) := (others => '0');
-    signal PC_IN: std_logic_vector(31 DOWNTO 0);
     signal internal_instruction: std_logic_vector(15 DOWNTO 0);
     signal IncrementTwo: std_logic; --will i increment by 1 or 2
     signal internal_PC : std_logic_vector(31 DOWNTO 0);
+    signal inital_PC : std_logic_vector(31 DOWNTO 0) := (others => '0');
     begin
         PC1: PC port map(clk, rst, '1', internal_PC, PC_OUT);
-        IM1: instruction_memory port map(clk, rst, PC_OUT, internal_instruction);
+        IM1: instruction_memory port map(clk, rst, PC_OUT, internal_instruction, inital_PC);
         instruction <= internal_instruction;
-        PC_IN <= PC_OUT;
        -- IncrementTwo <= '1' when (internal_instruction(15 downto 10) = "001100" or internal_instruction(15 downto 10)= "001101" or internal_instruction(15 downto 10) = "010010") else '0';
 
         process(clk)
         begin
-            if falling_edge(clk) then
-                if rst = '1' then
-                    internal_PC <= (others => '0');
-                else
-                
+            if rst = '1' then
+                internal_PC <= inital_PC;
+            elsif falling_edge(clk) then
                 internal_PC <= std_logic_vector(unsigned(internal_PC) + 1);
             --         if IncrementTwo = '1' then
             --             internal_PC <= std_logic_vector(unsigned(internal_PC) + 2);
             --         else
             --         internal_PC <= std_logic_vector(unsigned(internal_PC) + 1);
             --         end if;
-                end if;
             end if;
         end process;
 end architecture behavioral;

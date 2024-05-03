@@ -17,7 +17,7 @@ BEGIN
     PROCESS(clk, reset)
     BEGIN
         IF reset = '1' THEN
-            PC_OUT <= (OTHERS => '0');
+            PC_OUT <= PC_IN;
         ELSIF rising_edge(clk) THEN
             IF WEN = '1' THEN
                 PC_OUT <= PC_IN;

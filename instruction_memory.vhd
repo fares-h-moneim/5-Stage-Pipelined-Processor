@@ -6,8 +6,9 @@ ENTITY instruction_memory is
     PORT(
         clk, reset : IN std_logic;
         address : IN std_logic_vector(31 DOWNTO 0);
-        instruction : OUT std_logic_vector(15 DOWNTO 0)
+        instruction : OUT std_logic_vector(15 DOWNTO 0);
         -- immediate : OUT std_logic_vector(15 DOWNTO 0)
+        inital_PC : OUT std_logic_vector(31 DOWNTO 0)
     );
 END instruction_memory;
 
@@ -16,6 +17,7 @@ ARCHITECTURE Behavioral OF instruction_memory IS
     SIGNAL mem : memory;
     SIGNAL internal_instruction : std_logic_vector(15 DOWNTO 0);
 BEGIN
+    inital_PC <= mem(0) & mem(1);
     internal_instruction <= "1100000000000000" WHEN reset = '1' ELSE
                             mem(TO_INTEGER(unsigned(address)));
     instruction <= internal_instruction;
