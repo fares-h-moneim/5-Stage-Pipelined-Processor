@@ -30,7 +30,9 @@ ENTITY DecodeBlock IS
         FreeWrite : out std_logic;
         Branching : out std_logic;
         IsInstructionOut : out std_logic;
-        OutEnable : out std_logic
+        OutEnable: out std_logic;
+        ConditionalBranch : out std_logic;
+        UnConditionalBranch : out std_logic
     );
 END DecodeBlock;
 
@@ -69,7 +71,9 @@ architecture Behavioral of DecodeBlock IS
             FreeWrite : out std_logic;
             Branching : out std_logic;
             IsInstructionOut : out std_logic;
-            OutEnable : out std_logic
+            OutEnable : out std_logic;
+            ConditionalBranch : out std_logic;
+            UnconditionalBranch : out std_logic
         );
     END component;
 
@@ -106,6 +110,8 @@ architecture Behavioral of DecodeBlock IS
             FreeWrite => FreeWrite,
             Branching => Branching,
             IsInstructionOut => IsInstructionOut,
-            OutEnable => OutEnable
+            OutEnable => OutEnable,
+            ConditionalBranch => ConditionalBranch,
+            UnconditionalBranch => UnconditionalBranch
         );
 end Behavioral;
