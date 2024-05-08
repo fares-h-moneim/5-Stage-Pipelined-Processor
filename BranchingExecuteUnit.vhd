@@ -33,7 +33,7 @@ architecture Behavioral of BranchingExecuteUnit is
 begin
     process(Clk, reset)
     begin
-        if reset = '0' then
+        if reset = '1' then
             FlushDecode <= '1';
             FlushExecute <= '1';
             JumpAddress <= (others => '0');

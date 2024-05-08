@@ -388,6 +388,11 @@ architecture Behavioral of Processor is
     signal execute_in_port : std_logic_vector(31 downto 0);
     signal execute_out_en : std_logic;
 
+    signal flushDecode2 : std_logic; -- WHAT COMES OUT OF BRANCHINGEXECUTEUNIT
+    signal flushExecute : std_logic; -- WHAT COMES OUT OF BRANCHINGEXECUTEUNIT
+    signal changePCExecute : std_logic; -- WHAT COMES OUT OF BRANCHINGEXECUTEUNIT
+    signal branching_address_out2 : std_logic_vector(31 downto 0); -- WHAT COMES OUT OF BRANCHINGEXECUTEUNIT
+
     ----------- Signals Memory ------------
     signal memory_zero_out : std_logic;
     signal memory_alu_out : std_logic_vector(31 downto 0);
@@ -490,10 +495,9 @@ architecture Behavioral of Processor is
                                                 memory_branching, memory_instruction_src1, memory_instruction_src2, memory_in_port, memory_out_en
                                             );
         
-        -- BranchingExecuteUnit1: BranchingExecuteUnit port map(
-        --     Clk, Rst, execute_zero_out, fetch_instruction_out(15 downto 0), branching_address_out, '1', '1', changePCDecode, '1', '1', memory_read_data_output
-        -- ); executeblockpc feh el pc el ana 3ayzo
-
+        BranchingExecuteUnit1: BranchingExecuteUnit port map(
+            Clk, Rst, execute_zero_out, ExecuteBlockPC, execute_read_data1, '1', '0', flushDecode2, flushExecute, changePCExecute, branching_address_out2
+        ); 
         ----------- Memory -------------
 
         DataMemory1: MemoryBlock port map (
