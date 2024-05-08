@@ -32,7 +32,9 @@ ENTITY DecodeBlock IS
         IsInstructionOut : out std_logic;
         OutEnable: out std_logic;
         ConditionalBranch : out std_logic;
-        UnConditionalBranch : out std_logic
+        UnConditionalBranch : out std_logic;
+        PCIN : in std_logic_vector(31 downto 0);
+        PCOUT : out std_logic_vector(31 downto 0)
     );
 END DecodeBlock;
 
@@ -114,4 +116,5 @@ architecture Behavioral of DecodeBlock IS
             ConditionalBranch => ConditionalBranch,
             UnconditionalBranch => UnconditionalBranch
         );
+        PCOUT <= PCIN;
 end Behavioral;

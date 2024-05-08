@@ -16,7 +16,8 @@ architecture Behavioral of Processor is
         port (
             clk : in std_logic;
             rst : in std_logic;
-            instruction : OUT std_logic_vector(15 DOWNTO 0)
+            instruction : OUT std_logic_vector(15 DOWNTO 0);
+            PCOUT : OUT std_logic_vector(31 DOWNTO 0)
         );
     end component FetchBlock;
 
@@ -27,7 +28,9 @@ architecture Behavioral of Processor is
             instructionIn: in std_logic_vector(15 downto 0);
             instructionOut: out std_logic_vector(15 downto 0);
             InPort: in std_logic_vector(31 downto 0);
-            InPortOut: out std_logic_vector(31 downto 0)
+            InPortOut: out std_logic_vector(31 downto 0);
+            PCIN : in std_logic_vector(31 downto 0);
+            PCOUT : out std_logic_vector(31 downto 0)
         );
     end component FetchDecode;
 
@@ -62,7 +65,9 @@ architecture Behavioral of Processor is
             IsInstructionOut : out std_logic;
             OutEnable: out std_logic;
             ConditionalBranch : out std_logic;
-            UnConditionalBranch : out std_logic
+            UnConditionalBranch : out std_logic;
+            PCIN : in std_logic_vector(31 downto 0);
+            PCOUT : out std_logic_vector(31 downto 0)
         );
     end component DecodeBlock;
     component RegisterFile is
@@ -154,7 +159,9 @@ architecture Behavioral of Processor is
             DestinationOut : OUT std_logic_vector(2 downto 0);
             ImmOut : OUT std_logic_vector(31 downto 0);
             InPortOut : OUT std_logic_vector(31 downto 0);
-            OutEnableOut : OUT std_logic
+            OutEnableOut : OUT std_logic;
+            PCIN : IN std_logic_vector(31 downto 0);
+            PCOUT : OUT std_logic_vector(31 downto 0)
         );
     end component DecodeExecute;
 
@@ -424,12 +431,12 @@ architecture Behavioral of Processor is
     begin
         ----------- Fetch ------------
         FetchBlock1: FetchBlock port map (
-                                            Clk, Rst, internal_fetch_instruction
+                                            Clk, Rst, internal_fetch_instruction, FetchPC
                                         );
 
         FetchDecode1: FetchDecode port map (
                                             Clk, Rst, internal_fetch_instruction,
-                                            fetch_instruction_out, InPort, decode_in_port
+                                            fetch_instruction_out, InPort, decode_in_port, FetchPC, FetchDecodePC
                                         );
         
         ----------- Decode ------------
@@ -439,7 +446,7 @@ architecture Behavioral of Processor is
                                             read_data1, read_data2, fetch_instruction_out(15 downto 10), IsInstructionIN, decode_alu_selector, decode_alu_src,
                                             decode_mem_write, decode_mem_read, decode_mem_to_reg, decode_reg_write, decode_reg_write2,
                                             decode_sp_pointers, decode_protect_write, decode_free_write, decode_branching, IsInstructionOUT, decode_out_en,
-                                            ConditionalBranch, UnConditionalBranch
+                                            ConditionalBranch, UnConditionalBranch, FetchDecodePC, DecodeBlockPC
                                         );
 
         SignExtend1: SignExtend port map (
@@ -456,7 +463,8 @@ architecture Behavioral of Processor is
                                                 execute_alu_src, execute_mem_write, execute_mem_read,
                                                 execute_mem_to_reg, execute_reg_write, execute_reg_write2, execute_sp_pointers,
                                                 execute_protect_write, execute_free_write, execute_branching, execute_read_data1,
-                                                execute_read_data2, execute_instruction_src1, execute_instruction_src2, execute_reg_destination, execute_immediate, execute_in_port, execute_out_en
+                                                execute_read_data2, execute_instruction_src1, execute_instruction_src2, execute_reg_destination, execute_immediate, execute_in_port, execute_out_en,
+                                                DecodeBlockPC, ExecuteBlockPC
                                             );
 
         BranchingDecodeUnit1: BranchingDecodeUnit port map(
@@ -484,7 +492,7 @@ architecture Behavioral of Processor is
         
         -- BranchingExecuteUnit1: BranchingExecuteUnit port map(
         --     Clk, Rst, execute_zero_out, fetch_instruction_out(15 downto 0), branching_address_out, '1', '1', changePCDecode, '1', '1', memory_read_data_output
-        -- );
+        -- ); executeblockpc feh el pc el ana 3ayzo
 
         ----------- Memory -------------
 

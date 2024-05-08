@@ -44,7 +44,9 @@ ENTITY DecodeExecute IS
         DestinationOut : OUT std_logic_vector(2 downto 0);
         ImmOut : OUT std_logic_vector(31 downto 0);
         InPortOut : OUT std_logic_vector(31 downto 0);
-        OutEnableOut : OUT std_logic
+        OutEnableOut : OUT std_logic;
+        PCIN : IN std_logic_vector(31 downto 0);
+        PCOUT : OUT std_logic_vector(31 downto 0)
     );
 END DecodeExecute;
 
@@ -94,6 +96,7 @@ BEGIN
                 ImmOut <= Imm;
                 InPortOut <= InPort;
                 OutEnableOut <= OutEnable;
+                PCOUT <= PCIN;
             END IF;
         END IF;
     END PROCESS;
