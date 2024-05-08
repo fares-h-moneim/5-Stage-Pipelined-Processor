@@ -27,5 +27,5 @@ ARCHITECTURE sync_ram_a OF ProtectedMemory IS
         END IF;
     END PROCESS;
     read_data_protected <= ram(to_integer(unsigned((alu_address))));
-    read_data_protected_after <= ram(to_integer(unsigned((alu_address))) + 1);
+   -- read_data_protected_after <= ram(to_integer(unsigned((alu_address))) + 1);
 END sync_ram_a;

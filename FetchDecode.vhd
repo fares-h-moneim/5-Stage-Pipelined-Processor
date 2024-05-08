@@ -25,6 +25,7 @@ BEGIN
         ELSIF rising_edge(clk) THEN
             instructionOut <= instructionIn;
             InPortOut <= InPort;
+            PCOUT <= PCIN;
         END IF;
     END PROCESS;
 

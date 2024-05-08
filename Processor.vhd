@@ -338,7 +338,7 @@ architecture Behavioral of Processor is
     signal FetchPC : std_logic_vector(31 downto 0);
 
     ----------- Signals Decode ------------
-    signal FetchDecodePC, DecodeBlockPC, DecodeExecuteBlockPC : std_logic_vector(31 downto 0); -- WHAT COMES OUT OF FETCHDECODE
+    signal FetchDecodePC, DecodeBlockPC: std_logic_vector(31 downto 0); -- WHAT COMES OUT OF FETCHDECODE
     signal read_data1, read_data2 : std_logic_vector(31 downto 0); -- WHAT COMES OUT OF REGISTER FILE
     signal decode_alu_selector : std_logic_vector(3 downto 0); -- WHAT COMES OUT OF CONTROL
     signal decode_alu_src : std_logic; -- WHAT COMES OUT OF CONTROL 
