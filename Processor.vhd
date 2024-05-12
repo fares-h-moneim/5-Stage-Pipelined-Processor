@@ -368,6 +368,20 @@ architecture Behavioral of Processor is
         );
     end component;
 
+    ---------- Exception Handler ---------
+    component ExceptionHandler is
+        port(
+            clk : IN STD_LOGIC;
+            reset : IN STD_LOGIC;
+            overflow : IN STD_LOGIC;
+            protect : IN STD_LOGIC;
+            flush_exception_until_execute : OUT STD_LOGIC;
+            flush_exception_until_write_back : OUT STD_LOGIC;
+            exception_handler_address: OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+            change_pc_from_exception : OUT STD_LOGIC
+        );
+    end component ExceptionHandler;
+
     
     ----------- Signals Fetch ------------
     
@@ -486,6 +500,15 @@ architecture Behavioral of Processor is
     signal forwarding_sel1 : std_logic_vector(2 downto 0);
     signal forwarding_sel2 : std_logic_vector(2 downto 0);
 
+
+    ----------- Signals Exception ------------
+    signal flush_exception_until_execute : std_logic;
+    signal flush_exception_until_write_back : std_logic;
+    signal exception_handler_address : std_logic_vector(31 downto 0);
+    signal change_pc_from_exception : std_logic;
+    signal exception_from_protect : std_logic;
+
+
     signal IsInstructionIN: std_logic := '1';
     signal IsInstructionOUT: std_logic;
     begin
@@ -600,6 +623,14 @@ architecture Behavioral of Processor is
                                                     memory_in, write_back_in, forwarding_sel1, forwarding_sel2
         );
 
+        ----------- Exception Handler ------------
+        ExceptionHandlerUnit: ExceptionHandler port map (
+            Clk, Rst, execute_overflow_out,
+             exception_from_protect, flush_exception_until_execute, flush_exception_until_write_back,
+             exception_handler_address, change_pc_from_exception
+        );
+
+        exception_from_protect <= memory_read_data_protected_after and memory_read_data_protected;
         process(Clk)
         begin
             if rising_edge(Clk) then
