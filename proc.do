@@ -1,16 +1,10 @@
 vsim -gui work.processor
 do binaryCommands.do
 
-add wave sim:/processor/Clk
-add wave sim:/processor/Rst
-add wave sim:/processor/FetchBlock1/PC_OUT
-add wave sim:/processor/execute_zero_out
-add wave sim:/processor/execute_negative_out
-add wave sim:/processor/execute_overflow_out
-add wave sim:/processor/execute_carry_out
-add wave sim:/processor/DecodeBlock1/RegisterFile1/ram
-add wave sim:/processor/InPort
-add wave sim:/processor/OutPort
+add wave sim:/processor/ForwardingUnit1/*
+add wave sim:/processor/ExecuteBlock1/AluIn1
+add wave sim:/processor/ExecuteBlock1/AluIn2
+add wave sim:/processor/*
 
 force -freeze sim:/processor/Clk 1 0, 0 {50 ps} -r 100
 force -freeze sim:/processor/Rst 1 0

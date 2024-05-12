@@ -30,7 +30,10 @@ ENTITY DecodeBlock IS
         FreeWrite : out std_logic;
         Branching : out std_logic;
         IsInstructionOut : out std_logic;
-        OutEnable : out std_logic
+        OutEnable : out std_logic;
+        RegRead1 : out std_logic;
+        RegRead2 : out std_logic;
+        InPortInstruction : out std_logic
     );
 END DecodeBlock;
 
@@ -53,23 +56,27 @@ architecture Behavioral of DecodeBlock IS
     END component;
 
     component Control is
-        PORT(
+        port(
             reset : in std_logic;
             Opcode : in std_logic_vector(5 downto 0);
             IsInstructionIn : in std_logic;
+
             AluSelector : out std_logic_vector(3 downto 0);
             AluSrc : out std_logic;
             MemWrite : out std_logic;
             MemRead : out std_logic;
-            MemToReg : out std_logic_vector(1 downto 0);
+            MemToReg : out std_logic_vector(1 downto 0); -- 10 writes from ALU to register, 01 writes from Memory to register, 00 writes from inport to register;
             RegWrite : out std_logic;
             RegWrite2 : out std_logic;
             SpPointers : out std_logic_vector(1 downto 0);
             ProtectWrite : out std_logic;
             FreeWrite : out std_logic;
             Branching : out std_logic;
-            IsInstructionOut : out std_logic;
-            OutEnable : out std_logic
+            IsInstructionOut : out std_logic; -- Corrected syntax error here, no semicolon needed before this declaration
+            OutEnable : out std_logic;
+            RegRead1 : out std_logic;
+            RegRead2 : out std_logic;
+            InPortInstruction : out std_logic
         );
     END component;
 
@@ -106,6 +113,9 @@ architecture Behavioral of DecodeBlock IS
             FreeWrite => FreeWrite,
             Branching => Branching,
             IsInstructionOut => IsInstructionOut,
-            OutEnable => OutEnable
+            OutEnable => OutEnable,
+            RegRead1 => RegRead1,
+            RegRead2 => RegRead2,
+            InPortInstruction => InPortInstruction
         );
 end Behavioral;

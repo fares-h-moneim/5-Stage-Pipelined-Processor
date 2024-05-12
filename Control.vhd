@@ -20,7 +20,10 @@ entity Control is
         FreeWrite : out std_logic;
         Branching : out std_logic;
         IsInstructionOut : out std_logic; -- Corrected syntax error here, no semicolon needed before this declaration
-        OutEnable : out std_logic
+        OutEnable : out std_logic;
+        RegRead1 : out std_logic;
+        RegRead2 : out std_logic;
+        InPortInstruction : out std_logic
     );
 end Control;
 architecture Behavioral of Control is
@@ -56,6 +59,8 @@ begin
     else "00" when Opcode = "110010" -- MemToReg is equal 00 if IN
     else "10"; -- MemToReg is equal 10 if ALU operation
 
+    InPortInstruction <= '1' when Opcode = "110010" else '0';
+
     RegWrite <= '0' when IsInstructionIn = '0' else
     '0' when Opcode = "001011" or Opcode = "010100" or Opcode = "010110" or Opcode = "110000" or Opcode = "110001" or Opcode = "010111" or Opcode = "011000" -- Don't Write to register if CMP, STD, Push, NOP, Out, protect, free
     else '1';
@@ -76,5 +81,11 @@ begin
 
     Branching <= '1' when Opcode(5 downto 4) = "10"
     else '0';
+
+    RegRead1 <= '0' when Opcode = "010010" or Opcode = "010011" or Opcode = "10011" or Opcode = "110100" or Opcode = "0010" or Opcode = "110011" or Opcode = "010101" or IsInstructionIn = '0' else
+    '1';
+
+    RegRead2 <= '1' when (Opcode = "000100" or Opcode = "000101" or Opcode = "000110" or Opcode = "000111" or Opcode = "001000" or Opcode = "001010" or Opcode = "001011") and IsInstructionIn /= '0' else
+    '0';
 
 end Behavioral;

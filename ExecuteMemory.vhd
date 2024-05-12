@@ -24,6 +24,9 @@ entity ExecuteMemory is
         Instruction_Src2 : in std_logic_vector(2 downto 0);
         InPort : in std_logic_vector(31 downto 0);
         OutEnable : in std_logic;
+        ReadReg1 : in std_logic;
+        ReadReg2 : in std_logic;
+        InPortInstruction : in std_logic;
 
         ZeroFlagOut : out std_logic;
         RegDstOut : out std_logic_vector(2 downto 0);
@@ -42,7 +45,10 @@ entity ExecuteMemory is
         Instruction_Src1Out : out std_logic_vector(2 downto 0);
         Instruction_Src2Out : out std_logic_vector(2 downto 0);
         InPortOut : out std_logic_vector(31 downto 0);
-        OutEnableOut : out std_logic
+        OutEnableOut : out std_logic;
+        ReadReg1Out : out std_logic;
+        ReadReg2Out : out std_logic;
+        InPortInstructionOut : out std_logic
     );
 end entity ExecuteMemory;
 
@@ -69,6 +75,9 @@ begin
             Instruction_Src2Out <= (others => '0');
             InPortOut <= (others => '0');
             OutEnableOut <= '0';
+            ReadReg1Out <= '0';
+            ReadReg2Out <= '0';
+            InPortInstructionOut <= '0';
         elsif rising_edge(clk) then
             ZeroFlagOut <= ZeroFlagIn;
             RegDstOut <= RegDst;
@@ -88,6 +97,9 @@ begin
             Instruction_Src2Out <= Instruction_Src2;
             InPortOut <= InPort;
             OutEnableOut <= OutEnable;
+            ReadReg1Out <= ReadReg1;
+            ReadReg2Out <= ReadReg2;
+            InPortInstructionOut <= InPortInstruction;
         end if;
     end process;
 end Behavioural;

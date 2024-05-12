@@ -25,6 +25,9 @@ ENTITY DecodeExecute IS
         Imm : IN std_logic_vector(31 downto 0);
         InPort : IN std_logic_vector(31 downto 0);
         OutEnable : IN std_logic;
+        ReadReg1 : IN std_logic;
+        ReadReg2 : IN std_logic;
+        InPortInstruction : IN std_logic;
 
         AluSelectorOut : OUT std_logic_vector(3 downto 0);
         AluSrcOut : OUT std_logic;
@@ -44,7 +47,10 @@ ENTITY DecodeExecute IS
         DestinationOut : OUT std_logic_vector(2 downto 0);
         ImmOut : OUT std_logic_vector(31 downto 0);
         InPortOut : OUT std_logic_vector(31 downto 0);
-        OutEnableOut : OUT std_logic
+        OutEnableOut : OUT std_logic;
+        ReadReg1Out : OUT std_logic;
+        ReadReg2Out : OUT std_logic;
+        InPortInstructionOut : OUT std_logic
     );
 END DecodeExecute;
 
@@ -73,6 +79,9 @@ BEGIN
             ImmOut <= (OTHERS=>'0');
             InPortOut <= (OTHERS=>'0');
             OutEnableOut <= '0';
+            ReadReg1Out <= '0';
+            ReadReg2Out <= '0';
+            InPortInstructionOut <= '0';
         ELSIF rising_edge(clk) THEN
             IF enable = '1' THEN
                 AluSelectorOut <= AluSelector;
@@ -94,6 +103,9 @@ BEGIN
                 ImmOut <= Imm;
                 InPortOut <= InPort;
                 OutEnableOut <= OutEnable;
+                ReadReg1Out <= ReadReg1;
+                ReadReg2Out <= ReadReg2;
+                InPortInstructionOut <= InPortInstruction;
             END IF;
         END IF;
     END PROCESS;
