@@ -21,6 +21,8 @@ entity Control is
         Branching : out std_logic;
         IsInstructionOut : out std_logic; -- Corrected syntax error here, no semicolon needed before this declaration
         OutEnable : out std_logic;
+        ConditionalBranch : out std_logic;
+        UnconditionalBranch : out std_logic;
         RegRead1 : out std_logic;
         RegRead2 : out std_logic;
         InPortInstruction : out std_logic
@@ -33,6 +35,9 @@ begin
     IsInstructionOut <= '0' when Opcode = "010010" or Opcode = "010011" or Opcode = "010100" else '1';
 
     OutEnable <= '1' when Opcode = "110001" else '0';
+
+    ConditionalBranch <= '1' when Opcode = "100000" else '0';
+    UnconditionalBranch <= '1' when Opcode = "100001" or Opcode = "100010" else '0';
 
     AluSelector <= "1001" when IsInstructionIn = '0' or reset = '1' else
     Opcode(3 downto 0) when Opcode(5 downto 4) = "00" -- R-type

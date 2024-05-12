@@ -30,7 +30,11 @@ ENTITY DecodeBlock IS
         FreeWrite : out std_logic;
         Branching : out std_logic;
         IsInstructionOut : out std_logic;
-        OutEnable : out std_logic;
+        OutEnable: out std_logic;
+        ConditionalBranch : out std_logic;
+        UnConditionalBranch : out std_logic;
+        PCIN : in std_logic_vector(31 downto 0);
+        PCOUT : out std_logic_vector(31 downto 0);
         RegRead1 : out std_logic;
         RegRead2 : out std_logic;
         InPortInstruction : out std_logic
@@ -74,6 +78,8 @@ architecture Behavioral of DecodeBlock IS
             Branching : out std_logic;
             IsInstructionOut : out std_logic; -- Corrected syntax error here, no semicolon needed before this declaration
             OutEnable : out std_logic;
+            ConditionalBranch : out std_logic;
+            UnconditionalBranch : out std_logic;
             RegRead1 : out std_logic;
             RegRead2 : out std_logic;
             InPortInstruction : out std_logic
@@ -116,6 +122,9 @@ architecture Behavioral of DecodeBlock IS
             OutEnable => OutEnable,
             RegRead1 => RegRead1,
             RegRead2 => RegRead2,
-            InPortInstruction => InPortInstruction
+            InPortInstruction => InPortInstruction,
+            ConditionalBranch => ConditionalBranch,
+            UnconditionalBranch => UnconditionalBranch
         );
+        PCOUT <= PCIN;
 end Behavioral;

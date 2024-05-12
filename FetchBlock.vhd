@@ -6,7 +6,12 @@ entity FetchBlock is
     port (
         clk : in std_logic;
         rst : in std_logic;
-        instruction : OUT std_logic_vector(15 DOWNTO 0)
+        instruction : OUT std_logic_vector(15 DOWNTO 0);
+        PCOUT : OUT std_logic_vector(31 DOWNTO 0);
+        changePCDecode : IN std_logic;
+        changePCExecute : IN std_logic;
+        newPCDecode : IN std_logic_vector(31 DOWNTO 0);
+        newPCExecute : IN std_logic_vector(31 DOWNTO 0)
         -- immediate : OUT std_logic_vector(15 DOWNTO 0)
     );
 end entity FetchBlock;
@@ -41,12 +46,17 @@ architecture behavioral of FetchBlock is
         PC1: PC port map(clk, rst, '1', internal_PC, PC_OUT);
         IM1: instruction_memory port map(clk, rst, PC_OUT, internal_instruction, inital_PC);
         instruction <= internal_instruction;
+        PCOUT <= PC_OUT;
        -- IncrementTwo <= '1' when (internal_instruction(15 downto 10) = "001100" or internal_instruction(15 downto 10)= "001101" or internal_instruction(15 downto 10) = "010010") else '0';
 
         process(clk)
         begin
             if rst = '1' then
                 internal_PC <= inital_PC;
+            elsif changePCExecute = '1' then
+                internal_PC <= newPCExecute;
+            elsif changePCDecode = '1' then
+                internal_PC <= newPCDecode;
             elsif falling_edge(clk) then
                 internal_PC <= std_logic_vector(unsigned(internal_PC) + 1);
             --         if IncrementTwo = '1' then

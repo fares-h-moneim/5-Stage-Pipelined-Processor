@@ -50,7 +50,11 @@ ENTITY DecodeExecute IS
         OutEnableOut : OUT std_logic;
         ReadReg1Out : OUT std_logic;
         ReadReg2Out : OUT std_logic;
-        InPortInstructionOut : OUT std_logic
+        InPortInstructionOut : OUT std_logic;
+        PCIN : IN std_logic_vector(31 downto 0);
+        PCOUT : OUT std_logic_vector(31 downto 0);
+        ConditionalBranchIn : IN std_logic;
+        ConditionalBranchOut : OUT std_logic
     );
 END DecodeExecute;
 
@@ -106,6 +110,8 @@ BEGIN
                 ReadReg1Out <= ReadReg1;
                 ReadReg2Out <= ReadReg2;
                 InPortInstructionOut <= InPortInstruction;
+                PCOUT <= PCIN;
+                ConditionalBranchOut <= ConditionalBranchIn;
             END IF;
         END IF;
     END PROCESS;

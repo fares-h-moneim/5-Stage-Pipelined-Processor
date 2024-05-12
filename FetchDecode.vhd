@@ -8,7 +8,9 @@ entity FetchDecode is
         instructionIn: in std_logic_vector(15 downto 0);
         instructionOut: out std_logic_vector(15 downto 0);
         InPort: in std_logic_vector(31 downto 0);
-        InPortOut: out std_logic_vector(31 downto 0)
+        InPortOut: out std_logic_vector(31 downto 0);
+        PCIN : in std_logic_vector(31 downto 0);
+        PCOUT : out std_logic_vector(31 downto 0)
     );
 end FetchDecode;
 
@@ -23,6 +25,7 @@ BEGIN
         ELSIF rising_edge(clk) THEN
             instructionOut <= instructionIn;
             InPortOut <= InPort;
+            PCOUT <= PCIN;
         END IF;
     END PROCESS;
 
