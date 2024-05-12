@@ -505,7 +505,7 @@ architecture Behavioral of Processor is
                                             fetch_instruction_out(9 downto 7), fetch_instruction_out(3 downto 1), WriteBackData, write_back_read_data1,
                                             read_data1, read_data2, fetch_instruction_out(15 downto 10), IsInstructionIN, decode_alu_selector, decode_alu_src,
                                             decode_mem_write, decode_mem_read, decode_mem_to_reg, decode_reg_write, decode_reg_write2,
-                                            decode_sp_pointers, decode_protect_write, decode_free_write, decode_branching, IsInstructionOUT, decode_out_en,  decode_read_reg1, decode_read_reg2, decode_in,  ConditionalBranch, UnConditionalBranch, FetchDecodePC, DecodeBlockPC
+                                            decode_sp_pointers, decode_protect_write, decode_free_write, decode_branching, IsInstructionOUT, decode_out_en, ConditionalBranch, UnConditionalBranch, FetchDecodePC, DecodeBlockPC, decode_read_reg1, decode_read_reg2, decode_in
                                         );
 
         SignExtend1: SignExtend port map (
@@ -525,6 +525,7 @@ architecture Behavioral of Processor is
                                                 execute_read_data2, execute_instruction_src1, execute_instruction_src2, execute_reg_destination, execute_immediate, execute_in_port, execute_out_en,  execute_read_reg1, execute_read_reg2, execute_in,
                                                 DecodeBlockPC, ExecuteBlockPC, ConditionalBranch, ConditionalBranchExecute
                                             );
+                                            
                                             BranchingDecodeUnit1: BranchingDecodeUnit port map(
                                                 Rst, '0', ConditionalBranch, UnConditionalBranch, read_data1, '0', flush_decode, changePCDecode, branching_address_out
                                             ); 
