@@ -17,7 +17,11 @@ architecture Behavioral of Processor is
             clk : in std_logic;
             rst : in std_logic;
             instruction : OUT std_logic_vector(15 DOWNTO 0);
-            PCOUT : OUT std_logic_vector(31 DOWNTO 0)
+            PCOUT : OUT std_logic_vector(31 DOWNTO 0);
+            changePCDecode : IN std_logic;
+            changePCExecute : IN std_logic;
+            newPCDecode : IN std_logic_vector(31 DOWNTO 0);
+            newPCExecute : IN std_logic_vector(31 DOWNTO 0)
         );
     end component FetchBlock;
 
@@ -161,13 +165,14 @@ architecture Behavioral of Processor is
             InPortOut : OUT std_logic_vector(31 downto 0);
             OutEnableOut : OUT std_logic;
             PCIN : IN std_logic_vector(31 downto 0);
-            PCOUT : OUT std_logic_vector(31 downto 0)
+            PCOUT : OUT std_logic_vector(31 downto 0);
+            ConditionalBranchIn : IN std_logic;
+            ConditionalBranchOut : OUT std_logic
         );
     end component DecodeExecute;
 
     component BranchingDecodeUnit is
         port (
-            Clk : in std_logic;
             reset : in std_logic;
             DisableBranching : in std_logic;
             ConditionalBranch : in std_logic; -- 1 if conditional branch
@@ -179,12 +184,7 @@ architecture Behavioral of Processor is
             BranchingAddressOut : out std_logic_vector(31 downto 0)
         );
     end component BranchingDecodeUnit;
-    
-
-    
-
     ------------- Execute ------------
-
     component ExecuteBlock is
         port (
             clk : in std_logic;
@@ -249,7 +249,6 @@ architecture Behavioral of Processor is
 
     component BranchingExecuteUnit is 
     port (
-        Clk : in std_logic;
         reset : in std_logic;
        -- WasPredictionDisabled : in std_logic; AZON MALHA4 LAZMA
         ZeroFlag : in std_logic;
@@ -362,6 +361,7 @@ architecture Behavioral of Processor is
     signal branching_address_out : std_logic_vector(31 downto 0); -- WHAT COMES OUT OF BRANCHINGDECODEUNIT
 
     ----------- Signals Execute -----------
+    signal ConditionalBranchExecute : std_logic;
     signal ExecuteBlockPC : std_logic_vector(31 downto 0);
     signal execute_zero_out : std_logic;
     signal execute_negative_out : std_logic;
@@ -436,7 +436,7 @@ architecture Behavioral of Processor is
     begin
         ----------- Fetch ------------
         FetchBlock1: FetchBlock port map (
-                                            Clk, Rst, internal_fetch_instruction, FetchPC
+                                            Clk, Rst, internal_fetch_instruction, FetchPC, changePCDecode, changePCExecute, branching_address_out, branching_address_out2
                                         );
 
         FetchDecode1: FetchDecode port map (
@@ -469,12 +469,19 @@ architecture Behavioral of Processor is
                                                 execute_mem_to_reg, execute_reg_write, execute_reg_write2, execute_sp_pointers,
                                                 execute_protect_write, execute_free_write, execute_branching, execute_read_data1,
                                                 execute_read_data2, execute_instruction_src1, execute_instruction_src2, execute_reg_destination, execute_immediate, execute_in_port, execute_out_en,
-                                                DecodeBlockPC, ExecuteBlockPC
+                                                DecodeBlockPC, ExecuteBlockPC, ConditionalBranch, ConditionalBranchExecute
                                             );
 
         BranchingDecodeUnit1: BranchingDecodeUnit port map(
-            Clk, Rst, '0', ConditionalBranch, UnConditionalBranch, read_data1, '1', flush_decode, changePCDecode, branching_address_out
-        );
+            Rst, '0', ConditionalBranch, UnConditionalBranch, read_data1, '0', flush_decode, changePCDecode, branching_address_out
+        ); 
+        --the 1 means prediction = true
+        --need to test here
+        -- 1. Prediction = false & Unconditional tmam
+        -- 3. Prediction = true & Unconditional tmam
+
+        -- 2. Prediction = false & Conditional msh h3ml haga tmam
+        -- 4. Prediction = true & Conditional el mafrood a change.
 
         ----------- Execute ------------
 
@@ -496,8 +503,17 @@ architecture Behavioral of Processor is
                                             );
         
         BranchingExecuteUnit1: BranchingExecuteUnit port map(
-            Clk, Rst, execute_zero_out, ExecuteBlockPC, execute_read_data1, '1', '0', flushDecode2, flushExecute, changePCExecute, branching_address_out2
+            Rst, execute_zero_out, ExecuteBlockPC, execute_read_data1, '0', ConditionalBranchExecute, flushDecode2, flushExecute, changePCExecute, branching_address_out2
         ); 
+        -- Branch prediciton & conditional jump which i have to forward
+        --need to test here
+        -- 1. Prediction = false & Unconditional tmam
+        -- 3. Prediction = true & Unconditional tmam
+
+        -- 2. Prediction = false & Conditional & zero = 0 msh h3ml haga tmam
+        -- 2.1 Prediction = fals & Conditional & zero = 1 i need to change tmam
+        -- 4. Prediction = true & Conditional & zero = 0 i need to change
+        -- 4.1 Prediction = tr  & Conditional & zero = 1 msh h3ml haga
         ----------- Memory -------------
 
         DataMemory1: MemoryBlock port map (

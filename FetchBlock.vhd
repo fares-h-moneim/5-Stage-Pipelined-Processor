@@ -7,7 +7,11 @@ entity FetchBlock is
         clk : in std_logic;
         rst : in std_logic;
         instruction : OUT std_logic_vector(15 DOWNTO 0);
-        PCOUT : OUT std_logic_vector(31 DOWNTO 0)
+        PCOUT : OUT std_logic_vector(31 DOWNTO 0);
+        changePCDecode : IN std_logic;
+        changePCExecute : IN std_logic;
+        newPCDecode : IN std_logic_vector(31 DOWNTO 0);
+        newPCExecute : IN std_logic_vector(31 DOWNTO 0)
         -- immediate : OUT std_logic_vector(15 DOWNTO 0)
     );
 end entity FetchBlock;
@@ -49,6 +53,10 @@ architecture behavioral of FetchBlock is
         begin
             if rst = '1' then
                 internal_PC <= inital_PC;
+            elsif changePCExecute = '1' then
+                internal_PC <= newPCExecute;
+            elsif changePCDecode = '1' then
+                internal_PC <= newPCDecode;
             elsif falling_edge(clk) then
                 internal_PC <= std_logic_vector(unsigned(internal_PC) + 1);
             --         if IncrementTwo = '1' then

@@ -14,7 +14,6 @@ use ieee.std_logic_1164.all;
 
 entity BranchingExecuteUnit is 
     port (
-        Clk : in std_logic;
         reset : in std_logic;
        -- WasPredictionDisabled : in std_logic; AZON MALHA4 LAZMA
         ZeroFlag : in std_logic;
@@ -31,37 +30,52 @@ end BranchingExecuteUnit;
 
 architecture Behavioral of BranchingExecuteUnit is
 begin
-    process(Clk, reset)
-    begin
-        if reset = '1' then
-            FlushDecode <= '1';
-            FlushExecute <= '1';
-            JumpAddress <= (others => '0');
-        elsif rising_edge(Clk) then
-            if(ConditionalJump = '1' and BranchPrediction = '0' and ZeroFlag = '1') then --i predicted to not jump but i should have
-                FlushDecode <= '1';
-                FlushExecute <= '1';
-                ChangePC <= '1';
-                JumpAddress <= ConditionalJumpAddress;
-            elsif(ConditionalJump = '1' and BranchPrediction = '1' and ZeroFlag = '0') then --i predicted to jump but i should not have
-                FlushDecode <= '1';
-                FlushExecute <= '1';
-                ChangePC <= '1';
-                JumpAddress <= PCPlus1;
-            elsif(ConditionalJump = '1' and BranchPrediction = '1' and ZeroFlag = '1') then --i predicted to jump and i should have
-                FlushDecode <= '0';
-                FlushExecute <= '0';
-                ChangePC <= '0';
-            elsif(ConditionalJump = '1' and BranchPrediction = '0' and ZeroFlag = '0') then --i predicted to not jump and i should not have
-                FlushDecode <= '0';
-                FlushExecute <= '0';
-                ChangePC <= '0';
-            else
-                FlushDecode <= '0';
-                FlushExecute <= '0';
-                ChangePC <= '0';
-                JumpAddress <= PCPlus1;
-            end if;
-        end if;
-    end process;
+    FlushDecode <= '0' when reset = '1' else
+                   '1' when ConditionalJump = '1' and BranchPrediction = '0' and ZeroFlag = '1' else
+                   '1' when ConditionalJump = '1' and BranchPrediction = '1' and ZeroFlag = '0' else
+                   '0';
+    FlushExecute <= '0' when reset = '1' else
+                    '1' when ConditionalJump = '1' and BranchPrediction = '0' and ZeroFlag = '1' else
+                    '1' when ConditionalJump = '1' and BranchPrediction = '1' and ZeroFlag = '0' else
+                    '0';
+    ChangePC <= '0' when reset = '1' else
+                '1' when ConditionalJump = '1' and BranchPrediction = '0' and ZeroFlag = '1' else
+                '1' when ConditionalJump = '1' and BranchPrediction = '1' and ZeroFlag = '0' else
+                '0';
+    JumpAddress <= (others => '0') when reset = '1' else
+                   ConditionalJumpAddress when ConditionalJump = '1' and BranchPrediction = '0' and ZeroFlag = '1' else
+                   PCPlus1 when ConditionalJump = '1' and BranchPrediction = '1' and ZeroFlag = '0' else
+                   (others => '0');
+    -- process(Clk, reset)
+    -- begin
+    --     if reset = '1' then
+    --         FlushExecute <= '1';
+    --         JumpAddress <= (others => '0');
+    --     elsif rising_edge(Clk) then
+    --         if(ConditionalJump = '1' and BranchPrediction = '0' and ZeroFlag = '1') then --i predicted to not jump but i should have
+    --             FlushDecode <= '1';
+    --             FlushExecute <= '1';
+    --             ChangePC <= '1';
+    --             JumpAddress <= ConditionalJumpAddress;
+    --         elsif(ConditionalJump = '1' and BranchPrediction = '1' and ZeroFlag = '0') then --i predicted to jump but i should not have
+    --             FlushDecode <= '1';
+    --             FlushExecute <= '1';
+    --             ChangePC <= '1';
+    --             JumpAddress <= PCPlus1;
+    --         elsif(ConditionalJump = '1' and BranchPrediction = '1' and ZeroFlag = '1') then --i predicted to jump and i should have
+    --             FlushDecode <= '0';
+    --             FlushExecute <= '0';
+    --             ChangePC <= '0';
+    --         elsif(ConditionalJump = '1' and BranchPrediction = '0' and ZeroFlag = '0') then --i predicted to not jump and i should not have
+    --             FlushDecode <= '0';
+    --             FlushExecute <= '0';
+    --             ChangePC <= '0';
+    --         else
+    --             FlushDecode <= '0';
+    --             FlushExecute <= '0';
+    --             ChangePC <= '0';
+    --             JumpAddress <= PCPlus1;
+    --         end if;
+    --     end if;
+    -- end process;
 end Behavioral;

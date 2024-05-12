@@ -12,7 +12,6 @@ use ieee.std_logic_1164.all;
 
 entity BranchingDecodeUnit is
     port (
-        Clk : in std_logic;
         reset : in std_logic;
         DisableBranching : in std_logic;
         ConditionalBranch : in std_logic; -- 1 if conditional branch
@@ -27,26 +26,30 @@ end BranchingDecodeUnit;
 
 architecture Behavioral of BranchingDecodeUnit is
 begin
-    process(Clk)
-    begin
-        if reset = '1' then
-            FlushDecode <= '0';
-            changePC <= '0';
-        elsif rising_edge(Clk) then
-            if DisableBranching = '1' then
-                FlushDecode <= '0';
-                changePC <= '0';
-            elsif ConditionalBranch = '1' and Branching = '1' then
-                FlushDecode <= '1';
-                changePC <= '1';
-            elsif UnConditionalBranch = '1' then
-                FlushDecode <= '1';
-                changePC <= '1';
-            else
-                FlushDecode <= '0';
-                changePC <= '0';
-            end if;
-            BranchingAddressOut <= BranchingAddressIn;
-        end if;
-    end process;
+    FlushDecode <= '0' when reset = '1' else
+                    '0' when DisableBranching = '1' else
+                    '1' when (ConditionalBranch = '1' and Branching = '1') or UnConditionalBranch = '1' else
+                    '0';
+    BranchingAddressOut <= BranchingAddressIn;
+    ChangePC <= '0' when reset = '1' else 
+                '0' when DisableBranching = '1' else
+                '1' when (ConditionalBranch = '1' and Branching = '1') or UnConditionalBranch = '1' else
+                '0';
+    -- process(Clk)
+    -- begin
+    --     if reset = '1' then
+    --         changePC <= '0';
+    --     elsif rising_edge(Clk) then
+    --         if DisableBranching = '1' then
+    --             changePC <= '0';
+    --         elsif ConditionalBranch = '1' and Branching = '1' then
+    --             changePC <= '1';
+    --         elsif UnConditionalBranch = '1' then
+    --             changePC <= '1';
+    --         else
+    --             changePC <= '0';
+    --         end if;
+    --         BranchingAddressOut <= BranchingAddressIn;
+    --     end if;
+    -- end process;
 end Behavioral;
