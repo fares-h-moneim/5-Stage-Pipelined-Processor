@@ -22,7 +22,8 @@ architecture Behavioral of Processor is
             changePCDecode : IN std_logic;
             changePCExecute : IN std_logic;
             newPCDecode : IN std_logic_vector(31 DOWNTO 0);
-            newPCExecute : IN std_logic_vector(31 DOWNTO 0)
+            newPCExecute : IN std_logic_vector(31 DOWNTO 0);
+            changePCFromException : IN std_logic
         );
     end component FetchBlock;
 
@@ -518,7 +519,7 @@ architecture Behavioral of Processor is
     begin
         ----------- Fetch ------------
         FetchBlock1: FetchBlock port map (
-                                            Clk, Rst, internal_fetch_instruction, FetchPC, changePCDecode, changePCExecute, branching_address_out, branching_address_out2
+                                            Clk, Rst, internal_fetch_instruction, FetchPC, changePCDecode, changePCExecute, branching_address_out, branching_address_out2, change_pc_from_exception
                                         );
 
         FetchDecode1: FetchDecode port map (
