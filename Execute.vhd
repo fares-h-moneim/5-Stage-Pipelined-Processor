@@ -25,7 +25,8 @@ entity ExecuteBlock is
         NegativeFlag : out std_logic;
         CarryFlag : out std_logic;
         OverflowFlag : out std_logic;
-        AluOut : out std_logic_vector(31 downto 0)
+        AluOut : out std_logic_vector(31 downto 0);
+        ReadDataOut : out std_logic_vector(31 downto 0)
     );
 end entity ExecuteBlock; 
 
@@ -77,13 +78,13 @@ begin
             ReadData1;
 
     AluIn2 <= AluResExecuteMemory when Sel2 = "001" else
-    AluResMemoryWriteBack when Sel2 = "010" else
-    ReadData1ExecuteMemory when Sel2 = "011" else
-    ReadData1MemoryWriteBack when Sel2 = "100" else
-    MemOutMemoryWriteBack when Sel2 = "101" else
-    InPortExecuteMemory when Sel2 = "110" else
-    InPortMemoryWriteBack when Sel2 = "111" else
-    OutMux1;
+            AluResMemoryWriteBack when Sel2 = "010" else
+            ReadData1ExecuteMemory when Sel2 = "011" else
+            ReadData1MemoryWriteBack when Sel2 = "100" else
+            MemOutMemoryWriteBack when Sel2 = "101" else
+            InPortExecuteMemory when Sel2 = "110" else
+            InPortMemoryWriteBack when Sel2 = "111" else
+            OutMux1;
 
     ALU1: ALU generic map (32) port map (AluIn1, AluIn2, AluSelector, TempFlags, Flags, TempAluOut);
 
@@ -95,5 +96,13 @@ begin
     FlagsReg1: FlagReg generic map (4) port map (clk, reset, '1', Flags, FlagsOut);
 
     AluOut <= TempAluOut;
+    ReadDataOut <= AluResExecuteMemory when Sel1 = "001" else
+            AluResMemoryWriteBack when Sel1 = "010" else
+            ReadData1ExecuteMemory when Sel1 = "011" else
+            ReadData1MemoryWriteBack when Sel1 = "100" else
+            MemOutMemoryWriteBack when Sel1 = "101" else
+            InPortExecuteMemory when Sel1 = "110" else
+            InPortMemoryWriteBack when Sel1 = "111" else
+            ReadData1;
 
 end architecture Behavioral;

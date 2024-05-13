@@ -56,8 +56,8 @@ begin
     
     AluMuxSel2 <= "000" when DecodeExecuteRegRead2 = '0' else -- DONE
     "110" when DecodeExecuteSrc2 = ExecuteMemoryRegDst1 and ExecuteMemoryInPort = '1' and ExecuteMemoryMemToReg = "00" else
-    "001" when DecodeExecuteSrc2 = ExecuteMemoryRegDst1 and ExecuteMemoryRegWrite1 = '1' and ExecuteMemoryMemToReg = "10" else -- DONE
     "011" when DecodeExecuteSrc2 = ExecuteMemoryRegDst2 and ExecuteMemoryRegWrite2 = '1' else
+    "001" when DecodeExecuteSrc2 = ExecuteMemoryRegDst1 and ExecuteMemoryRegWrite1 = '1' and ExecuteMemoryMemToReg = "10" else
     "111" when DecodeExecuteSrc2 = MemoryWriteBackRegDst1 and MemoryWriteBackInPort = '1' and MemoryWriteBackMemToReg = "00" else
     "100" when DecodeExecuteSrc2 = MemoryWriteBackRegDst1 and MemoryWriteBackRegWrite1 = '1' and MemoryWriteBackMemToReg = "10" else -- DONE
     "101" when DecodeExecuteSrc2 = MemoryWriteBackRegDst1 and MemoryWriteBackRegWrite1 = '1' and MemoryWriteBackMemToReg = "01" else
