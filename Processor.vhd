@@ -171,7 +171,8 @@ architecture Behavioral of Processor is
             NegativeFlag : out std_logic;
             CarryFlag : out std_logic;
             OverflowFlag : out std_logic;
-            AluOut : out std_logic_vector(31 downto 0)
+            AluOut : out std_logic_vector(31 downto 0);
+            ReadDataOut : out std_logic_vector(31 downto 0)
         );
     end component ExecuteBlock; 
 
@@ -354,6 +355,8 @@ architecture Behavioral of Processor is
     signal decode_in : std_logic;
 
     ----------- Signals Execute -----------
+    signal execute_block_read_data1 : std_logic_vector(31 downto 0);
+
     signal execute_zero_out : std_logic;
     signal execute_negative_out : std_logic;
     signal execute_carry_out : std_logic;
@@ -474,12 +477,12 @@ architecture Behavioral of Processor is
         ExecuteBlock1: ExecuteBlock port map (
                                                 Clk, Rst, execute_alu_src, forwarding_sel1, forwarding_sel2,
                                                 execute_read_data1, execute_read_data2, execute_immediate,
-                                                execute_alu_selector, memory_alu_out, write_back_alu_out, memory_read_data1, write_back_read_data1, memory_read_data_output, memory_in_port, write_back_in_port, execute_zero_out, execute_negative_out, execute_carry_out, execute_overflow_out, execute_alu_out
+                                                execute_alu_selector, memory_alu_out, write_back_alu_out, memory_read_data1, write_back_read_data1, memory_read_data_output, memory_in_port, write_back_in_port, execute_zero_out, execute_negative_out, execute_carry_out, execute_overflow_out, execute_alu_out, execute_block_read_data1
                                             );
 
         ExecuteMemory1: ExecuteMemory port map (
                                                 Clk, Rst, execute_zero_out,
-                                                execute_reg_destination, execute_alu_out, execute_read_data1, execute_read_data2, execute_mem_write,
+                                                execute_reg_destination, execute_alu_out, execute_block_read_data1, execute_read_data2, execute_mem_write,
                                                 execute_mem_read, execute_mem_to_reg, execute_reg_write, execute_reg_write2,
                                                 execute_sp_pointers, execute_protect_write, execute_free_write, execute_branching, execute_instruction_src1, execute_instruction_src2, execute_in_port, execute_out_en, execute_read_reg1, execute_read_reg2, execute_in,
                                                 memory_zero_out, memory_reg_destination, memory_alu_out, memory_read_data1, memory_read_data2,
