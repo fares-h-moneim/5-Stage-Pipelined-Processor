@@ -16,7 +16,9 @@ Rd_Rd = {
 Rd = {
     "IN",
     "OUT",
-    "RET",
+}
+
+Jumps = {
     "CALL",
     "JMP",
     "JZ",
@@ -90,7 +92,7 @@ hexaToBinary = {
 
 def hex_to_binary(hex_string):
     binary_result = ""
-    while(len(hex_string) < 4):
+    while len(hex_string) < 4:
         hex_string = "0" + hex_string
     for char in hex_string.upper():
         if char in hexaToBinary:
@@ -182,6 +184,19 @@ for instruction in removedSpacesInstr:
         temp += "0000"
         isInstruction = True
 
+    elif instruction[0] in Jumps:
+        print(instruction)
+        temp += commands[instruction[0]]
+        temp += operands[instruction[1]]
+        temp += "0000000"
+        isInstruction = True
+
+    elif instruction[0] == "RET":
+        print(instruction)
+        temp += commands[instruction[0]]
+        temp += "0000000000"
+        isInstruction = True
+
     elif instruction[0] == "POP" or instruction[0] == "PUSH":
         print(instruction)
         temp += commands[instruction[0]]
@@ -268,13 +283,31 @@ for instruction in removedSpacesInstr:
 
     elif instruction[0] == "LDD":
         print("LDD")
+        new_lst = [item for sublist in instruction for item in sublist.split("(")]
+        new_lst = [item.replace(")", "") for item in new_lst]
+        instruction = new_lst
         print(instruction)
-        # isImmidiate = True
-        # temp += commands[instruction[0]]
-        # temp += "000"
-        # temp += operands[instruction[1]]
-        # temp += "0000"
-        # immediate = instruction[2]
+        isImmidiate = True
+        temp += commands[instruction[0]]
+        temp += operands[instruction[3]]
+        temp += operands[instruction[1]]
+        temp += "0000"
+        immediate = hex_to_binary(instruction[2])
+        isInstruction = True
+
+    elif instruction[0] == "STD":
+        print("STD")
+        new_lst = [item for sublist in instruction for item in sublist.split("(")]
+        new_lst = [item.replace(")", "") for item in new_lst]
+        instruction = new_lst
+        print(instruction)
+        isImmidiate = True
+        temp += commands[instruction[0]]
+        temp += operands[instruction[3]]
+        temp += "000"
+        temp += operands[instruction[1]]
+        temp += "0"
+        immediate = hex_to_binary(instruction[2])
         isInstruction = True
 
     if instruction[0] == ".ORG":
