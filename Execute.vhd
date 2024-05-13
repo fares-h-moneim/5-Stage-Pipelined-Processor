@@ -26,7 +26,9 @@ entity ExecuteBlock is
         CarryFlag : out std_logic;
         OverflowFlag : out std_logic;
         AluOut : out std_logic_vector(31 downto 0);
-        ReadDataOut : out std_logic_vector(31 downto 0)
+        ReadDataOut : out std_logic_vector(31 downto 0);
+        call_signal_in : in std_logic;
+        call_signal_out : out std_logic
     );
 end entity ExecuteBlock; 
 
@@ -63,6 +65,7 @@ architecture Behavioral of ExecuteBlock is
     signal TempAluOut: std_logic_vector(31 downto 0);
 
 begin
+    call_signal_out <= call_signal_in;
 
     TempFlags <= FlagsOut;
 

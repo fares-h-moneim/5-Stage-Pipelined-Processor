@@ -48,7 +48,11 @@ entity ExecuteMemory is
         OutEnableOut : out std_logic;
         ReadReg1Out : out std_logic;
         ReadReg2Out : out std_logic;
-        InPortInstructionOut : out std_logic
+        InPortInstructionOut : out std_logic;
+        call_signal_in : in std_logic;
+        call_signal_out : out std_logic;
+        PCIN : in std_logic_vector(31 downto 0);
+        PCOUT : out std_logic_vector(31 downto 0)
     );
 end entity ExecuteMemory;
 
@@ -100,6 +104,8 @@ begin
             ReadReg1Out <= ReadReg1;
             ReadReg2Out <= ReadReg2;
             InPortInstructionOut <= InPortInstruction;
+            call_signal_out <= call_signal_in;
+            PCOUT <= PCIN;
         end if;
     end process;
 end Behavioural;

@@ -54,7 +54,9 @@ ENTITY DecodeExecute IS
         PCIN : IN std_logic_vector(31 downto 0);
         PCOUT : OUT std_logic_vector(31 downto 0);
         ConditionalBranchIn : IN std_logic;
-        ConditionalBranchOut : OUT std_logic
+        ConditionalBranchOut : OUT std_logic;
+        call_signal_in : IN std_logic;
+        call_signal_out : OUT std_logic
     );
 END DecodeExecute;
 
@@ -112,6 +114,7 @@ BEGIN
                 InPortInstructionOut <= InPortInstruction;
                 PCOUT <= PCIN;
                 ConditionalBranchOut <= ConditionalBranchIn;
+                call_signal_out <= call_signal_in;
             END IF;
         END IF;
     END PROCESS;

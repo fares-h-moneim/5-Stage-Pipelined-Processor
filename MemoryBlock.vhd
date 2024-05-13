@@ -18,7 +18,8 @@ Entity MemoryBlock is
     protect_signal : IN std_logic;
     free_signal : IN std_logic;
     read_data_protected : OUT std_logic;
-    read_data_protected_after : OUT std_logic
+    read_data_protected_after : OUT std_logic;
+    call_signal : IN std_logic
     );
 END ENTITY MemoryBlock;
 
@@ -70,7 +71,8 @@ architecture Behavioral of MemoryBlock is
         else std_logic_vector(unsigned(sppOut) + 2) when sp_signal = "10"
         else sppOut;
 
-        memDataIn <= reg2_value when sp_signal = "00"
+        memDataIn <= std_logic_vector(to_unsigned(to_integer(unsigned((pc_value))) + 1, 32)) when (sp_signal = "01" and call_signal = '1')
+        else reg2_value when sp_signal = "00"
         else reg2_value when sp_signal = "01"
         else reg2_value;
 

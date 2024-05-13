@@ -25,13 +25,16 @@ entity Control is
         UnconditionalBranch : out std_logic;
         RegRead1 : out std_logic;
         RegRead2 : out std_logic;
-        InPortInstruction : out std_logic
+        InPortInstruction : out std_logic;
+        call_signal : out std_logic
     );
 end Control;
 architecture Behavioral of Control is
 
 begin
  --010101 Regwrite = 1, Memread= 1, memtoreg = 01
+    call_signal <= '1' when Opcode = "100010" else '0';
+
     IsInstructionOut <= '0' when Opcode = "010010" or Opcode = "010011" or Opcode = "010100" else '1';
 
     OutEnable <= '1' when Opcode = "110001" else '0';
@@ -53,7 +56,7 @@ begin
     else '0';
 
     MemWrite <= '0' when IsInstructionIn = '0' else
-    '1' when Opcode = "010100" or Opcode = "010110" or Opcode = "010110" --MemWrite is equal 1 only if STD and Push
+    '1' when Opcode = "010100" or Opcode = "010110" or Opcode = "010110" or Opcode = "100010" --MemWrite is equal 1 only if STD and Push
     else '0';
 
     MemRead <= '0' when IsInstructionIn = '0' else
