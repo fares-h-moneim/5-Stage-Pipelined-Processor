@@ -6,7 +6,8 @@ entity Processor is
     port (
         Clk, Rst : in std_logic;
         InPort : in std_logic_vector(31 downto 0);
-        OutPort : out std_logic_vector(31 downto 0)
+        OutPort : out std_logic_vector(31 downto 0);
+        Exception : out std_logic
     );
 end entity Processor;
 
@@ -630,7 +631,8 @@ architecture Behavioral of Processor is
              exception_handler_address, change_pc_from_exception
         );
 
-        exception_from_protect <= memory_read_data_protected_after and memory_read_data_protected;
+        exception_from_protect <= memory_read_data_protected_after or memory_read_data_protected;
+        Exception <= change_pc_from_exception;
         process(Clk)
         begin
             if rising_edge(Clk) then

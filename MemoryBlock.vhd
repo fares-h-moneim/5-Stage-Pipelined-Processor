@@ -77,8 +77,10 @@ architecture Behavioral of MemoryBlock is
         actual_mem_write <= mem_write when read_data_protected_temp = '0' and read_data_protected_after_temp = '0'
         else '0';
 
-        read_data_protected <= read_data_protected_temp;
-        read_data_protected_after <= read_data_protected_after_temp;
+        read_data_protected <= read_data_protected_temp when mem_write = '1'
+        else '0';
+        read_data_protected_after <= read_data_protected_after_temp when mem_write = '1'
+        else '0';
 
 
     DataMemory1: DataMemory PORT MAP (clk, memAddress, memDataIn, actual_mem_write, mem_read, read_data);
