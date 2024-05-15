@@ -52,7 +52,9 @@ entity ExecuteMemory is
         call_signal_in : in std_logic;
         call_signal_out : out std_logic;
         PCIN : in std_logic_vector(31 downto 0);
-        PCOUT : out std_logic_vector(31 downto 0)
+        PCOUT : out std_logic_vector(31 downto 0);
+        RETIN : in std_logic;
+        RETOUT : out std_logic
     );
 end entity ExecuteMemory;
 
@@ -106,6 +108,7 @@ begin
             InPortInstructionOut <= InPortInstruction;
             call_signal_out <= call_signal_in;
             PCOUT <= PCIN;
+            RETOUT <= RETIN;
         end if;
     end process;
 end Behavioural;

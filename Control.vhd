@@ -26,13 +26,15 @@ entity Control is
         RegRead1 : out std_logic;
         RegRead2 : out std_logic;
         InPortInstruction : out std_logic;
-        call_signal : out std_logic
+        call_signal : out std_logic;
+        RET : out std_logic
     );
 end Control;
 architecture Behavioral of Control is
 
 begin
  --010101 Regwrite = 1, Memread= 1, memtoreg = 01
+    RET <= '1' when Opcode = "100011" else '0';
     call_signal <= '1' when Opcode = "100010" else '0';
 
     IsInstructionOut <= '0' when Opcode = "010010" or Opcode = "010011" or Opcode = "010100" else '1';
@@ -60,7 +62,7 @@ begin
     else '0';
 
     MemRead <= '0' when IsInstructionIn = '0' else
-    '1' when Opcode = "010011" or Opcode = "010101" --MemRead is equal 1 only if LDD and Pop
+    '1' when Opcode = "010011" or Opcode = "010101" or Opcode = "100011" --MemRead is equal 1 only if LDD and Pop
     else '0';
 
     MemToReg <= "01" when Opcode = "010011" or Opcode = "010101" -- MemToReg is equal 01 if LDD and Pop

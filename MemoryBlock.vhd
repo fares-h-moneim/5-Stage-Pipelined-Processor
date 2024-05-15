@@ -19,7 +19,9 @@ Entity MemoryBlock is
     free_signal : IN std_logic;
     read_data_protected : OUT std_logic;
     read_data_protected_after : OUT std_logic;
-    call_signal : IN std_logic
+    call_signal : IN std_logic;
+    RETIN : IN STD_LOGIC;
+    changePCRET : OUT STD_LOGIC
     );
 END ENTITY MemoryBlock;
 
@@ -83,6 +85,8 @@ architecture Behavioral of MemoryBlock is
         else '0';
         read_data_protected_after <= read_data_protected_after_temp when mem_write = '1'
         else '0';
+
+        changePCRET <= RETIN;
 
 
     DataMemory1: DataMemory PORT MAP (clk, memAddress, memDataIn, actual_mem_write, mem_read, read_data);

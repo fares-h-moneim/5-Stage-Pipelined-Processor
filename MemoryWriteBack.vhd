@@ -34,7 +34,9 @@ ENTITY MemoryWriteBack IS
         OutEnableOut : OUT STD_LOGIC;
         ReadReg1Out : out std_logic;
         ReadReg2Out : out std_logic;
-        InPortInstructionOut : OUT std_logic
+        InPortInstructionOut : OUT std_logic;
+        RETIN : IN STD_LOGIC;
+        RETOUT : OUT STD_LOGIC
     );
 END MemoryWriteBack;
 
@@ -74,6 +76,7 @@ BEGIN
                 ReadReg1Out <= ReadReg1;
                 ReadReg2Out <= ReadReg2;
                 InPortInstructionOut <= InPortInstruction;
+                RETOUT <= RETIN;
             END IF;
     END IF;
     END PROCESS;

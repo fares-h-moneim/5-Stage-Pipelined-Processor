@@ -56,7 +56,9 @@ ENTITY DecodeExecute IS
         ConditionalBranchIn : IN std_logic;
         ConditionalBranchOut : OUT std_logic;
         call_signal_in : IN std_logic;
-        call_signal_out : OUT std_logic
+        call_signal_out : OUT std_logic;
+        RETIN : IN std_logic;
+        RETOUT : out std_logic
     );
 END DecodeExecute;
 
@@ -115,6 +117,7 @@ BEGIN
                 PCOUT <= PCIN;
                 ConditionalBranchOut <= ConditionalBranchIn;
                 call_signal_out <= call_signal_in;
+                RETOUT <= RETIN;
             END IF;
         END IF;
     END PROCESS;
