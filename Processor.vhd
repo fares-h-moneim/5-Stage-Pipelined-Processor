@@ -218,6 +218,7 @@ architecture Behavioral of Processor is
             OverflowFlag : out std_logic;
             AluOut : out std_logic_vector(31 downto 0);
             ReadDataOut : out std_logic_vector(31 downto 0);
+            ReadDataOut2 : out std_logic_vector(31 downto 0);
             call_signal_in : in std_logic;
             call_signal_out : out std_logic
         );
@@ -386,22 +387,23 @@ architecture Behavioral of Processor is
             DecodeExecuteRegDst1 : in std_logic_vector(2 downto 0);
             DecodeExecuteRegRead1 : in std_logic;
             DecodeExecuteRegRead2 : in std_logic;
-
+            DecodeExecuteSPSignal : in std_logic_vector(1 downto 0);
+    
             ExecuteMemoryRegWrite1 : in std_logic;
             ExecuteMemoryRegWrite2 : in std_logic;
             ExecuteMemoryRegDst1 : in std_logic_vector(2 downto 0);
             ExecuteMemoryRegDst2 : in std_logic_vector(2 downto 0);
             ExecuteMemoryMemToReg : in std_logic_vector(1 downto 0);
-
+    
             MemoryWriteBackRegWrite1 : in std_logic;
             MemoryWriteBackRegWrite2 : in std_logic;
             MemoryWriteBackRegDst1 : in std_logic_vector(2 downto 0);
             MemoryWriteBackRegDst2 : in std_logic_vector(2 downto 0);
             MemoryWriteBackMemToReg : in std_logic_vector(1 downto 0);
-
+    
             ExecuteMemoryInPort : in std_logic;
             MemoryWriteBackInPort : in std_logic;
-
+    
             AluMuxSel1 : out std_logic_vector(2 downto 0); -- First Operand (ALU A)
             AluMuxSel2 : out std_logic_vector(2 downto 0) -- Second Operand (ALU B)
         );
@@ -463,6 +465,7 @@ architecture Behavioral of Processor is
     ----------- Signals Execute -----------
     signal call_signal_execute : std_logic;
     signal execute_block_read_data1 : std_logic_vector(31 downto 0);
+    signal execute_block_read_data2 : std_logic_vector(31 downto 0);
 
     signal ConditionalBranchExecute : std_logic;
     signal ExecuteBlockPC : std_logic_vector(31 downto 0);
@@ -618,13 +621,13 @@ architecture Behavioral of Processor is
         ExecuteBlock1: ExecuteBlock port map (
                                                 Clk, Rst, execute_alu_src, forwarding_sel1, forwarding_sel2,
                                                 execute_read_data1, execute_read_data2, execute_immediate,
-                                                execute_alu_selector, memory_alu_out, write_back_alu_out, memory_read_data1, write_back_read_data1, memory_read_data_output, memory_in_port, write_back_in_port, execute_zero_out, execute_negative_out, execute_carry_out, execute_overflow_out, execute_alu_out, execute_block_read_data1,
+                                                execute_alu_selector, memory_alu_out, write_back_alu_out, memory_read_data1, write_back_read_data1, memory_read_data_output, memory_in_port, write_back_in_port, execute_zero_out, execute_negative_out, execute_carry_out, execute_overflow_out, execute_alu_out, execute_block_read_data1, execute_block_read_data2,
                                                 call_signal_execute, call_signal_memory
                                             );
 
         ExecuteMemory1: ExecuteMemory port map (
                                                 Clk, Rst, execute_zero_out,
-                                                execute_reg_destination, execute_alu_out, execute_block_read_data1, execute_read_data2, execute_mem_write,
+                                                execute_reg_destination, execute_alu_out, execute_block_read_data1, execute_block_read_data2, execute_mem_write,
                                                 execute_mem_read, execute_mem_to_reg, execute_reg_write, execute_reg_write2,
                                                 execute_sp_pointers, execute_protect_write, execute_free_write, execute_branching, execute_instruction_src1, execute_instruction_src2, execute_in_port, execute_out_en, execute_read_reg1, execute_read_reg2, execute_in, execute_rti,
                                                 memory_zero_out, memory_reg_destination, memory_alu_out, memory_read_data1, memory_read_data2,
@@ -672,7 +675,7 @@ architecture Behavioral of Processor is
 
         ----------- Forwarding Unit ------------
         ForwardingUnit1: ForwardingUnit port map (
-                                                    execute_instruction_src1, execute_instruction_src2, execute_reg_destination, execute_read_reg1, execute_read_reg2,
+                                                    execute_instruction_src1, execute_instruction_src2, execute_reg_destination, execute_read_reg1, execute_read_reg2, execute_sp_pointers,
                                                     memory_reg_write, memory_reg_write2, memory_reg_destination, memory_reg_destination, memory_mem_to_reg,
                                                     write_back_reg_write, write_back_reg_write2, write_back_reg_destination, memory_reg_destination, memory_mem_to_reg,
                                                     memory_in, write_back_in, forwarding_sel1, forwarding_sel2
