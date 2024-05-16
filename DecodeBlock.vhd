@@ -39,7 +39,8 @@ ENTITY DecodeBlock IS
         RegRead2 : out std_logic;
         InPortInstruction : out std_logic;
         call_signal : out std_logic;
-        RET : out std_logic
+        RET : out std_logic;
+        RTI : out std_logic
     );
 END DecodeBlock;
 
@@ -86,7 +87,8 @@ architecture Behavioral of DecodeBlock IS
             RegRead2 : out std_logic;
             InPortInstruction : out std_logic;
             call_signal : out std_logic;
-            RET : out std_logic
+            RET : out std_logic;
+            RTI : out std_logic
         );
     END component;
 
@@ -130,7 +132,8 @@ architecture Behavioral of DecodeBlock IS
             ConditionalBranch => ConditionalBranch,
             UnconditionalBranch => UnconditionalBranch,
             call_signal => call_signal,
-            RET => RET
+            RET => RET,
+            RTI => RTI
         );
         PCOUT <= PCIN;
 end Behavioral;

@@ -9,7 +9,9 @@ entity FlagReg is
         rst: in std_logic;
         en: in std_logic;
         flag: in std_logic_vector(n-1 downto 0);
-        flag_out: out std_logic_vector(n-1 downto 0)
+        flag_out: out std_logic_vector(n-1 downto 0);
+        update_flags: in std_logic;
+        updated_flags: in std_logic_vector(31 downto 0)
     );
 end FlagReg;
 
@@ -19,6 +21,8 @@ architecture nDff of FlagReg is
         begin
             if rst = '1' then
                 flag_out <= (others => '0');
+            elsif update_flags = '1' then
+                flag_out <= updated_flags(31 downto 28);
             elsif falling_edge(clk) and en = '1' then
                 flag_out <= flag;
             end if;

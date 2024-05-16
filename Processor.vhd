@@ -27,7 +27,8 @@ architecture Behavioral of Processor is
             newPCExecute : IN std_logic_vector(31 DOWNTO 0);
             changePCFromException : IN std_logic;
             changePCFromRet : IN std_logic;
-            newPCFromRet : IN std_logic_vector(31 DOWNTO 0)
+            newPCFromRet : IN std_logic_vector(31 DOWNTO 0);
+            chnagePCInterrupt : IN std_logic
         );
     end component FetchBlock;
 
@@ -43,7 +44,9 @@ architecture Behavioral of Processor is
             PCOUT : out std_logic_vector(31 downto 0);
             flushDecodeRETfromDecode, flushDecodeRETfromExecute, flushDecodeRETfromMemory, flush_decode_branching1, flush_decode_branching2 : IN std_logic;
             flush_exception_until_execute : IN std_logic;
-            flush_exception_until_write_back : IN std_logic
+            flush_exception_until_write_back : IN std_logic;
+            interrupt_signalin : in std_logic;
+            interrupt_signalout : out std_logic
         );
     end component FetchDecode;
 
@@ -85,7 +88,8 @@ architecture Behavioral of Processor is
             RegRead2 : out std_logic;
             InPortInstruction : out std_logic;
             call_signal : out std_logic;
-            RET : out std_logic
+            RET : out std_logic;
+            RTI : out std_logic
         );
     end component DecodeBlock;
     component RegisterFile is
@@ -175,7 +179,9 @@ architecture Behavioral of Processor is
             flush_execute_branching : IN std_logic;
             flush_exception_until_execute : IN std_logic;
             flush_exception_until_write_back : IN std_logic;
-            RTI_OUT : OUT std_logic
+            RTI_OUT : OUT std_logic;
+            interrupt_signalin : in std_logic;
+            interrupt_signalout : out std_logic
         );
     end component DecodeExecute;
 
@@ -219,7 +225,10 @@ architecture Behavioral of Processor is
             AluOut : out std_logic_vector(31 downto 0);
             ReadDataOut : out std_logic_vector(31 downto 0);
             call_signal_in : in std_logic;
-            call_signal_out : out std_logic
+            call_signal_out : out std_logic;
+            flags_out : out std_logic_vector(31 downto 0);
+            update_flags : in std_logic;
+            updated_flags : in std_logic_vector(31 downto 0)
         );
     end component ExecuteBlock; 
 
@@ -281,7 +290,11 @@ architecture Behavioral of Processor is
             flush_exception_until_write_back : in std_logic;
             RTI_OUT : out std_logic;
             flush_decode : in std_logic;
-            flush_decode_branching : out std_logic
+            flush_decode_branching : out std_logic;
+            interrupt_signalin : in std_logic;
+            interrupt_signalout : out std_logic;
+            flagsIn : in std_logic_vector(31 downto 0);
+            flagsOut : out std_logic_vector(31 downto 0)
         );
     end component ExecuteMemory;
 
@@ -321,7 +334,12 @@ architecture Behavioral of Processor is
             read_data_protected_after : OUT std_logic;
             call_signal : IN std_logic;
             RETIN : IN STD_LOGIC;
-            changePCRET : OUT STD_LOGIC
+            changePCRET : OUT STD_LOGIC;
+            memory_rti : IN STD_LOGIC;
+            interrupt_signal : IN STD_LOGIC;
+            flags : OUT std_logic_vector(31 DOWNTO 0);
+            data_in2 : IN std_logic_vector(31 DOWNTO 0); -- FLAGS HTGY HNA
+            changePC : OUT STD_LOGIC
         );
     END COMPONENT MemoryBlock;
 
@@ -537,6 +555,8 @@ architecture Behavioral of Processor is
     signal memory_in : std_logic;
     signal ExecuteMemoryPC, MemoryBlockPC : std_logic_vector(31 downto 0);
     signal memory_rti : std_logic;
+    signal interruptFetchDecode, interruptDecodeExecute, interruptExecuteMemory : std_logic;
+    signal flagsoutputfrommemory, flagsinputtomemory, flags_out : std_logic_vector(31 downto 0);
 
     --------- Signals Write Back ----------
     signal WriteBackData : std_logic_vector(31 downto 0);
@@ -555,6 +575,7 @@ architecture Behavioral of Processor is
     signal write_back_read_reg1 : std_logic;
     signal write_back_read_reg2 : std_logic;
     signal write_back_in : std_logic;
+    signal changePCInterrupt : std_logic;
 
     ----------- Signals Forwarding ------------
     signal forwarding_sel1 : std_logic_vector(2 downto 0);
@@ -574,12 +595,13 @@ architecture Behavioral of Processor is
     begin
         ----------- Fetch ------------
         FetchBlock1: FetchBlock port map (
-                                            Clk, Rst, interrupt, internal_fetch_instruction, FetchPC, changePCDecode, changePCExecute, branching_address_out, branching_address_out2, change_pc_from_exception, changePCfromRET, memory_read_data_output
+                                            Clk, Rst, interrupt, internal_fetch_instruction, FetchPC, changePCDecode, changePCExecute, branching_address_out, branching_address_out2, change_pc_from_exception, changePCfromRET, memory_read_data_output, changePCInterrupt
                                         );
 
         FetchDecode1: FetchDecode port map (
                                             Clk, Rst, internal_fetch_instruction,
-                                            fetch_instruction_out, InPort, decode_in_port, FetchPC, FetchDecodePC, flushDecodeRETfromDecode, flushDecodeRETfromExecute, flushDecodeRETfromMemory, flush_decode, flush_decode_branching2, flush_exception_until_execute, flush_exception_until_write_back
+                                            fetch_instruction_out, InPort, decode_in_port, FetchPC, FetchDecodePC, flushDecodeRETfromDecode, flushDecodeRETfromExecute, flushDecodeRETfromMemory, flush_decode, flush_decode_branching2, flush_exception_until_execute, flush_exception_until_write_back,
+                                            interrupt, interruptFetchDecode
                                         );
         
         ----------- Decode ------------
@@ -589,7 +611,7 @@ architecture Behavioral of Processor is
                                             read_data1, read_data2, fetch_instruction_out(15 downto 10), IsInstructionIN, decode_alu_selector, decode_alu_src,
                                             decode_mem_write, decode_mem_read, decode_mem_to_reg, decode_reg_write, decode_reg_write2,
                                             decode_sp_pointers, decode_protect_write, decode_free_write, decode_branching, IsInstructionOUT, decode_out_en, ConditionalBranch, UnConditionalBranch, FetchDecodePC, DecodeBlockPC, decode_read_reg1, decode_read_reg2, decode_in, 
-                                            call_signal_decode, isRETURN
+                                            call_signal_decode, isRETURN, decode_rti
                                         );
 
         SignExtend1: SignExtend port map (
@@ -607,7 +629,8 @@ architecture Behavioral of Processor is
                                                 execute_mem_to_reg, execute_reg_write, execute_reg_write2, execute_sp_pointers,
                                                 execute_protect_write, execute_free_write, execute_branching, execute_read_data1,
                                                 execute_read_data2, execute_instruction_src1, execute_instruction_src2, execute_reg_destination, execute_immediate, execute_in_port, execute_out_en,  execute_read_reg1, execute_read_reg2, execute_in,
-                                                DecodeBlockPC, ExecuteBlockPC, ConditionalBranch, ConditionalBranchExecute, call_signal_decode, call_signal_execute, isRETURN, flushDecodeRETfromDecode, flush_execute_branching, flush_exception_until_execute, flush_exception_until_write_back, execute_rti
+                                                DecodeBlockPC, ExecuteBlockPC, ConditionalBranch, ConditionalBranchExecute, call_signal_decode, call_signal_execute, isRETURN, flushDecodeRETfromDecode, flush_execute_branching, flush_exception_until_execute, flush_exception_until_write_back, execute_rti,
+                                                interruptFetchDecode, interruptDecodeExecute
                                             );
                                             
                                             BranchingDecodeUnit1: BranchingDecodeUnit port map(
@@ -628,7 +651,7 @@ architecture Behavioral of Processor is
                                                 Clk, Rst, execute_alu_src, forwarding_sel1, forwarding_sel2,
                                                 execute_read_data1, execute_read_data2, execute_immediate,
                                                 execute_alu_selector, memory_alu_out, write_back_alu_out, memory_read_data1, write_back_read_data1, memory_read_data_output, memory_in_port, write_back_in_port, execute_zero_out, execute_negative_out, execute_carry_out, execute_overflow_out, execute_alu_out, execute_block_read_data1,
-                                                call_signal_execute, call_signal_memory
+                                                call_signal_execute, call_signal_memory, flags_out, changePCInterrupt, flagsoutputfrommemory
                                             );
 
         ExecuteMemory1: ExecuteMemory port map (
@@ -640,7 +663,8 @@ architecture Behavioral of Processor is
                                                 memory_mem_write, memory_mem_read, memory_mem_to_reg,
                                                 memory_reg_write, memory_reg_write2, memory_sp_pointers, memory_protect_write, memory_free_write,
                                                 memory_branching, memory_instruction_src1, memory_instruction_src2, memory_in_port, memory_out_en, memory_read_reg1, memory_read_reg2, memory_in,
-                                                call_signal_memory, call_signal_final, ExecuteBlockPC, MemoryBlockPC, flushDecodeRETfromDecode, flushDecodeRETfromExecute, flush_exception_until_execute, flush_exception_until_write_back, memory_rti, flush_decode, flush_decode_branching
+                                                call_signal_memory, call_signal_final, ExecuteBlockPC, MemoryBlockPC, flushDecodeRETfromDecode, flushDecodeRETfromExecute, flush_exception_until_execute, flush_exception_until_write_back, memory_rti, flush_decode, flush_decode_branching,
+                                                interruptDecodeExecute, interruptExecuteMemory, flags_out, flagsinputtomemory
                                             );
         
         BranchingExecuteUnit1: BranchingExecuteUnit port map(
@@ -661,7 +685,7 @@ architecture Behavioral of Processor is
                                             Clk, Rst, memory_alu_out(11 downto 0), memory_alu_out(31 downto 0),
                                             memory_mem_write, memory_mem_read,
                                             memory_read_data_output, memory_sp_pointers,MemoryBlockPC, memory_read_data2, memory_protect_write, memory_free_write, memory_read_data_protected,
-                                            memory_read_data_protected_after, call_signal_final, flushDecodeRETfromExecute, changePCfromRET
+                                            memory_read_data_protected_after, call_signal_final, flushDecodeRETfromExecute, changePCfromRET, memory_rti, interruptExecuteMemory, flagsoutputfrommemory, flagsinputtomemory, changePCInterrupt
                                         );
 
         MemoryWriteBack1: MemoryWriteBack port map (
