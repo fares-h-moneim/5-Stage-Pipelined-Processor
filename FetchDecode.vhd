@@ -17,7 +17,7 @@ end FetchDecode;
 
 ARCHITECTURE Behavior OF FetchDecode IS
 BEGIN
-    PROCESS (clk, reset)
+    PROCESS (clk, reset, flushDecodeRETfromDecode, flushDecodeRETfromExecute)
     BEGIN
     IF reset = '1' or flushDecodeRETfromDecode = '1' or flushDecodeRETfromExecute = '1' THEN
             instructionOut <= "1100000000000000";
