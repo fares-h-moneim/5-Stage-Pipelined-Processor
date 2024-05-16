@@ -27,6 +27,7 @@ entity ExecuteBlock is
         OverflowFlag : out std_logic;
         AluOut : out std_logic_vector(31 downto 0);
         ReadDataOut : out std_logic_vector(31 downto 0);
+        ReadDataOut2 : out std_logic_vector(31 downto 0);
         call_signal_in : in std_logic;
         call_signal_out : out std_logic;
         flags_out : out std_logic_vector(31 downto 0);
@@ -113,5 +114,15 @@ begin
             InPortExecuteMemory when Sel1 = "110" else
             InPortMemoryWriteBack when Sel1 = "111" else
             ReadData1;
+
+    ReadDataOut2 <= AluResExecuteMemory when Sel2 = "001" else
+            AluResMemoryWriteBack when Sel2 = "010" else
+            ReadData1ExecuteMemory when Sel2 = "011" else
+            ReadData1MemoryWriteBack when Sel2 = "100" else
+            MemOutMemoryWriteBack when Sel2 = "101" else
+            InPortExecuteMemory when Sel2 = "110" else
+            InPortMemoryWriteBack when Sel2 = "111" else
+            OutMux1;
+
 
 end architecture Behavioral;
