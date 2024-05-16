@@ -21,7 +21,7 @@ ARCHITECTURE Behavior OF FetchDecode IS
 BEGIN
     PROCESS (clk, reset)
     BEGIN
-    IF reset = '1' or (flushDecodeRETfromDecode = '1' and falling_edge(clk)) or (flushDecodeRETfromExecute = '1' and falling_edge(clk)) or (flushDecodeRETfromMemory = '1' and falling_edge(clk)) or (flush_decode_branching1 = '1' and falling_edge(clk)) or (flush_decode_branching2 = '1' and falling_edge(clk)) or (flush_exception_until_execute = '1' and falling_edge(clk)) or (flush_exception_until_write_back = '1' and falling_edge(clk)) THEN
+    IF reset = '1' or (flushDecodeRETfromDecode = '1' and falling_edge(clk)) or (flushDecodeRETfromExecute = '1' and falling_edge(clk)) or (flushDecodeRETfromMemory = '1' and falling_edge(clk)) or (flush_exception_until_write_back = '1' and falling_edge(clk)) THEN
             instructionOut <= "1100000000000000";
             InPortOut <= (others => '0');
 

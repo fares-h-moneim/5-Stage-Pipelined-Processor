@@ -5,6 +5,7 @@ use ieee.numeric_std.all;
 entity Processor is
     port (
         Clk, Rst : in std_logic;
+        interrupt : in std_logic;
         InPort : in std_logic_vector(31 downto 0);
         OutPort : out std_logic_vector(31 downto 0);
         Exception : out std_logic
@@ -17,6 +18,7 @@ architecture Behavioral of Processor is
         port (
             clk : in std_logic;
             rst : in std_logic;
+            interrupt : in std_logic;
             instruction : OUT std_logic_vector(15 DOWNTO 0);
             PCOUT : OUT std_logic_vector(31 DOWNTO 0);
             changePCDecode : IN std_logic;
@@ -556,7 +558,7 @@ architecture Behavioral of Processor is
     begin
         ----------- Fetch ------------
         FetchBlock1: FetchBlock port map (
-                                            Clk, Rst, internal_fetch_instruction, FetchPC, changePCDecode, changePCExecute, branching_address_out, branching_address_out2, change_pc_from_exception, changePCfromRET, memory_read_data_output
+                                            Clk, Rst, interrupt, internal_fetch_instruction, FetchPC, changePCDecode, changePCExecute, branching_address_out, branching_address_out2, change_pc_from_exception, changePCfromRET, memory_read_data_output
                                         );
 
         FetchDecode1: FetchDecode port map (
