@@ -51,27 +51,23 @@ architecture behavioral of FetchBlock is
         IM1: instruction_memory port map(clk, rst, PC_OUT, internal_instruction, inital_PC);
         instruction <= "1100110000000000" when interrupt = '1' else internal_instruction;
         PCOUT <= PC_OUT;
-       -- IncrementTwo <= '1' when (internal_instruction(15 downto 10) = "001100" or internal_instruction(15 downto 10)= "001101" or internal_instruction(15 downto 10) = "010010") else '0';
 
-        process(clk)
+        process(clk, changePCDecode)
         begin
             if rst = '1' then
                 internal_PC <= inital_PC;
-            elsif changePCFromException = '1' then
-                internal_PC <= "00000000000000000000000000000000";
-            elsif changePCExecute = '1' then
-                internal_PC <= newPCExecute;
-            elsif changePCDecode = '1' then
-                internal_PC <= newPCDecode;
-            elsif changePCFromRet = '1' then
-                internal_PC <= newPCFromRet;
             elsif falling_edge(clk) then
-                internal_PC <= std_logic_vector(unsigned(internal_PC) + 1);
-            --         if IncrementTwo = '1' then
-            --             internal_PC <= std_logic_vector(unsigned(internal_PC) + 2);
-            --         else
-            --         internal_PC <= std_logic_vector(unsigned(internal_PC) + 1);
-            --         end if;
+                if(changePCDecode = '1') then
+                    internal_PC <= newPCDecode;
+                elsif changePCFromException = '1' then
+                    internal_PC <= "00000000000000000000000000000000";
+                elsif changePCExecute = '1' then
+                    internal_PC <= newPCExecute;
+                elsif changePCFromRet = '1' then
+                    internal_PC <= newPCFromRet;
+                else
+                    internal_PC <= std_logic_vector(unsigned(internal_PC) + 1);
+                end if;
             end if;
         end process;
 end architecture behavioral;

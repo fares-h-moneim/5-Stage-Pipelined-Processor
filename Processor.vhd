@@ -275,7 +275,9 @@ architecture Behavioral of Processor is
             RETIN : in std_logic;
             RETOUT : out std_logic;
             flush_exception_until_execute : in std_logic;
-            flush_exception_until_write_back : in std_logic
+            flush_exception_until_write_back : in std_logic;
+            flush_decode : in std_logic;
+            flush_decode_branching : out std_logic
         );
     end component ExecuteMemory;
 
@@ -355,7 +357,11 @@ architecture Behavioral of Processor is
             InPortInstructionOut : OUT std_logic;
             RETIN : IN STD_LOGIC;
             RETOUT : OUT STD_LOGIC;
-            flush_exception_until_write_back : IN STD_LOGIC
+            flush_exception_until_write_back : IN STD_LOGIC;
+            flush_decode2 : IN STD_LOGIC;
+            flush_decode_branching2 : OUT STD_LOGIC;
+            flush_execute : IN STD_LOGIC;
+            flush_execute_branching : OUT STD_LOGIC
         );
     END COMPONENT MemoryWriteBack;
 
@@ -452,6 +458,9 @@ architecture Behavioral of Processor is
     signal UnConditionalBranch : std_logic;
 
     signal flush_decode : std_logic; -- WHAT COMES OUT OF BRANCHINGDECODEUNIT
+    signal flush_decode_branching : std_logic; -- WHAT COMES OUT OF BRANCHINGDECODEUNIT
+    signal flush_decode_branching2 : std_logic; -- WHAT COMES OUT OF BRANCHINGDECODEUNIT
+    signal flush_execute_branching : std_logic; -- WHAT COMES OUT OF BRANCHINGDECODEUNIT
     signal changePCDecode : std_logic; -- WHAT COMES OUT OF BRANCHINGDECODEUNIT
     signal branching_address_out : std_logic_vector(31 downto 0); -- WHAT COMES OUT OF BRANCHINGDECODEUNIT
 
@@ -563,7 +572,7 @@ architecture Behavioral of Processor is
 
         FetchDecode1: FetchDecode port map (
                                             Clk, Rst, internal_fetch_instruction,
-                                            fetch_instruction_out, InPort, decode_in_port, FetchPC, FetchDecodePC, flushDecodeRETfromDecode, flushDecodeRETfromExecute, flushDecodeRETfromMemory, flush_decode, flushDecode2, flush_exception_until_execute, flush_exception_until_write_back
+                                            fetch_instruction_out, InPort, decode_in_port, FetchPC, FetchDecodePC, flushDecodeRETfromDecode, flushDecodeRETfromExecute, flushDecodeRETfromMemory, flush_decode, flush_decode_branching2, flush_exception_until_execute, flush_exception_until_write_back
                                         );
         
         ----------- Decode ------------
@@ -591,7 +600,7 @@ architecture Behavioral of Processor is
                                                 execute_mem_to_reg, execute_reg_write, execute_reg_write2, execute_sp_pointers,
                                                 execute_protect_write, execute_free_write, execute_branching, execute_read_data1,
                                                 execute_read_data2, execute_instruction_src1, execute_instruction_src2, execute_reg_destination, execute_immediate, execute_in_port, execute_out_en,  execute_read_reg1, execute_read_reg2, execute_in,
-                                                DecodeBlockPC, ExecuteBlockPC, ConditionalBranch, ConditionalBranchExecute, call_signal_decode, call_signal_execute, isRETURN, flushDecodeRETfromDecode, flushExecute, flush_exception_until_execute, flush_exception_until_write_back
+                                                DecodeBlockPC, ExecuteBlockPC, ConditionalBranch, ConditionalBranchExecute, call_signal_decode, call_signal_execute, isRETURN, flushDecodeRETfromDecode, flush_execute_branching, flush_exception_until_execute, flush_exception_until_write_back
                                             );
                                             
                                             BranchingDecodeUnit1: BranchingDecodeUnit port map(
@@ -624,7 +633,8 @@ architecture Behavioral of Processor is
                                                 memory_mem_write, memory_mem_read, memory_mem_to_reg,
                                                 memory_reg_write, memory_reg_write2, memory_sp_pointers, memory_protect_write, memory_free_write,
                                                 memory_branching, memory_instruction_src1, memory_instruction_src2, memory_in_port, memory_out_en, memory_read_reg1, memory_read_reg2, memory_in,
-                                                call_signal_memory, call_signal_final, ExecuteBlockPC, MemoryBlockPC, flushDecodeRETfromDecode, flushDecodeRETfromExecute, flush_exception_until_execute, flush_exception_until_write_back
+                                                call_signal_memory, call_signal_final, ExecuteBlockPC, MemoryBlockPC, flushDecodeRETfromDecode, flushDecodeRETfromExecute, flush_exception_until_execute, flush_exception_until_write_back,
+                                                flush_decode, flush_decode_branching
                                             );
         
         BranchingExecuteUnit1: BranchingExecuteUnit port map(
@@ -655,7 +665,8 @@ architecture Behavioral of Processor is
                                                     write_back_mem_to_reg, write_back_reg_write,
                                                     write_back_reg_write2, write_back_data_output, write_back_alu_out,
                                                     write_back_reg_destination, write_back_read_data1, write_back_instruction_src1, write_back_instruction_src2, write_back_in_port, write_back_out_en, write_back_read_reg1, write_back_read_reg2, write_back_in,
-                                                    flushDecodeRETfromExecute, flushDecodeRETfromMemory, flush_exception_until_write_back
+                                                    flushDecodeRETfromExecute, flushDecodeRETfromMemory, flush_exception_until_write_back,
+                                                    flushDecode2, flush_decode_branching2, flushExecute, flush_execute_branching
                                                 );
 
         ----------- Write Back ------------
