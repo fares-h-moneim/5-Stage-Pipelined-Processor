@@ -36,7 +36,8 @@ ENTITY MemoryWriteBack IS
         ReadReg2Out : out std_logic;
         InPortInstructionOut : OUT std_logic;
         RETIN : IN STD_LOGIC;
-        RETOUT : OUT STD_LOGIC
+        RETOUT : OUT STD_LOGIC;
+        flush_exception_until_write_back : IN STD_LOGIC
     );
 END MemoryWriteBack;
 
@@ -45,7 +46,7 @@ ARCHITECTURE MemoryWriteBack OF MemoryWriteBack IS
 BEGIN
     PROCESS (clk, reset, enable)
     BEGIN
-        IF reset = '1' THEN
+        IF reset = '1' or (flush_exception_until_write_back = '1' and falling_edge(clk)) THEN
             MemToRegOut <= (OTHERS => '0');
             RegWriteOut <= '0';
             RegWrite2Out <= '0';

@@ -54,7 +54,9 @@ entity ExecuteMemory is
         PCIN : in std_logic_vector(31 downto 0);
         PCOUT : out std_logic_vector(31 downto 0);
         RETIN : in std_logic;
-        RETOUT : out std_logic
+        RETOUT : out std_logic;
+        flush_exception_until_execute : in std_logic;
+        flush_exception_until_write_back : in std_logic
     );
 end entity ExecuteMemory;
 
@@ -62,7 +64,7 @@ architecture Behavioural of ExecuteMemory is
 begin
     process(clk, reset)
     begin
-        if reset = '1' then
+        if reset = '1' or (flush_exception_until_execute = '1' and falling_edge(clk)) or (flush_exception_until_write_back = '1' and falling_edge(clk)) then
             ZeroFlagOut <= '0';
             RegDstOut <= (others => '0');
             AluResultOut <= (others => '0');
