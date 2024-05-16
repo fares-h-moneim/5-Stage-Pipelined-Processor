@@ -37,7 +37,11 @@ ENTITY MemoryWriteBack IS
         InPortInstructionOut : OUT std_logic;
         RETIN : IN STD_LOGIC;
         RETOUT : OUT STD_LOGIC;
-        flush_exception_until_write_back : IN STD_LOGIC
+        flush_exception_until_write_back : IN STD_LOGIC;
+        flush_decode2 : IN STD_LOGIC;
+        flush_decode_branching2 : OUT STD_LOGIC;
+        flush_execute : IN STD_LOGIC;
+        flush_execute_branching : OUT STD_LOGIC
     );
 END MemoryWriteBack;
 
@@ -78,6 +82,8 @@ BEGIN
                 ReadReg2Out <= ReadReg2;
                 InPortInstructionOut <= InPortInstruction;
                 RETOUT <= RETIN;
+                flush_decode_branching2 <= flush_decode2;
+                flush_execute_branching <= flush_execute;
             END IF;
     END IF;
     END PROCESS;

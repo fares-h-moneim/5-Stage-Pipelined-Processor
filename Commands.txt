@@ -1,28 +1,14 @@
 .org 0
 2
-LDM R0, 1
-LDM R1, AAAA
-LDM R2, FFFF
-DEC R0
-MOV R4, R1
-NOT R1
-MOV R3, R0
-DEC R0
-CMP R4, R2
-OR R5, R1, R4
-MOV R6, R0
-CMP R2, R4
-CMP R5, R0
-OR R7, R4, R3
-NOT R6
-DEC R0
+IN R1            #R1=30
+IN R2            #R2=50
+IN R3            #R3=100
+IN R4            #R4=300
+Push R4          #SP=FFD, M[FFE]=300
+JMP R1           # taken
+INC R1	        
 
-LDD R1, 77(R2)
-STD R1, 77(R2)
-
-CALL R1
-JZ R1
-JMP R1
-
-RET
-
+.ORG 30
+AND R5,R1,R5     #R5=0 , Z = 1
+JZ  R2           #Jump taken, Z = 0
+IN R3             # this statement shouldn't be executed, C-->1
