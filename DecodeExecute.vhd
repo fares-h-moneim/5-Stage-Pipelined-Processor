@@ -28,6 +28,7 @@ ENTITY DecodeExecute IS
         ReadReg1 : IN std_logic;
         ReadReg2 : IN std_logic;
         InPortInstruction : IN std_logic;
+        RTI : IN std_logic;
 
         AluSelectorOut : OUT std_logic_vector(3 downto 0);
         AluSrcOut : OUT std_logic;
@@ -61,7 +62,8 @@ ENTITY DecodeExecute IS
         RETOUT : out std_logic;
         flush_execute_branching : IN std_logic;
         flush_exception_until_execute : IN std_logic;
-        flush_exception_until_write_back : IN std_logic
+        flush_exception_until_write_back : IN std_logic;
+        RTI_OUT : OUT std_logic
     );
 END DecodeExecute;
 
@@ -93,6 +95,7 @@ BEGIN
             ReadReg1Out <= '0';
             ReadReg2Out <= '0';
             InPortInstructionOut <= '0';
+            RTI_OUT <= '0';
         ELSIF rising_edge(clk) THEN
             IF enable = '1' THEN
                 AluSelectorOut <= AluSelector;
@@ -121,6 +124,7 @@ BEGIN
                 ConditionalBranchOut <= ConditionalBranchIn;
                 call_signal_out <= call_signal_in;
                 RETOUT <= RETIN;
+                RTI_OUT <= RTI;
             END IF;
         END IF;
     END PROCESS;

@@ -27,6 +27,7 @@ entity ExecuteMemory is
         ReadReg1 : in std_logic;
         ReadReg2 : in std_logic;
         InPortInstruction : in std_logic;
+        RTI : in std_logic;
 
         ZeroFlagOut : out std_logic;
         RegDstOut : out std_logic_vector(2 downto 0);
@@ -56,7 +57,8 @@ entity ExecuteMemory is
         RETIN : in std_logic;
         RETOUT : out std_logic;
         flush_exception_until_execute : in std_logic;
-        flush_exception_until_write_back : in std_logic
+        flush_exception_until_write_back : in std_logic;
+        RTI_OUT : out std_logic
     );
 end entity ExecuteMemory;
 
@@ -86,6 +88,7 @@ begin
             ReadReg1Out <= '0';
             ReadReg2Out <= '0';
             InPortInstructionOut <= '0';
+            RTI_OUT <= '0';
         elsif rising_edge(clk) then
             ZeroFlagOut <= ZeroFlagIn;
             RegDstOut <= RegDst;
@@ -111,6 +114,7 @@ begin
             call_signal_out <= call_signal_in;
             PCOUT <= PCIN;
             RETOUT <= RETIN;
+            RTI_OUT <= RTI;
         end if;
     end process;
 end Behavioural;

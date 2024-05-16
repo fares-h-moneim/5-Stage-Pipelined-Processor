@@ -27,7 +27,8 @@ entity Control is
         RegRead2 : out std_logic;
         InPortInstruction : out std_logic;
         call_signal : out std_logic;
-        RET : out std_logic
+        RET : out std_logic;
+        RTI : out std_logic
     );
 end Control;
 architecture Behavioral of Control is
@@ -80,7 +81,7 @@ begin
     else '0';
 
     SpPointers <= "01" when Opcode = "010110" or Opcode = "100010" -- Push or Call
-    else "10" when Opcode = "010101" or Opcode = "100011" or Opcode = "100100" -- Pop, RET, RTI
+    else "10" when Opcode = "010101" or Opcode = "100011" or Opcode = "110100" -- Pop, RET, RTI
     else "00"; -- SP is not changed
 
     ProtectWrite <= '1' when Opcode = "010111" -- ProtectWrite is equal 1 if Protect
@@ -97,5 +98,7 @@ begin
 
     RegRead2 <= '1' when (Opcode = "000100" or Opcode = "000101" or Opcode = "000110" or Opcode = "000111" or Opcode = "001000" or Opcode = "001010" or Opcode = "001011") and IsInstructionIn /= '0' else
     '0';
+
+    RTI <= '1' when Opcode = "110100" else '0';
 
 end Behavioral;
