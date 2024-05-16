@@ -39,7 +39,7 @@ architecture Behavioral of Processor is
             InPortOut: out std_logic_vector(31 downto 0);
             PCIN : in std_logic_vector(31 downto 0);
             PCOUT : out std_logic_vector(31 downto 0);
-            flushDecodeRETfromDecode, flushDecodeRETfromExecute, flushDecodeRETfromMemory : IN std_logic
+            flushDecodeRETfromDecode, flushDecodeRETfromExecute, flushDecodeRETfromMemory, flush_decode_branching1, flush_decode_branching2 : IN std_logic
         );
     end component FetchDecode;
 
@@ -166,7 +166,8 @@ architecture Behavioral of Processor is
             call_signal_in : IN std_logic;
             call_signal_out : OUT std_logic;
             RETIN : IN std_logic;
-            RETOUT : out std_logic
+            RETOUT : out std_logic;
+            flush_execute_branching : IN std_logic
         );
     end component DecodeExecute;
 
@@ -553,7 +554,7 @@ architecture Behavioral of Processor is
 
         FetchDecode1: FetchDecode port map (
                                             Clk, Rst, internal_fetch_instruction,
-                                            fetch_instruction_out, InPort, decode_in_port, FetchPC, FetchDecodePC, flushDecodeRETfromDecode, flushDecodeRETfromExecute, flushDecodeRETfromMemory 
+                                            fetch_instruction_out, InPort, decode_in_port, FetchPC, FetchDecodePC, flushDecodeRETfromDecode, flushDecodeRETfromExecute, flushDecodeRETfromMemory, flush_decode, flushDecode2
                                         );
         
         ----------- Decode ------------
@@ -581,7 +582,7 @@ architecture Behavioral of Processor is
                                                 execute_mem_to_reg, execute_reg_write, execute_reg_write2, execute_sp_pointers,
                                                 execute_protect_write, execute_free_write, execute_branching, execute_read_data1,
                                                 execute_read_data2, execute_instruction_src1, execute_instruction_src2, execute_reg_destination, execute_immediate, execute_in_port, execute_out_en,  execute_read_reg1, execute_read_reg2, execute_in,
-                                                DecodeBlockPC, ExecuteBlockPC, ConditionalBranch, ConditionalBranchExecute, call_signal_decode, call_signal_execute, isRETURN, flushDecodeRETfromDecode
+                                                DecodeBlockPC, ExecuteBlockPC, ConditionalBranch, ConditionalBranchExecute, call_signal_decode, call_signal_execute, isRETURN, flushDecodeRETfromDecode, flushExecute
                                             );
                                             
                                             BranchingDecodeUnit1: BranchingDecodeUnit port map(

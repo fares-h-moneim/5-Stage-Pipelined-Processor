@@ -11,7 +11,7 @@ entity FetchDecode is
         InPortOut: out std_logic_vector(31 downto 0);
         PCIN : in std_logic_vector(31 downto 0);
         PCOUT : out std_logic_vector(31 downto 0);
-        flushDecodeRETfromDecode, flushDecodeRETfromExecute, flushDecodeRETfromMemory : IN std_logic
+        flushDecodeRETfromDecode, flushDecodeRETfromExecute, flushDecodeRETfromMemory, flush_decode_branching1, flush_decode_branching2 : IN std_logic
     );
 end FetchDecode;
 
@@ -19,7 +19,7 @@ ARCHITECTURE Behavior OF FetchDecode IS
 BEGIN
     PROCESS (clk, reset)
     BEGIN
-    IF reset = '1' or (flushDecodeRETfromDecode = '1' and falling_edge(clk)) or (flushDecodeRETfromExecute = '1' and falling_edge(clk)) or (flushDecodeRETfromMemory = '1' and falling_edge(clk)) THEN
+    IF reset = '1' or (flushDecodeRETfromDecode = '1' and falling_edge(clk)) or (flushDecodeRETfromExecute = '1' and falling_edge(clk)) or (flushDecodeRETfromMemory = '1' and falling_edge(clk)) or (flush_decode_branching1 = '1' and falling_edge(clk)) or (flush_decode_branching2 = '1' and falling_edge(clk)) THEN
             instructionOut <= "1100000000000000";
             InPortOut <= (others => '0');
 

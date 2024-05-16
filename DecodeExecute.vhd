@@ -58,7 +58,8 @@ ENTITY DecodeExecute IS
         call_signal_in : IN std_logic;
         call_signal_out : OUT std_logic;
         RETIN : IN std_logic;
-        RETOUT : out std_logic
+        RETOUT : out std_logic;
+        flush_execute_branching : IN std_logic
     );
 END DecodeExecute;
 
@@ -67,7 +68,7 @@ ARCHITECTURE DecodeExecute OF DecodeExecute IS
 BEGIN
     PROCESS (clk, reset, enable)
     BEGIN
-        IF reset = '1' THEN
+        IF reset = '1' or (flush_execute_branching = '1' and falling_edge(clk)) THEN
             AluSelectorOut <= "1001";
             AluSrcOut <= '0';
             MemWriteOut <= '0';
