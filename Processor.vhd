@@ -38,7 +38,8 @@ architecture Behavioral of Processor is
             InPort: in std_logic_vector(31 downto 0);
             InPortOut: out std_logic_vector(31 downto 0);
             PCIN : in std_logic_vector(31 downto 0);
-            PCOUT : out std_logic_vector(31 downto 0)
+            PCOUT : out std_logic_vector(31 downto 0);
+            flushDecodeRETfromDecode, flushDecodeRETfromExecute, flushDecodeRETfromMemory : IN std_logic
         );
     end component FetchDecode;
 
@@ -552,7 +553,7 @@ architecture Behavioral of Processor is
 
         FetchDecode1: FetchDecode port map (
                                             Clk, Rst, internal_fetch_instruction,
-                                            fetch_instruction_out, InPort, decode_in_port, FetchPC, FetchDecodePC
+                                            fetch_instruction_out, InPort, decode_in_port, FetchPC, FetchDecodePC, flushDecodeRETfromDecode, flushDecodeRETfromExecute, flushDecodeRETfromMemory 
                                         );
         
         ----------- Decode ------------
