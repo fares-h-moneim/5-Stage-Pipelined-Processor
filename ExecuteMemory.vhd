@@ -116,6 +116,8 @@ begin
             call_signal_out <= call_signal_in;
             PCOUT <= PCIN;
             RETOUT <= RETIN;
+            RTI_OUT <= RTI;
+            flush_decode_branching <= flush_decode;
         end if;
     end process;
 end Behavioural;
