@@ -7,8 +7,8 @@ entity ExecuteBlock is
         clk : in std_logic;
         reset : in std_logic;
         AluSrc : in std_logic;
-        Sel1: in std_logic_vector(2 downto 0);
-        Sel2: in std_logic_vector(2 downto 0);
+        Sel1: in std_logic_vector(3 downto 0);
+        Sel2: in std_logic_vector(3 downto 0);
         ReadData1 : in std_logic_vector(31 downto 0);
         ReadData2 : in std_logic_vector(31 downto 0);
         Immediate : in std_logic_vector(31 downto 0);
@@ -32,7 +32,8 @@ entity ExecuteBlock is
         call_signal_out : out std_logic;
         flags_out : out std_logic_vector(31 downto 0);
         update_flags : in std_logic;
-        updated_flags : in std_logic_vector(31 downto 0)
+        updated_flags : in std_logic_vector(31 downto 0);
+        ExecuteMemoryWriteBack : in std_logic_vector(31 downto 0)
     );
 end entity ExecuteBlock; 
 
@@ -78,22 +79,24 @@ begin
 
     OutMux1 <= immediate when AluSrc = '1' else ReadData2;
     
-    AluIn1 <= AluResExecuteMemory when Sel1 = "001" else
-            AluResMemoryWriteBack when Sel1 = "010" else
-            ReadData1ExecuteMemory when Sel1 = "011" else
-            ReadData1MemoryWriteBack when Sel1 = "100" else
-            MemOutMemoryWriteBack when Sel1 = "101" else
-            InPortExecuteMemory when Sel1 = "110" else
-            InPortMemoryWriteBack when Sel1 = "111" else
+    AluIn1 <= AluResExecuteMemory when Sel1 = "0001" else
+            AluResMemoryWriteBack when Sel1 = "0010" else
+            ReadData1ExecuteMemory when Sel1 = "0011" else
+            ReadData1MemoryWriteBack when Sel1 = "0100" else
+            MemOutMemoryWriteBack when Sel1 = "0101" else
+            InPortExecuteMemory when Sel1 = "0110" else
+            InPortMemoryWriteBack when Sel1 = "0111" else
+            ExecuteMemoryWriteBack when Sel1 = "1000" else
             ReadData1;
 
-    AluIn2 <= AluResExecuteMemory when Sel2 = "001" else
-            AluResMemoryWriteBack when Sel2 = "010" else
-            ReadData1ExecuteMemory when Sel2 = "011" else
-            ReadData1MemoryWriteBack when Sel2 = "100" else
-            MemOutMemoryWriteBack when Sel2 = "101" else
-            InPortExecuteMemory when Sel2 = "110" else
-            InPortMemoryWriteBack when Sel2 = "111" else
+    AluIn2 <= AluResExecuteMemory when Sel2 = "0001" else
+            AluResMemoryWriteBack when Sel2 = "0010" and AluSrc = '0' else
+            ReadData1ExecuteMemory when Sel2 = "0011" else
+            ReadData1MemoryWriteBack when Sel2 = "0100" else
+            MemOutMemoryWriteBack when Sel2 = "0101" else
+            InPortExecuteMemory when Sel2 = "0110" else
+            InPortMemoryWriteBack when Sel2 = "0111" else
+            ExecuteMemoryWriteBack when Sel2 = "1000" else
             OutMux1;
 
     ALU1: ALU generic map (32) port map (AluIn1, AluIn2, AluSelector, TempFlags, Flags, TempAluOut);
@@ -106,22 +109,24 @@ begin
     FlagsReg1: FlagReg generic map (4) port map (clk, reset, '1', Flags, FlagsOut, update_flags, updated_flags);
 
     AluOut <= TempAluOut;
-    ReadDataOut <= AluResExecuteMemory when Sel1 = "001" else
-            AluResMemoryWriteBack when Sel1 = "010" else
-            ReadData1ExecuteMemory when Sel1 = "011" else
-            ReadData1MemoryWriteBack when Sel1 = "100" else
-            MemOutMemoryWriteBack when Sel1 = "101" else
-            InPortExecuteMemory when Sel1 = "110" else
-            InPortMemoryWriteBack when Sel1 = "111" else
+    ReadDataOut <= AluResExecuteMemory when Sel1 = "0001" else
+            AluResMemoryWriteBack when Sel1 = "0010" else
+            ReadData1ExecuteMemory when Sel1 = "0011" else
+            ReadData1MemoryWriteBack when Sel1 = "0100" else
+            MemOutMemoryWriteBack when Sel1 = "0101" else
+            InPortExecuteMemory when Sel1 = "0110" else
+            InPortMemoryWriteBack when Sel1 = "0111" else
+            ExecuteMemoryWriteBack when Sel1 = "1000" else
             ReadData1;
 
-    ReadDataOut2 <= AluResExecuteMemory when Sel2 = "001" else
-            AluResMemoryWriteBack when Sel2 = "010" else
-            ReadData1ExecuteMemory when Sel2 = "011" else
-            ReadData1MemoryWriteBack when Sel2 = "100" else
-            MemOutMemoryWriteBack when Sel2 = "101" else
-            InPortExecuteMemory when Sel2 = "110" else
-            InPortMemoryWriteBack when Sel2 = "111" else
+    ReadDataOut2 <= AluResExecuteMemory when Sel2 = "0001" else
+            AluResMemoryWriteBack when Sel2 = "0010" else
+            ReadData1ExecuteMemory when Sel2 = "0011" else
+            ReadData1MemoryWriteBack when Sel2 = "0100" else
+            MemOutMemoryWriteBack when Sel2 = "0101" else
+            InPortExecuteMemory when Sel2 = "0110" else
+            InPortMemoryWriteBack when Sel2 = "0111" else
+            ExecuteMemoryWriteBack when Sel2 = "1000" else
             ReadData2;
 
 
