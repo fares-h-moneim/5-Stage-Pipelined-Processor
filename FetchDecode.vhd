@@ -13,7 +13,9 @@ entity FetchDecode is
         PCOUT : out std_logic_vector(31 downto 0);
         flushDecodeRETfromDecode, flushDecodeRETfromExecute, flushDecodeRETfromMemory, flush_decode_branching1, flush_decode_branching2 : IN std_logic;
         flush_exception_until_execute : IN std_logic;
-        flush_exception_until_write_back : IN std_logic
+        flush_exception_until_write_back : IN std_logic;
+        interrupt_signalin : in std_logic;
+        interrupt_signalout : out std_logic
     );
 end FetchDecode;
 
@@ -29,6 +31,7 @@ BEGIN
             instructionOut <= instructionIn;
             InPortOut <= InPort;
             PCOUT <= PCIN;
+            interrupt_signalout <= interrupt_signalin;
         END IF;
     END PROCESS;
 

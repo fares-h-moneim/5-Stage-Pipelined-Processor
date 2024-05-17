@@ -15,7 +15,8 @@ entity FetchBlock is
         newPCExecute : IN std_logic_vector(31 DOWNTO 0);
         changePCFromException : IN std_logic;
         changePCFromRet : IN std_logic;
-        newPCFromRet : IN std_logic_vector(31 DOWNTO 0)
+        newPCFromRet : IN std_logic_vector(31 DOWNTO 0);
+        chnagePCInterrupt : IN std_logic
         -- immediate : OUT std_logic_vector(15 DOWNTO 0)
     );
 end entity FetchBlock;
@@ -26,7 +27,8 @@ architecture behavioral of FetchBlock is
             clk, reset : IN std_logic;
             address : IN std_logic_vector(31 DOWNTO 0);
             instruction : OUT std_logic_vector(15 DOWNTO 0);
-            inital_PC : OUT std_logic_vector(31 DOWNTO 0)
+            inital_PC : OUT std_logic_vector(31 DOWNTO 0);
+            interrupt_handler : OUT std_logic_vector(31 DOWNTO 0)
             -- immediate : OUT std_logic_vector(15 DOWNTO 0)
         );
     end component instruction_memory;
@@ -46,9 +48,10 @@ architecture behavioral of FetchBlock is
     signal IncrementTwo: std_logic; --will i increment by 1 or 2
     signal internal_PC : std_logic_vector(31 DOWNTO 0);
     signal inital_PC : std_logic_vector(31 DOWNTO 0) := (others => '0');
+    signal interrupt_handler : std_logic_vector(31 DOWNTO 0) := (others => '0');
     begin
         PC1: PC port map(clk, rst, '1', internal_PC, PC_OUT);
-        IM1: instruction_memory port map(clk, rst, PC_OUT, internal_instruction, inital_PC);
+        IM1: instruction_memory port map(clk, rst, PC_OUT, internal_instruction, inital_PC, interrupt_handler);
         instruction <= "1100110000000000" when interrupt = '1' else internal_instruction;
         PCOUT <= PC_OUT;
 
@@ -56,8 +59,12 @@ architecture behavioral of FetchBlock is
         begin
             if rst = '1' then
                 internal_PC <= inital_PC;
+            elsif interrupt = '1' then
+                internal_PC <= interrupt_handler;
             elsif falling_edge(clk) then
-                if(changePCDecode = '1') then
+                if(chnagePCInterrupt = '1') then
+                    internal_PC <= newPCFromRet; 
+                elsif(changePCDecode = '1') then
                     internal_PC <= newPCDecode;
                 elsif changePCFromException = '1' then
                     internal_PC <= "00000000000000000000000000000000";

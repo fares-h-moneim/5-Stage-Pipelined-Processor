@@ -29,7 +29,10 @@ entity ExecuteBlock is
         ReadDataOut : out std_logic_vector(31 downto 0);
         ReadDataOut2 : out std_logic_vector(31 downto 0);
         call_signal_in : in std_logic;
-        call_signal_out : out std_logic
+        call_signal_out : out std_logic;
+        flags_out : out std_logic_vector(31 downto 0);
+        update_flags : in std_logic;
+        updated_flags : in std_logic_vector(31 downto 0)
     );
 end entity ExecuteBlock; 
 
@@ -53,7 +56,9 @@ architecture Behavioral of ExecuteBlock is
             rst: in std_logic;
             en: in std_logic;
             flag: in std_logic_vector(n-1 downto 0);
-            flag_out: out std_logic_vector(n-1 downto 0)
+            flag_out: out std_logic_vector(n-1 downto 0);
+            update_flags: in std_logic;
+            updated_flags: in std_logic_vector(31 downto 0)
         );
     end component;
 
@@ -69,6 +74,7 @@ begin
     call_signal_out <= call_signal_in;
 
     TempFlags <= FlagsOut;
+    flags_out <= FlagsOut & "0000000000000000000000000000";
 
     OutMux1 <= immediate when AluSrc = '1' else ReadData2;
     
@@ -97,7 +103,7 @@ begin
     OverflowFlag <= Flags(2);
     CarryFlag <= Flags(3);
 
-    FlagsReg1: FlagReg generic map (4) port map (clk, reset, '1', Flags, FlagsOut);
+    FlagsReg1: FlagReg generic map (4) port map (clk, reset, '1', Flags, FlagsOut, update_flags, updated_flags);
 
     AluOut <= TempAluOut;
     ReadDataOut <= AluResExecuteMemory when Sel1 = "001" else

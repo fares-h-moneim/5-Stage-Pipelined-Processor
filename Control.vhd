@@ -59,12 +59,12 @@ begin
     else '0';
 
     MemWrite <= '0' when IsInstructionIn = '0' else
-    '1' when Opcode = "010100" or Opcode = "010110" or Opcode = "010110" or Opcode = "100010" --MemWrite is equal 1 only if STD and Push
+    '1' when Opcode = "010100" or Opcode = "010110" or Opcode = "010110" or Opcode = "100010" or Opcode = "110011" --MemWrite is equal 1 only if STD and Push
     else '0';
 
     MemRead <= '0' when IsInstructionIn = '0' else
-    '1' when Opcode = "010011" or Opcode = "010101" or Opcode = "100011" --MemRead is equal 1 only if LDD and Pop
-    else '0';
+    '1' when Opcode = "010011" or Opcode = "010101" or Opcode = "100011" or Opcode = "110100"--MemRead is equal 1 only if LDD and Pop
+    else '0'; --when rti
 
     MemToReg <= "01" when Opcode = "010011" or Opcode = "010101" -- MemToReg is equal 01 if LDD and Pop
     else "00" when Opcode = "110010" -- MemToReg is equal 00 if IN
@@ -80,7 +80,7 @@ begin
     '1' when Opcode = "001010" -- we will only need multiple writes if instruction is swap
     else '0';
 
-    SpPointers <= "01" when Opcode = "010110" or Opcode = "100010" -- Push or Call
+    SpPointers <= "01" when Opcode = "010110" or Opcode = "100010" or Opcode = "110011" -- Push or Call
     else "10" when Opcode = "010101" or Opcode = "100011" or Opcode = "110100" -- Pop, RET, RTI
     else "00"; -- SP is not changed
 

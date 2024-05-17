@@ -63,7 +63,9 @@ ENTITY DecodeExecute IS
         flush_execute_branching : IN std_logic;
         flush_exception_until_execute : IN std_logic;
         flush_exception_until_write_back : IN std_logic;
-        RTI_OUT : OUT std_logic
+        RTI_OUT : OUT std_logic;
+        interrupt_signalin : in std_logic;
+        interrupt_signalout : out std_logic
     );
 END DecodeExecute;
 
@@ -125,6 +127,7 @@ BEGIN
                 call_signal_out <= call_signal_in;
                 RETOUT <= RETIN;
                 RTI_OUT <= RTI;
+                interrupt_signalout <= interrupt_signalin;
             END IF;
         END IF;
     END PROCESS;

@@ -16,7 +16,7 @@ IN R7 # R7=5
 AND R0,R0,R0     #N=0,Z=1
 OUT R3
 RTI              #POP PC and flags restored
-ADDI R1, R2, R3  # Try Hardware interrupt when fetching this (in a second run) - infinite loop?
+//ADDI R1, R2, R3  # Try Hardware interrupt when fetching this (in a second run) - infinite loop?
 
 .ORG 10
 IN R1            #R1=30
@@ -25,7 +25,7 @@ IN R3            #R3=100
 IN R4            #R4=300
 Push R4          #SP=FFD, M[FFE]=300
 JMP R1           # taken
-INC R1	         # this statement shouldn't be executed
+INC R1         # this statement shouldn't be executed
  
 #check flag fowarding  
 .ORG 30
@@ -69,7 +69,7 @@ JMP R6           #jump taken
 ADD R7, R0, R1             #R7=80
 POP R6           #R6=300, SP=FFF, try hardware interrupt here
 Call R6         #SP=FFD, M[FFF, FFE]=next PC
-INC R6	         #R6=401, this statement shouldn't be executed till call returns, C--> 0, N-->0,Z-->0
+INC R6         #R6=401, this statement shouldn't be executed till call returns, C--> 0, N-->0,Z-->0
 NOP
 NOP
 

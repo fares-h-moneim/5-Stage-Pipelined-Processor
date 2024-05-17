@@ -128,8 +128,17 @@ def removeComments(Line):
     return line
 
 
-file1 = open("Commands.txt", "r")
-Lines = file1.readlines()
+file_r1 = open("OneOperand.asm", "r")
+file_r2 = open("TwoOperand.asm", "r")
+file_r3 = open("Memory.asm", "r")
+file_r4 = open("Branch.asm", "r")
+
+Lines = (
+    file_r1.readlines()
+    + file_r2.readlines()
+    + file_r3.readlines()
+    + file_r4.readlines()
+)
 
 
 instructions = []
@@ -147,7 +156,11 @@ for line in Lines:
 
     instructions.append(line)
 
-file1.close()
+file_r1.close()
+file_r2.close()
+file_r3.close()
+file_r4.close()
+
 for instruction in instructions:
     instruction = instruction.replace(",", " ")
     instruction = instruction.split(" ")

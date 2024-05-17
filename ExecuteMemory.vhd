@@ -60,7 +60,11 @@ entity ExecuteMemory is
         flush_exception_until_write_back : in std_logic;
         RTI_OUT : out std_logic;
         flush_decode : in std_logic;
-        flush_decode_branching : out std_logic
+        flush_decode_branching : out std_logic;
+        interrupt_signalin : in std_logic;
+        interrupt_signalout : out std_logic;
+        flagsIn : in std_logic_vector(31 downto 0);
+        flagsOut : out std_logic_vector(31 downto 0)
     );
 end entity ExecuteMemory;
 
@@ -118,6 +122,8 @@ begin
             RETOUT <= RETIN;
             RTI_OUT <= RTI;
             flush_decode_branching <= flush_decode;
+            flagsOut <= flagsIn;
+            interrupt_signalout <= interrupt_signalin;
         end if;
     end process;
 end Behavioural;
