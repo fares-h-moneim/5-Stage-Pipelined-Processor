@@ -710,16 +710,16 @@ architecture Behavioral of Processor is
         ----------- Forwarding Unit ------------
         ForwardingUnit1: ForwardingUnit port map (
                                                     execute_instruction_src1, execute_instruction_src2, execute_reg_destination, execute_read_reg1, execute_read_reg2, execute_sp_pointers,
-                                                    memory_reg_write, memory_reg_write2, memory_reg_destination, memory_reg_destination, memory_mem_to_reg,
-                                                    write_back_reg_write, write_back_reg_write2, write_back_reg_destination, memory_reg_destination, memory_mem_to_reg,
+                                                    memory_reg_write, memory_reg_write2, memory_reg_destination, memory_instruction_src2, memory_mem_to_reg,
+                                                    write_back_reg_write, write_back_reg_write2, write_back_reg_destination, write_back_instruction_src2, memory_mem_to_reg,
                                                     memory_in, write_back_in, forwarding_sel1, forwarding_sel2
         );
 
         ----------- Exception Handler ------------
         ExceptionHandlerUnit: ExceptionHandler port map (
             Clk, Rst, execute_overflow_out,
-             exception_from_protect, flush_exception_until_execute, flush_exception_until_write_back,
-             exception_handler_address, change_pc_from_exception
+            exception_from_protect, flush_exception_until_execute, flush_exception_until_write_back,
+            exception_handler_address, change_pc_from_exception
         );
 
         exception_from_protect <= memory_read_data_protected_after or memory_read_data_protected;

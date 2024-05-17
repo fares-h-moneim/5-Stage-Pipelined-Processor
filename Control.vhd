@@ -34,11 +34,11 @@ end Control;
 architecture Behavioral of Control is
 
 begin
- --010101 Regwrite = 1, Memread= 1, memtoreg = 01
+    --010101 Regwrite = 1, Memread= 1, memtoreg = 01
     RET <= '1' when Opcode = "100011" else '0';
     call_signal <= '1' when Opcode = "100010" else '0';
 
-    IsInstructionOut <= '0' when Opcode = "010010" or Opcode = "010011" or Opcode = "010100" else '1';
+    IsInstructionOut <= '0' when Opcode = "010010" or Opcode = "010011" or Opcode = "010100" or Opcode = "001100" or Opcode = "001101" else '1';
 
     OutEnable <= '1' when Opcode = "110001" else '0';
 
