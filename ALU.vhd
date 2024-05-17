@@ -9,7 +9,8 @@ entity ALU is
         Sel: in std_logic_vector(3 downto 0); -- Select lines
         FlagsIn: in std_logic_vector(3 downto 0); -- Flags input (Zero, Negative, Overflow, Carry)
         FlagsOut: out std_logic_vector(3 downto 0); -- Flags output (Zero, Negative, Overflow, Carry)
-        Res: out std_logic_vector(n-1 downto 0) -- Result
+        Res: out std_logic_vector(n-1 downto 0); -- Result
+        conditional_branch: in std_logic
     );
 end entity ALU;
 
@@ -62,8 +63,8 @@ architecture Behavioral of ALU is
                     else std_logic_vector(unsigned('0' & TempA(n-2 downto 0)) - unsigned('0' & TempB(n-2 downto 0))) when Sel = ALU_SUB or Sel = ALU_CMP or Sel = ALU_SUBI;
 
     -- Zero flag
-    FlagsOut(0) <= '1'  when (Sel = ALU_NOT or Sel = ALU_NEG or Sel = ALU_INC or Sel = ALU_DEC or Sel = ALU_ADD or Sel = ALU_ADDI or Sel = ALU_SUB or Sel = ALU_SUBI or Sel = ALU_CMP or Sel = ALU_OR or Sel = ALU_XOR or Sel = ALU_AND) AND TempOut(n-1 downto 0) = "00000000000000000000000000000000"
-            else '0'    when (Sel = ALU_NOT or Sel = ALU_NEG or Sel = ALU_INC or Sel = ALU_DEC or Sel = ALU_ADD or Sel = ALU_ADDI or Sel = ALU_SUB or Sel = ALU_SUBI or Sel = ALU_CMP or Sel = ALU_OR or Sel = ALU_XOR or Sel = ALU_AND) AND TempOut(n-1 downto 0) /= "00000000000000000000000000000000"
+    FlagsOut(0) <=  '1'  when (Sel = ALU_NOT or Sel = ALU_NEG or Sel = ALU_INC or Sel = ALU_DEC or Sel = ALU_ADD or Sel = ALU_ADDI or Sel = ALU_SUB or Sel = ALU_SUBI or Sel = ALU_CMP or Sel = ALU_OR or Sel = ALU_XOR or Sel = ALU_AND) AND TempOut(n-1 downto 0) = "00000000000000000000000000000000"
+            else '0' when (Sel = ALU_NOT or Sel = ALU_NEG or Sel = ALU_INC or Sel = ALU_DEC or Sel = ALU_ADD or Sel = ALU_ADDI or Sel = ALU_SUB or Sel = ALU_SUBI or Sel = ALU_CMP or Sel = ALU_OR or Sel = ALU_XOR or Sel = ALU_AND) AND TempOut(n-1 downto 0) /= "00000000000000000000000000000000"
             else FlagsIn(0);
 
     -- Negative flag

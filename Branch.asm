@@ -16,7 +16,7 @@ IN R7 # R7=5
 AND R0,R0,R0     #N=0,Z=1
 OUT R3
 RTI              #POP PC and flags restored
-//ADDI R1, R2, R3  # Try Hardware interrupt when fetching this (in a second run) - infinite loop?
+ADDI R1, R2, R3  # Try Hardware interrupt when fetching this (in a second run) - infinite loop?
 
 .ORG 10
 IN R1            #R1=30

@@ -15,7 +15,9 @@ entity FetchDecode is
         flush_exception_until_execute : IN std_logic;
         flush_exception_until_write_back : IN std_logic;
         interrupt_signalin : in std_logic;
-        interrupt_signalout : out std_logic
+        interrupt_signalout : out std_logic;
+        predicitIN : in std_logic;
+        predicitOUT : out std_logic
     );
 end FetchDecode;
 
@@ -32,6 +34,7 @@ BEGIN
             InPortOut <= InPort;
             PCOUT <= PCIN;
             interrupt_signalout <= interrupt_signalin;
+            predicitOUT <= predicitIN;
         END IF;
     END PROCESS;
 
