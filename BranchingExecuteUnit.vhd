@@ -53,7 +53,7 @@ begin
                 '1' when ConditionalJump = '1' and BranchPrediction = '1' and ZeroFlag = '0' else
                 '0';
 
-                updatePredicition <= '1' when (ConditionalJump = '1' and BranchPrediction = '0' and ZeroFlag = '1') or (ConditionalJump = '1' and BranchPrediction = '1' and ZeroFlag = '0') or (UnconditionalJump = '1' and BranchPrediction = '0') else
+                updatePredicition <= '1' when (ConditionalJump = '1' and BranchPrediction = '0' and ZeroFlag = '1') or (ConditionalJump = '1' and BranchPrediction = '1' and ZeroFlag = '0') or (UnconditionalJump = '1' and BranchPrediction = '0' and WasPredictionDisabled = '1') else
                         '0';
 
     JumpAddress <= (others => '0') when reset = '1' else
