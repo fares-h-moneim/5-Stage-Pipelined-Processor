@@ -11,11 +11,11 @@ Rd_Rd = {
     "NEG",
     "INC",
     "DEC",
+    "OUT",
 }
 
 Rd = {
     "IN",
-    "OUT",
 }
 
 Jumps = {
