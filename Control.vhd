@@ -96,7 +96,7 @@ begin
     RegRead1 <= '0' when Opcode = "010010" or Opcode = "010011" or Opcode = "10011" or Opcode = "110100" or Opcode = "0010" or Opcode = "110011" or Opcode = "010101" or IsInstructionIn = '0' else
     '1';
 
-    RegRead2 <= '1' when (Opcode = "000100" or Opcode = "000101" or Opcode = "000110" or Opcode = "000111" or Opcode = "001000" or Opcode = "001010" or Opcode = "001011") and IsInstructionIn /= '0' else
+    RegRead2 <= '1' when (Opcode = "000100" or Opcode = "000101" or Opcode = "000110" or Opcode = "000111" or Opcode = "001000" or Opcode = "001010" or Opcode = "001011" or Opcode = "010100") and IsInstructionIn /= '0' else
     '0';
 
     RTI <= '1' when Opcode = "110100" else '0';
