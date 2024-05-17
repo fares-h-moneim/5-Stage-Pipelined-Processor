@@ -122,7 +122,7 @@ begin
             MemOutMemoryWriteBack when Sel2 = "101" else
             InPortExecuteMemory when Sel2 = "110" else
             InPortMemoryWriteBack when Sel2 = "111" else
-            OutMux1;
+            ReadData2;
 
 
 end architecture Behavioral;

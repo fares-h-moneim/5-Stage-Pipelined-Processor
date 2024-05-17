@@ -653,7 +653,7 @@ architecture Behavioral of Processor is
         ExecuteBlock1: ExecuteBlock port map (
                                                 Clk, Rst, execute_alu_src, forwarding_sel1, forwarding_sel2,
                                                 execute_read_data1, execute_read_data2, execute_immediate,
-                                                execute_alu_selector, memory_alu_out, write_back_alu_out, memory_read_data1, write_back_read_data1, memory_read_data_output, memory_in_port, write_back_in_port, execute_zero_out, execute_negative_out, execute_carry_out, execute_overflow_out, execute_alu_out, execute_block_read_data1, execute_block_read_data2,
+                                                execute_alu_selector, memory_alu_out, write_back_alu_out, memory_read_data1, write_back_read_data1, WriteBackData, memory_in_port, write_back_in_port, execute_zero_out, execute_negative_out, execute_carry_out, execute_overflow_out, execute_alu_out, execute_block_read_data1, execute_block_read_data2,
                                                 call_signal_execute, call_signal_memory, flags_out, changePCInterrupt, flagsoutputfrommemory
                                             );
 
@@ -711,7 +711,7 @@ architecture Behavioral of Processor is
         ForwardingUnit1: ForwardingUnit port map (
                                                     execute_instruction_src1, execute_instruction_src2, execute_reg_destination, execute_read_reg1, execute_read_reg2, execute_sp_pointers,
                                                     memory_reg_write, memory_reg_write2, memory_reg_destination, memory_instruction_src2, memory_mem_to_reg,
-                                                    write_back_reg_write, write_back_reg_write2, write_back_reg_destination, write_back_instruction_src2, memory_mem_to_reg,
+                                                    write_back_reg_write, write_back_reg_write2, write_back_reg_destination, write_back_instruction_src2, write_back_mem_to_reg,
                                                     memory_in, write_back_in, forwarding_sel1, forwarding_sel2
         );
 

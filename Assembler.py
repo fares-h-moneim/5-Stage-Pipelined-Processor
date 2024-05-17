@@ -127,17 +127,17 @@ def removeComments(Line):
             return Line[: Line.index(char)]
     return line
 
-
-file_r1 = open("OneOperand.asm", "r")
-file_r2 = open("TwoOperand.asm", "r")
-file_r3 = open("Memory.asm", "r")
-file_r4 = open("Branch.asm", "r")
+file_name = input("Please enter the name of the file you want to assemble: ")
+file_r1 = open(file_name+".asm", "r")
+# file_r2 = open("TwoOperand.asm", "r")
+# file_r3 = open("Memory.asm", "r")
+# file_r4 = open("Branch.asm", "r")
 
 Lines = (
     file_r1.readlines()
-    + file_r2.readlines()
-    + file_r3.readlines()
-    + file_r4.readlines()
+    # + file_r2.readlines()
+    # + file_r3.readlines()
+    # + file_r4.readlines()
 )
 
 
@@ -157,9 +157,9 @@ for line in Lines:
     instructions.append(line)
 
 file_r1.close()
-file_r2.close()
-file_r3.close()
-file_r4.close()
+# file_r2.close()
+# file_r3.close()
+# file_r4.close()
 
 for instruction in instructions:
     instruction = instruction.replace(",", " ")
@@ -213,7 +213,8 @@ for instruction in removedSpacesInstr:
     elif instruction[0] == "POP" or instruction[0] == "PUSH":
         print(instruction)
         temp += commands[instruction[0]]
-        temp += "000000"
+        temp += "000"
+        temp += operands[instruction[1]]
         temp += operands[instruction[1]]
         temp += "0"
         isInstruction = True
@@ -317,7 +318,7 @@ for instruction in removedSpacesInstr:
         isImmidiate = True
         temp += commands[instruction[0]]
         temp += operands[instruction[3]]
-        temp += "000"
+        temp += operands[instruction[1]]
         temp += operands[instruction[1]]
         temp += "0"
         immediate = hex_to_binary(instruction[2])
