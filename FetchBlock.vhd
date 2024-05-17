@@ -42,6 +42,14 @@ architecture behavioral of FetchBlock is
             PC_OUT: OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
         );
     end component PC;
+
+    component InterruptLatch is
+        port (
+            clk, rst, interrupt: in std_logic;
+            instruction: in std_logic_vector(15 downto 0);
+            interruptOut: out std_logic
+        );
+    end component InterruptLatch;
     
     signal PC_OUT: std_logic_vector(31 DOWNTO 0) := (others => '0');
     signal internal_instruction: std_logic_vector(15 DOWNTO 0);
@@ -49,17 +57,19 @@ architecture behavioral of FetchBlock is
     signal internal_PC : std_logic_vector(31 DOWNTO 0);
     signal inital_PC : std_logic_vector(31 DOWNTO 0) := (others => '0');
     signal interrupt_handler : std_logic_vector(31 DOWNTO 0) := (others => '0');
+    signal generatedInterrupt : std_logic;
     begin
         PC1: PC port map(clk, rst, '1', internal_PC, PC_OUT);
         IM1: instruction_memory port map(clk, rst, PC_OUT, internal_instruction, inital_PC, interrupt_handler);
-        instruction <= "1100110000000000" when interrupt = '1' else internal_instruction;
+        IL1: InterruptLatch port map(clk, rst, interrupt, internal_instruction, generatedInterrupt);
+        instruction <= "1100110000000000" when interrupt = '1' or generatedInterrupt = '1' else internal_instruction;
         PCOUT <= PC_OUT;
 
         process(clk, changePCDecode)
         begin
             if rst = '1' then
                 internal_PC <= inital_PC;
-            elsif interrupt = '1' then
+            elsif interrupt = '1' or generatedInterrupt = '1' then
                 internal_PC <= interrupt_handler;
             elsif falling_edge(clk) then
                 if(chnagePCInterrupt = '1') then

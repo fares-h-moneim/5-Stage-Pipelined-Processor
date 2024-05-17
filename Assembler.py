@@ -104,8 +104,21 @@ def hex_to_binary(hex_string):
 
 file2 = open("binaryCommands.do", "w")
 file2.write("")
+
 file2.close()
 file2 = open("binaryCommands.do", "a")
+
+file_r1 = open("OneOperand.asm", "r")
+file_r2 = open("TwoOperand.asm", "r")
+file_r3 = open("Memory.asm", "r")
+file_r4 = open("Branch.asm", "r")
+
+Lines = (
+    file_r1.readlines()
+    + file_r2.readlines()
+    + file_r3.readlines()
+    + file_r4.readlines()
+)
 
 
 def check_org(instruction):
