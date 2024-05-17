@@ -74,12 +74,12 @@ architecture behavioral of FetchBlock is
             elsif falling_edge(clk) then
                 if(chnagePCInterrupt = '1') then
                     internal_PC <= newPCFromRet; 
+                elsif changePCExecute = '1' then
+                    internal_PC <= newPCExecute;
                 elsif(changePCDecode = '1') then
                     internal_PC <= newPCDecode;
                 elsif changePCFromException = '1' then
                     internal_PC <= "00000000000000000000000000000000";
-                elsif changePCExecute = '1' then
-                    internal_PC <= newPCExecute;
                 elsif changePCFromRet = '1' then
                     internal_PC <= newPCFromRet;
                 else

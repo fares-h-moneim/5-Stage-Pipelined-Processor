@@ -33,7 +33,8 @@ entity ExecuteBlock is
         flags_out : out std_logic_vector(31 downto 0);
         update_flags : in std_logic;
         updated_flags : in std_logic_vector(31 downto 0);
-        ExecuteMemoryWriteBack : in std_logic_vector(31 downto 0)
+        ExecuteMemoryWriteBack : in std_logic_vector(31 downto 0);
+        conditional_branch : in std_logic
     );
 end entity ExecuteBlock; 
 
@@ -46,7 +47,8 @@ architecture Behavioral of ExecuteBlock is
 
             FlagsIn: in std_logic_vector(3 downto 0); -- Flags input (Zero, Negative, Carry)
             FlagsOut: out std_logic_vector(3 downto 0); -- Flags output (Zero, Negative, Carry)
-            Res: out std_logic_vector(n-1 downto 0) -- Result
+            Res: out std_logic_vector(n-1 downto 0); -- Result
+            conditional_branch: in std_logic
         );
     end component;
 
@@ -59,7 +61,8 @@ architecture Behavioral of ExecuteBlock is
             flag: in std_logic_vector(n-1 downto 0);
             flag_out: out std_logic_vector(n-1 downto 0);
             update_flags: in std_logic;
-            updated_flags: in std_logic_vector(31 downto 0)
+            updated_flags: in std_logic_vector(31 downto 0);
+            conditional_branch: in std_logic
         );
     end component;
 
@@ -99,14 +102,14 @@ begin
             ExecuteMemoryWriteBack when Sel2 = "1000" else
             OutMux1;
 
-    ALU1: ALU generic map (32) port map (AluIn1, AluIn2, AluSelector, TempFlags, Flags, TempAluOut);
+    ALU1: ALU generic map (32) port map (AluIn1, AluIn2, AluSelector, TempFlags, Flags, TempAluOut, conditional_branch);
 
     ZeroFlag <= Flags(0);
     NegativeFlag <= Flags(1);
     OverflowFlag <= Flags(2);
     CarryFlag <= Flags(3);
 
-    FlagsReg1: FlagReg generic map (4) port map (clk, reset, '1', Flags, FlagsOut, update_flags, updated_flags);
+    FlagsReg1: FlagReg generic map (4) port map (clk, reset, '1', Flags, FlagsOut, update_flags, updated_flags, conditional_branch);
 
     AluOut <= TempAluOut;
     ReadDataOut <= AluResExecuteMemory when Sel1 = "0001" else

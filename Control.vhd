@@ -49,6 +49,7 @@ begin
     Opcode(3 downto 0) when Opcode(5 downto 4) = "00" -- R-type
     else "1001" when Opcode = "010111" or Opcode = "011000" -- FREE AND PROTECT
     else "1110" when Opcode = "010010" or Opcode = "001010" or Opcode = "010110" --LDM outputs the selector for ALU that outputs TempB or push
+    else "1001" when Opcode = "010101" or Opcode = "010110" -- push and pop
     else "0100" when Opcode(5 downto 4) = "01" -- LDD and STD
     else "1001"; -- Rest are dont cares so just treat them as MOV;
 
@@ -73,7 +74,7 @@ begin
     InPortInstruction <= '1' when Opcode = "110010" else '0';
 
     RegWrite <= '0' when IsInstructionIn = '0' else
-    '0' when Opcode = "001011" or Opcode = "010100" or Opcode = "010110" or Opcode = "110000" or Opcode = "110001" or Opcode = "010111" or Opcode = "011000" -- Don't Write to register if CMP, STD, Push, NOP, Out, protect, free
+    '0' when Opcode = "001011" or Opcode = "010100" or Opcode = "010110" or Opcode = "110000" or Opcode = "110001" or Opcode = "010111" or Opcode = "011000" or Opcode = "100001" or Opcode = "100000" or Opcode = "100010" or Opcode = "100011" -- Don't Write to register if CMP, STD, Push, NOP, Out, protect, free
     else '1';
 
     RegWrite2 <= '0' when IsInstructionIn = '0' else

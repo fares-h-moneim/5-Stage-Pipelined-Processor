@@ -46,7 +46,9 @@ architecture Behavioral of Processor is
             flush_exception_until_execute : IN std_logic;
             flush_exception_until_write_back : IN std_logic;
             interrupt_signalin : in std_logic;
-            interrupt_signalout : out std_logic
+            interrupt_signalout : out std_logic;
+            predicitIN : in std_logic;
+            predicitOUT : out std_logic
         );
     end component FetchDecode;
 
@@ -181,7 +183,15 @@ architecture Behavioral of Processor is
             flush_exception_until_write_back : IN std_logic;
             RTI_OUT : OUT std_logic;
             interrupt_signalin : in std_logic;
-            interrupt_signalout : out std_logic
+            interrupt_signalout : out std_logic;
+            instruction_opcode : in std_logic_vector(5 downto 0);
+            instruction_opcode_out : out std_logic_vector(5 downto 0);
+            disable_branching : in std_logic;
+            disable_branching_out : out std_logic;
+            predictIN : in std_logic;
+            predictOUT : out std_logic;
+            unconditional_branch : in std_logic;
+            unconditional_branch_out : out std_logic
         );
     end component DecodeExecute;
 
@@ -198,6 +208,14 @@ architecture Behavioral of Processor is
             BranchingAddressOut : out std_logic_vector(31 downto 0)
         );
     end component BranchingDecodeUnit;
+    component DisableBranching is 
+    port(
+        rst : in std_logic;
+        decode_instruction : in std_logic_vector(15 downto 0);
+        execute_opcode : in std_logic_vector(5 downto 0);
+        disable_branching : out std_logic
+        );
+    end component DisableBranching;
     ------------- Execute ------------
     component ExecuteBlock is
         port (
@@ -230,7 +248,8 @@ architecture Behavioral of Processor is
             flags_out : out std_logic_vector(31 downto 0);
             update_flags : in std_logic;
             updated_flags : in std_logic_vector(31 downto 0);
-            ExecuteMemoryWriteBack : in std_logic_vector(31 downto 0)
+            ExecuteMemoryWriteBack : in std_logic_vector(31 downto 0);
+            conditional_branch : in std_logic
         );
     end component ExecuteBlock; 
 
@@ -312,7 +331,10 @@ architecture Behavioral of Processor is
         FlushDecode : out std_logic;
         FlushExecute : out std_logic;
         ChangePC : out std_logic;
-        JumpAddress : out std_logic_vector(31 downto 0)
+        JumpAddress : out std_logic_vector(31 downto 0);
+        WasPredictionDisabled : in std_logic;
+        updatePredicition : out std_logic;
+        UnconditionalJump : in std_logic
     );
     end component BranchingExecuteUnit;
 
@@ -449,7 +471,7 @@ architecture Behavioral of Processor is
         );
     end component ExceptionHandler;
 
-    
+    signal Predicition : std_logic := '0';
     ----------- Signals Fetch ------------
     
     signal fetch_instruction_out : std_logic_vector(15 downto 0); -- WHAT COMES OUT OF FETCHDECODE
@@ -482,6 +504,7 @@ architecture Behavioral of Processor is
     signal decode_in : std_logic;
     signal ConditionalBranch : std_logic;
     signal UnConditionalBranch : std_logic;
+    signal updatePredicition : std_logic;
 
     signal flush_decode : std_logic; -- WHAT COMES OUT OF BRANCHINGDECODEUNIT
     signal flush_decode_branching : std_logic; -- WHAT COMES OUT OF BRANCHINGDECODEUNIT
@@ -597,6 +620,12 @@ architecture Behavioral of Processor is
 
     signal IsInstructionIN: std_logic := '1';
     signal IsInstructionOUT: std_logic;
+    signal disable_branching : std_logic;
+    signal execute_opcode : std_logic_vector(5 downto 0);
+    signal wasdisabled : std_logic;
+    signal temp : std_logic;
+    signal predicitIN, predicitOUTDecode, predicitOUTExecute : std_logic;
+    signal UnconditionalBranchExecute : std_logic;
     begin
         ----------- Fetch ------------
         FetchBlock1: FetchBlock port map (
@@ -606,7 +635,7 @@ architecture Behavioral of Processor is
         FetchDecode1: FetchDecode port map (
                                             Clk, Rst, internal_fetch_instruction,
                                             fetch_instruction_out, InPort, decode_in_port, FetchPC, FetchDecodePC, flushDecodeRETfromDecode, flushDecodeRETfromExecute, flushDecodeRETfromMemory, flush_decode, flush_decode_branching2, flush_exception_until_execute, flush_exception_until_write_back,
-                                            interrupt, interruptFetchDecode
+                                            interrupt, interruptFetchDecode, Predicition, predicitOUTDecode
                                         );
         
         ----------- Decode ------------
@@ -635,11 +664,12 @@ architecture Behavioral of Processor is
                                                 execute_protect_write, execute_free_write, execute_branching, execute_read_data1,
                                                 execute_read_data2, execute_instruction_src1, execute_instruction_src2, execute_reg_destination, execute_immediate, execute_in_port, execute_out_en,  execute_read_reg1, execute_read_reg2, execute_in,
                                                 DecodeBlockPC, ExecuteBlockPC, ConditionalBranch, ConditionalBranchExecute, call_signal_decode, call_signal_execute, isRETURN, flushDecodeRETfromDecode, flush_execute_branching, flush_exception_until_execute, flush_exception_until_write_back, execute_rti,
-                                                interruptFetchDecode, interruptDecodeExecute
+                                                interruptFetchDecode, interruptDecodeExecute, fetch_instruction_out(15 downto 10), execute_opcode, disable_branching, wasdisabled, predicitOUTDecode, predicitOUTExecute, UnConditionalBranch, UnconditionalBranchExecute
                                             );
+        DisableBranching1: DisableBranching port map( Rst, fetch_instruction_out, execute_opcode, disable_branching);
                                             
                                             BranchingDecodeUnit1: BranchingDecodeUnit port map(
-                                                Rst, '0', ConditionalBranch, UnConditionalBranch, read_data1, '0', flush_decode, changePCDecode, branching_address_out
+                                                Rst, disable_branching, ConditionalBranch, UnConditionalBranch, read_data1, predicitOUTDecode, flush_decode, changePCDecode, branching_address_out
                                             ); 
                                             --the 1 means prediction = true
                                             --need to test here
@@ -656,7 +686,7 @@ architecture Behavioral of Processor is
                                                 Clk, Rst, execute_alu_src, forwarding_sel1, forwarding_sel2,
                                                 execute_read_data1, execute_read_data2, execute_immediate,
                                                 execute_alu_selector, memory_alu_out, write_back_alu_out, memory_read_data1, write_back_read_data1, WriteBackData, memory_in_port, write_back_in_port, execute_zero_out, execute_negative_out, execute_carry_out, execute_overflow_out, execute_alu_out, execute_block_read_data1, execute_block_read_data2,
-                                                call_signal_execute, call_signal_memory, flags_out, changePCInterrupt, flagsoutputfrommemory, memory_read_data_output
+                                                call_signal_execute, call_signal_memory, flags_out, changePCInterrupt, flagsoutputfrommemory, memory_read_data_output, ConditionalBranchExecute
                                             );
 
         ExecuteMemory1: ExecuteMemory port map (
@@ -673,7 +703,7 @@ architecture Behavioral of Processor is
                                             );
         
         BranchingExecuteUnit1: BranchingExecuteUnit port map(
-            Rst, execute_zero_out, ExecuteBlockPC, execute_read_data1, '0', ConditionalBranchExecute, flushDecode2, flushExecute, changePCExecute, branching_address_out2
+            Rst, execute_zero_out, ExecuteBlockPC, execute_block_read_data1, predicitOUTExecute, ConditionalBranchExecute, flushDecode2, flushExecute, changePCExecute, branching_address_out2, wasdisabled, updatePredicition, UnconditionalBranchExecute
         ); 
         -- Branch prediciton & conditional jump which i have to forward
         --need to test here
@@ -730,6 +760,17 @@ architecture Behavioral of Processor is
         begin
             if rising_edge(Clk) then
                 IsInstructionIN <= IsInstructionOUT;
+            end if;
+        end process;
+
+        process(clk)
+        begin
+            if(falling_edge(clk)) then
+            if updatePredicition = '1' then
+                Predicition <= not Predicition;
+            elsif changePCDecode = '1' then
+                Predicition <= '1';
+            end if;
             end if;
         end process;
 end architecture Behavioral;

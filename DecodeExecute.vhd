@@ -65,7 +65,15 @@ ENTITY DecodeExecute IS
         flush_exception_until_write_back : IN std_logic;
         RTI_OUT : OUT std_logic;
         interrupt_signalin : in std_logic;
-        interrupt_signalout : out std_logic
+        interrupt_signalout : out std_logic;
+        instruction_opcode : in std_logic_vector(5 downto 0);
+        instruction_opcode_out : out std_logic_vector(5 downto 0);
+        disable_branching : in std_logic;
+        disable_branching_out : out std_logic;
+        predictIN : in std_logic;
+        predictOUT : out std_logic;
+        unconditional_branch : in std_logic;
+        unconditional_branch_out : out std_logic
     );
 END DecodeExecute;
 
@@ -128,6 +136,10 @@ BEGIN
                 RETOUT <= RETIN;
                 RTI_OUT <= RTI;
                 interrupt_signalout <= interrupt_signalin;
+                instruction_opcode_out <= instruction_opcode;
+                disable_branching_out <= disable_branching;
+                predictOUT <= predictIN;
+                unconditional_branch_out <= unconditional_branch;
             END IF;
         END IF;
     END PROCESS;

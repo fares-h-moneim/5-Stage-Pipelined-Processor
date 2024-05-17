@@ -101,6 +101,7 @@ architecture Behavioral of MemoryBlock is
         else '0';
 
         changePC <= memory_rti;
+        changePCRET <= RETIN;
 
 
     DataMemory1: DataMemory PORT MAP (clk, memAddress, memDataIn, actual_mem_write, mem_read, read_data, memory_rti, flags, interrupt_signal, data_in2);
