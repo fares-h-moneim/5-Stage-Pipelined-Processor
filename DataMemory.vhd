@@ -21,8 +21,8 @@ ARCHITECTURE sync_ram_a OF DataMemory IS
         SIGNAL ram : ram_type ;
     BEGIN
 
-    read_data <= ram(to_integer(unsigned(address)) + 1) & ram(to_integer(unsigned(address))) when mem_read = '1' else data_in;
-    flags <= ram(to_integer(unsigned(address)) + 3) & ram(to_integer(unsigned(address)) + 2) when memory_rti = '1';
+    read_data <= ram(to_integer(unsigned(address)) + 1) & ram(to_integer(unsigned(address))) when (mem_read = '1' and to_integer(unsigned((address))) < 4095)  else data_in;
+    flags <= ram(to_integer(unsigned(address)) + 3) & ram(to_integer(unsigned(address)) + 2) when memory_rti = '1' and to_integer(unsigned((address))) < 4095;
     PROCESS(clk, mem_write, mem_read) IS  
         BEGIN
         IF rising_edge(clk) THEN   
