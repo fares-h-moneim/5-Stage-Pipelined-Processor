@@ -6,7 +6,7 @@
 ## Architecture
 Note: Click the image for higher quality (Click open with draw.io to interact and zoom)
 
-<a href="https://drive.google.com/file/d/1aCtEjQ2wx38Zt0gfON90N8CMRlunBgCD/view?usp=sharing" target="_blank">![Diagram](./Diagram.drawio.svg)</a>
+<a href="https://drive.google.com/file/d/1gNEX3eCRZ3R11BlOIeyV_1dLyXfIoX4l/view" target="_blank">![Diagram](./Diagram.drawio.svg)</a>
 
 ## Instruction Set Architecture
 
