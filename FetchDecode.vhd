@@ -17,7 +17,9 @@ entity FetchDecode is
         interrupt_signalin : in std_logic;
         interrupt_signalout : out std_logic;
         predicitIN : in std_logic;
-        predicitOUT : out std_logic
+        predicitOUT : out std_logic;
+        generatedInterruptin : in std_logic;
+        generatedInterruptout : out std_logic
     );
 end FetchDecode;
 
@@ -35,6 +37,7 @@ BEGIN
             PCOUT <= PCIN;
             interrupt_signalout <= interrupt_signalin;
             predicitOUT <= predicitIN;
+            generatedInterruptout <= generatedInterruptin;
         END IF;
     END PROCESS;
 

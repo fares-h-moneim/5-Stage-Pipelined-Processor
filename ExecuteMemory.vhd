@@ -64,7 +64,9 @@ entity ExecuteMemory is
         interrupt_signalin : in std_logic;
         interrupt_signalout : out std_logic;
         flagsIn : in std_logic_vector(31 downto 0);
-        flagsOut : out std_logic_vector(31 downto 0)
+        flagsOut : out std_logic_vector(31 downto 0);
+        generatedInterruptin : in std_logic;
+        generatedInterruptout : out std_logic
     );
 end entity ExecuteMemory;
 
@@ -124,6 +126,7 @@ begin
             flush_decode_branching <= flush_decode;
             flagsOut <= flagsIn;
             interrupt_signalout <= interrupt_signalin;
+            generatedInterruptout <= generatedInterruptin;
         end if;
     end process;
 end Behavioural;

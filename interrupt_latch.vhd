@@ -27,7 +27,7 @@ begin
             if instruction(15 downto 10) = "100011" then
                 saveCounter := 2;
             elsif instruction(15 downto 10) = "100000" then
-                saveCounter := 3;
+                saveCounter := 5;
             elsif instruction(15 downto 14) = "10" then
                 saveCounter := 1;
             end if;

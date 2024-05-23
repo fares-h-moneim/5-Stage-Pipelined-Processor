@@ -12,7 +12,8 @@ ENTITY DataMemory IS
             memory_rti : IN std_logic;
             flags : OUT std_logic_vector(31 DOWNTO 0);
             interrupt_signal : IN std_logic;
-            data_in2 : IN std_logic_vector(31 DOWNTO 0)
+            data_in2 : IN std_logic_vector(31 DOWNTO 0);
+            generatedInterrupt : IN std_logic
         );
 END ENTITY DataMemory;
 
@@ -30,7 +31,7 @@ ARCHITECTURE sync_ram_a OF DataMemory IS
                 ram(to_integer(unsigned((address)))) <= data_in(15 downto 0);
                 ram(to_integer(unsigned((address))) + 1) <= data_in(31 downto 16);
             END IF;
-            if(interrupt_signal = '1') then
+            if(interrupt_signal = '1' or generatedInterrupt = '1') then
                 ram(to_integer(unsigned((address))) + 2) <= data_in2(15 downto 0);
                 ram(to_integer(unsigned((address))) + 3) <= data_in2(31 downto 16);
             end if;

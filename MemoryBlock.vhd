@@ -26,7 +26,8 @@ Entity MemoryBlock is
     interrupt_signal : IN STD_LOGIC;
     flags : OUT std_logic_vector(31 DOWNTO 0);
     data_in2 : IN std_logic_vector(31 DOWNTO 0); -- FLAGS HTGY HNA
-    changePC : OUT STD_LOGIC
+    changePC : OUT STD_LOGIC;
+    generatedInterrupt : IN STD_LOGIC
     );
 END ENTITY MemoryBlock;
 
@@ -50,7 +51,8 @@ architecture Behavioral of MemoryBlock is
             memory_rti : IN std_logic;
             flags : OUT std_logic_vector(31 DOWNTO 0);
             interrupt_signal : IN std_logic;
-            data_in2 : IN std_logic_vector(31 DOWNTO 0)
+            data_in2 : IN std_logic_vector(31 DOWNTO 0);
+            generatedInterrupt : IN std_logic
         );
     END COMPONENT DataMemory;
 
@@ -76,16 +78,18 @@ architecture Behavioral of MemoryBlock is
         sppIn <= sppOut when sp_signal = "00" 
         else std_logic_vector(unsigned(sppOut) - 4) when (sp_signal = "01" and interrupt_signal = '1')
         else std_logic_vector(unsigned(sppOut) - 2) when sp_signal = "01"
+        else std_logic_vector(unsigned(sppOut) + 4) when sp_signal = "10" and memory_rti = '1'
         else std_logic_vector(unsigned(sppOut) + 2) when sp_signal = "10"
         else sppOut;
 
         memAddress <= address when sp_signal = "00"
+        else sppOut when sp_signal = "10" and memory_rti = '1'
         else std_logic_vector(unsigned(sppOut) + 2) when sp_signal = "10"
-        else std_logic_vector(unsigned(sppOut) - 2) when (sp_signal = "01" and interrupt_signal = '1')
+        else std_logic_vector(unsigned(sppOut) - 2) when (sp_signal = "01" and (interrupt_signal = '1' or generatedInterrupt = '1'))
         else sppOut;
 
         memDataIn <= std_logic_vector(to_unsigned(to_integer(unsigned((pc_value))) + 1, 32)) when (sp_signal = "01" and call_signal = '1') 
-        else std_logic_vector(to_unsigned(to_integer(unsigned((pc_value))), 32)) when (sp_signal = "01" and interrupt_signal = '1')
+        else std_logic_vector(to_unsigned(to_integer(unsigned((pc_value))), 32)) when (sp_signal = "01" and (interrupt_signal = '1' or generatedInterrupt = '1'))
         else reg2_value when sp_signal = "00"
         else reg2_value when sp_signal = "01"
         else reg2_value;
@@ -104,7 +108,7 @@ architecture Behavioral of MemoryBlock is
         changePCRET <= RETIN;
 
 
-    DataMemory1: DataMemory PORT MAP (clk, memAddress, memDataIn, actual_mem_write, mem_read, read_data, memory_rti, flags, interrupt_signal, data_in2);
+    DataMemory1: DataMemory PORT MAP (clk, memAddress, memDataIn, actual_mem_write, mem_read, read_data, memory_rti, flags, interrupt_signal, data_in2, generatedInterrupt);
     spp: stackReg generic map(12) port map ( sppIn,sppOut,clk,reset,'1' );
     ProtectedMemory1: ProtectedMemory PORT MAP (clk, address, protect_signal, free_signal, read_data_protected_temp, read_data_protected_after_temp);
 end Behavioral;

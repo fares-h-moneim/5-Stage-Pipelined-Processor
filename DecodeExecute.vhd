@@ -73,7 +73,9 @@ ENTITY DecodeExecute IS
         predictIN : in std_logic;
         predictOUT : out std_logic;
         unconditional_branch : in std_logic;
-        unconditional_branch_out : out std_logic
+        unconditional_branch_out : out std_logic;
+        generatedInterruptin : in std_logic;
+        generatedInterruptout : out std_logic
     );
 END DecodeExecute;
 
@@ -140,6 +142,7 @@ BEGIN
                 disable_branching_out <= disable_branching;
                 predictOUT <= predictIN;
                 unconditional_branch_out <= unconditional_branch;
+                generatedInterruptout <= generatedInterruptin;
             END IF;
         END IF;
     END PROCESS;

@@ -47,7 +47,25 @@ mem load -filltype value -filldata {0001000010010100 } -fillradix symbolic /proc
 mem load -filltype value -filldata {1000110000000000 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(770)
 mem load -filltype value -filldata {0001000010010010 } -fillradix symbolic /processor/FetchBlock1/IM1/mem(771)
 
-
+add wave sim:/processor/Clk
+add wave sim:/processor/Rst
+add wave sim:/processor/interrupt
+add wave sim:/processor/InPort
+add wave sim:/processor/OutPort
+add wave sim:/processor/Exception
+add wave sim:/processor/Predicition
+add wave sim:/processor/disable_branching
+add wave sim:/processor/changePCExecute
+add wave sim:/processor/changePCDecode
+add wave sim:/processor/fetch_instruction_out
+add wave sim:/processor/internal_fetch_instruction
+add wave sim:/processor/FetchPC
+add wave sim:/processor/DataMemory1/sppIn
+add wave sim:/processor/execute_carry_out
+add wave sim:/processor/execute_negative_out
+add wave sim:/processor/execute_zero_out
+add wave sim:/processor/execute_overflow_out
+add wave sim:/processor/DecodeBlock1/RegisterFile1/ram
 
 force -freeze sim:/processor/Clk 1 0, 0 {50 ps} -r 100
 force -freeze sim:/processor/Rst 1 0
@@ -101,7 +119,6 @@ run
 run
 run
 run
-mem load -filltype value -filldata 300 -fillradix hexadecimal /processor/DecodeBlock1/RegisterFile1/ram(6)
 run
 run
 run

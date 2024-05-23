@@ -16,7 +16,8 @@ entity FetchBlock is
         changePCFromException : IN std_logic;
         changePCFromRet : IN std_logic;
         newPCFromRet : IN std_logic_vector(31 DOWNTO 0);
-        chnagePCInterrupt : IN std_logic
+        chnagePCInterrupt : IN std_logic;
+        generatedInterruptout : OUT std_logic
         -- immediate : OUT std_logic_vector(15 DOWNTO 0)
     );
 end entity FetchBlock;
@@ -64,18 +65,21 @@ architecture behavioral of FetchBlock is
         IL1: InterruptLatch port map(clk, rst, interrupt, internal_instruction, generatedInterrupt);
         instruction <= "1100110000000000" when interrupt = '1' or generatedInterrupt = '1' else internal_instruction;
         PCOUT <= PC_OUT;
+        generatedInterruptout <= generatedInterrupt;
 
         process(clk, changePCDecode)
         begin
             if rst = '1' then
                 internal_PC <= inital_PC;
-            elsif interrupt = '1' or generatedInterrupt = '1' then
+            elsif interrupt = '1' then
                 internal_PC <= interrupt_handler;
             elsif falling_edge(clk) then
                 if(chnagePCInterrupt = '1') then
                     internal_PC <= newPCFromRet; 
                 elsif changePCExecute = '1' then
                     internal_PC <= newPCExecute;
+                elsif generatedInterrupt = '1' then
+                    internal_PC <= interrupt_handler;
                 elsif(changePCDecode = '1') then
                     internal_PC <= newPCDecode;
                 elsif changePCFromException = '1' then
